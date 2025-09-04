@@ -1,0 +1,13 @@
+h1, p, a, ul, table {
+    color:whitesmoke;
+    font-family: Garamond, serif;
+}
+
+body {
+    background-color:navy;
+}
+
+header {
+    text-align: center;
+    font-size: 25px;
+}
