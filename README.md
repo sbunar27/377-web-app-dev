@@ -1,5 +1,5 @@
 # 377-web-app-dev
-projects for course 377 web application development
+Projects for course 377 Web Application Development
 
 This project includes the following languages:
 - HTML
@@ -9,3 +9,5 @@ This project includes the following languages:
 - PHP
 - SQL
 - Python
+
+All code copyright 2025
