@@ -1,13 +1,36 @@
 h1, p, a, ul, table {
-    color:whitesmoke;
-    font-family: Garamond, serif;
+    color: #FCFCE8;
+    font-family: Georgia, serif;
 }
 
 body {
-    background-color:navy;
+    /* background-color: #30346B; */
+    background-image: linear-gradient(#6F74BE,#30346B);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 header {
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
+}
+
+hr {
+    border-color:#161831;
+    border-width: 4px;
+}
+
+.image-cropper {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+img {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
 }
