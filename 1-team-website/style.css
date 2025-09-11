@@ -41,18 +41,11 @@
     vertical-align: top;
 }
 
-.square-cropper {
-  position: relative;
-  width: 250px;
-  height: 250px;
-  overflow: hidden;
-}
-
-.square-cropper img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+#staff img {
+    width: 300px;
+    display: block;
+    align-items: center;
+    margin: 40px;
 }
 
 /* CIRCLE CROP */
