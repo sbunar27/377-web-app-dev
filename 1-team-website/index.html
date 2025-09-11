@@ -5,33 +5,26 @@
     </head>
 
     <body>
-    <!-- NEED TO FIX HEADER -->
         <header>
             <table>
                 <tr>
-                    <div class="header-table"></div>
-                        <td>
-                            <div class="image-cropper">
-                                <img style="float:inline-start;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQInP__kZfTqsXKNgtgOp0GxXkpApCPvFHVOg&s" alt="HHS Band Logo" width="50" height="50">
-                            </div>
-                        </td>
-                    </div>
-                    <div class="header-table">
-                        <td>
-                            <h1>‎ ♫⋆｡♪ The Pride of Hanover Marching Band ₊˚♬ ﾟ.‎ </h1>
-                        </td>
-                    </div>
-                    <div class="header-table">
-                        <td>
-                            <div class="image-cropper">
-                                <img style="float:inline-start;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQInP__kZfTqsXKNgtgOp0GxXkpApCPvFHVOg&s" alt="HHS Band Logo" width="50" height="50">
-                            </div>
-                        </td>
-                    </div>
+                    <td class="header-table">
+                        <div class="image-cropper">
+                            <img style="float:inline-start;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQInP__kZfTqsXKNgtgOp0GxXkpApCPvFHVOg&s" alt="HHS Band Logo" width="50" height="50">
+                        </div>
+                    </td>
+                    <td class="header-table" style="font-size: 20px;">
+                        <h1>‎ ♫⋆｡♪ The Pride of Hanover Marching Band ₊˚♬ ﾟ.‎ </h1>
+                    </td>
+                    <td class="header-table">
+                        <div class="image-cropper">
+                            <img style="float:inline-start;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQInP__kZfTqsXKNgtgOp0GxXkpApCPvFHVOg&s" alt="HHS Band Logo" width="50" height="50">
+                        </div>
+                    </td>
                 </tr>
             </table>
-            <hr>
-            <div class="button">
+            
+            <div class="button, white-bg">
                 <a href="index.html">
                     <button>Home</button></a>
                 <a href="calendar.html">
@@ -41,12 +34,16 @@
                 <a href="info.html">
                     <button>Info</button></a>
             </div>
+            
         </header>
-        <main>
-            <hr>
-            <p>The Pride of Hanover Marching band is a marching band located in Hanover, Massachusetts at Hanover High School. The band performs throughout football season at each home football game.</p>
+        <main class="white-bg">
+            <h2>Our Band</h2>
+            <p class="margin-paragraph">
+                The <strong>Pride of Hanover Marching Band</strong> is a marching band located in Hanover, Massachusetts at Hanover High School. Since its founding, the Pride of Hanover has strived to
+                achieve a sort of enthusiasm and excellence that no other band could match. When in uniform on the football field, we present ourselves as an ensemble with integrity and respect.
+                Though many may not think marching band is a sport, it requires hours of practice and dedication, as well as physical activity. (WIP...)</p>
             <h2>This Year's Field Show - Stevie Wonder, Songs in the Key of Life</h2>
-            <table style="border: 3px #161831;">
+            <table id="field-show">
                 <thead>
                     <tr>
                         <th>Song</th>
@@ -56,6 +53,7 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <!-- NEED TO FIX SIR DUKE AND ISNT SHE LOVELY VIDEOS, THEY DONT SHOW UP -->
                         <td>Sir Duke</td>
                         <td>
                             <iframe width="300" height="169" src="https://www.youtube.com/embed/7HrKr-TLgME?si=TXuIECb21GiXBBMF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
