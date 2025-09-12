@@ -11,7 +11,26 @@
     margin-left: 300px;
     margin-right: 300px;
     margin-top: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+}
+
+.website-embeds {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto; 
+    width: 500px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.band-images {
+    float: none;
+    border-radius: 20px;
+    width: 500px;
+    height: auto;
+    text-align: center;
+    display: block;
+    position: relative;
 }
 
 .white-bg {
@@ -150,6 +169,7 @@ img {
     margin: 0 auto;
     height: 100%;
     width: auto;
+    display: block;
 }
 
 table {
