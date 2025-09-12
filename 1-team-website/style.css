@@ -147,8 +147,9 @@ h2 {
 }
 
 hr {
-    height: 3px;
-    color:#161831;
+    height: 1px;
+    border-color:#161831;
+    border-width: 3px;
 }
 
 button {
