@@ -204,7 +204,6 @@ header {
 }
 
 img {
-    float: inline-start;
     margin: 0 auto;
     height: 100%;
     width: auto;
