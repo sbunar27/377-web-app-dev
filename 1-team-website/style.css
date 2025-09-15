@@ -1,8 +1,3 @@
-#secret-link {
-    color:#161831;
-    text-decoration: none;
-}
-
 #secret-video {
     text-align: center;
     margin-left: auto;
@@ -47,6 +42,11 @@
     text-align: center;
     display: block;
     position: relative;
+}
+
+.secret-link {
+    color:#161831;
+    text-decoration: none;
 }
 
 .header-table {
