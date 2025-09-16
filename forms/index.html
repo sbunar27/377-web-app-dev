@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Form Examples</title>
+        <script>
+
+function doSubmit() {
+    let firstName = document.getElementById('firstName').value;
+    let lastName = document.getElementById('lastName').value;
+    // alert('Thank you, ' + firstName + '!');
+
+    document.getElementById('output').innerHTML += firstName + ' ' + lastName + ' has submitted the form. <br />';
+}
+
+        </script>
+    </head>
+
+    <body>
+        <h1>HTML Form Examples</h1>
+
+        <form>
+            <h2>Student Handbook Acknowledgement</h2>
+
+            First name: <input type="text" id="firstName" /><br />
+            Last name: <input type="text" id="lastName" /><br />
+            School: <select>
+                <option>Hanover High School</option>
+                <option>Hanover Middle School</option>
+                <option>Center School</option>
+                <option>Cedar School</option>
+            </select><br />
+            I agree to the handbook policies. <input type="checkbox" /><br />
+            <input type="button" value="I Agree" onclick="doSubmit()" />
+        </form>
+
+        <div id="output"></div>
+    </body>
+</html>
