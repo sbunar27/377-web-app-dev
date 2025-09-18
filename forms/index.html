@@ -6,43 +6,40 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Form Examples</title>
         <script>
+            function doSubmit() {
+                let firstName = document.getElementById('firstName').value;
+                let lastName = document.getElementById('lastName').value;
+                // alert('Thank you, ' + firstName + '!');
 
-function doSubmit() {
-    let firstName = document.getElementById('firstName').value;
-    let lastName = document.getElementById('lastName').value;
-    // alert('Thank you, ' + firstName + '!');
+                document.getElementById('output').innerHTML += firstName + ' ' + lastName + ' has submitted the form. <br />';
+            }
 
-    document.getElementById('output').innerHTML += firstName + ' ' + lastName + ' has submitted the form. <br />';
-}
+            function login(){
+                let username = document.getElementById('username').value;
+                let password = document.forms[1].elements['password'].value;
 
-function login(){
-    let username = document.getElementById('username').value;
-    let password = document.forms[1].elements['password'].value;
+                alert('Access denied for user ' + username + ' and password ' + password)
+            }
 
-    alert('Access denied for user ' + username + ' and password ' + password)
-}
+            function register() {
+                var success = true;
+                
+                var username = document.forms[2].elements['username'].value;
+                if (username == '') {
+                    success = false;
+                    alert('User name is required');
+                }
 
-function register() {
-    var success = true;
-    
-    var username = document.forms[2].elements['username'].value;
-    if (username == '') {
-        success = false;
-        alert('User name is required');
-    }
+                var terms = document.forms[2].elements['agreement'].checked;
+                if (!terms) {
+                    success = false;
+                    alert('You must agree to the terms of service')
+                }
 
-    var terms = document.forms[2].elements['agreement'].checked;
-    if (!terms) {
-        success = false;
-        alert('You must agree to the terms of service')
-    }
-
-    if (success) {
-        alert('User account created successfully!');
-    }
-
-}
-
+                if (success) {
+                    alert('User account created successfully!');
+                }
+            }
         </script>
     </head>
 
