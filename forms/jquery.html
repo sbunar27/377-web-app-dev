@@ -35,8 +35,14 @@
     <body>
         <h1>jQuery Examples</h1>
 
+        <p>Let's  use jQuery instead of document.getElementbyId()</p>
+
         <input type="button" value="Click to Display Current Date and Time" onclick="updateDateTime()" />
         <div id="dateTime"></div><br />
+
+        <hr>
+
+        <p>Try out these toggles!</p>
 
         <input type="text" class="test-input" placeholder="Field 1" /><br />
         <input type="text" class="test-input" placeholder="Field 2" /><br />
@@ -44,10 +50,20 @@
 
         <input type="button" value="Click to Toggle Input Fields" onclick="toggleInputs()" />
 
+        <hr>
+
         <h2>Temperature Converter</h2>
+
+        <p>Use these input fields to convert Fahrenheit to Celsius or vice versa.</p>
 
         <input type="text" id="celsius" placeholder="Enter a Value" onchange="calculateFahrenheit(this.value)" /> &#176;C<br />
         <input type="text" id="fahrenheit" placeholder="Enter a Value" onchange="calculateCelsius(this.value)" /> &#176;F<br />
 
+        <hr>
+
+        <p>Use these buttons to hide or show paragraphs</p>
+        <input type="button" id="hide-paragraphs" value="Hide Paragraphs" onclick="$('p').hide()"/>
+        <!-- can also do button type="button" -->
+        <input type="button" id="show-paragraphs" value="Show Paragraphs" onclick="$('p').show()"/>
     </body>
 </html>
