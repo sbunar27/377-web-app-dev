@@ -11,6 +11,8 @@
                 let perimeter = ((2*width) + (2*height))
                 $('.area-output').html(area)
                 $('.perimeter-output').html(perimeter)
+                console.log('Perimeter is' + str(perimeter))
+                console.log('Area is ' + str(area))
             }
         </script>
     </head>
@@ -20,7 +22,7 @@
         Height: <input type="text" id="height" placeholder="Height"><br />
         Width: <input type="text" id="width" placeholder="Width"><br />
         <input type="button" id="get-values" value="Get Statistics" onclick="calculateFormulas($('#width').val(), $('#height').val())"><br />
-        Area: <div class="area-output"></div> <br />
-        Perimeter: <div class="perimeter-output"></div> <br />
+        Area: <div class="area-output"></div><br />
+        Perimeter: <div class="perimeter-output"></div><br />
     </body>
 </html>
