@@ -6,7 +6,11 @@ function calculatePercentComposition() {
     
     let percentComposition = ((elementMass*elementAmount)/compoundMass)*100
     let roundedComposition = Math.round(percentComposition*100) / 100
-    $('#percent-composition').html(roundedComposition + '% ' + elementName)
+    if (percentComposition > 0 && percentComposition <= 100) {
+        $('#percent-composition').html(roundedComposition + '% ' + elementName)
+    } else {
+        $('#percent-composition').html('Error. Please check your input values.')
+    }
 }
 
 function calculateAbsError() {
