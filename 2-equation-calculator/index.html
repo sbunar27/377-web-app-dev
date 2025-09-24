@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chemistry Formulas</title>
+        
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script src="scripts.js"></script>
+    </head>
+    <body>
+        <h1>Chemistry Formulas</h1>
+
+        <h2>Percent Composition of an Element</h2>
+        <p>Please input only integers. The result will be rounded to 2 decimal places.</p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Element Symbol:</td>
+                    <td><input type="text" id="element-name" placeholder="Element Symbol" /></td>
+                </tr>
+                <tr>
+                    <td>Amount of Element in Compound:</td>
+                    <td><input type="text" id="element-amount" placeholder="Amount of Element" /></td>
+                </tr>
+                <tr>
+                    <td>Molar Mass (1 mol) of Element:</td>
+                    <td><input type="text" id="element-mass" placeholder="Molar Mass of Element" /></td>
+                </tr>
+                <tr>
+                    <td>Molar Mass of Compound:</td>
+                    <td><input type="text" id="compound-mass" placeholder="Molar Mass of Compound" /></td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="button" value="Calculate % Composition" onclick="calculatePercentComposition()" /><br />
+        <div id="percent-composition" class="output"></div>
+
+        <h1>Error Calculations</h1>
+        <h2>Absolute Error</h2>
+
+
+        <h2>Percent Error</h2>
+    </body>
+</html>

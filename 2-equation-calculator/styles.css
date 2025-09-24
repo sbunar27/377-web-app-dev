@@ -1,0 +1,33 @@
+.inline {
+    display: inline;
+}
+
+.output {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:rgb(64, 76, 155);
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    font-weight: bold;
+}
+
+h1, h2, p, input, td {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:rgb(29, 37, 88);
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body {
+    background-color: rgb(223, 225, 244);
+}
+
+table {
+    margin: auto;
+    border: 0;
+}
+
+input {
+    display: block;
+}
