@@ -13,7 +13,7 @@
         <h1>Chemistry Formulas</h1>
 
         <h2>Percent Composition of an Element</h2>
-        <p>Please input only integers. The result will be rounded to 2 decimal places.</p>
+        <p>Please input only integers (other than the Element Symbol value). The result will be rounded to 2 decimal places.</p>
         <table>
             <tbody>
                 <tr>
@@ -39,8 +39,34 @@
 
         <h1>Error Calculations</h1>
         <h2>Absolute Error</h2>
-
+        <p>All solutions will round to 3 decimal places.</p>
+        <table>
+            <tr>
+                <td>Measured Value:</td>
+                <td><input type="text" id="measured-value" placeholder="Measured Value" /></td>
+            </tr>
+            <tr>
+                <td>Theoretical Value:</td>
+                <td><input type="text" id="theoretical-value" placeholder="Theoretical Value" /></td>
+            </tr>
+        </table>
+        <input type="button" value="Calculate Absolute Error" onclick="calculateAbsError()" /><br />
+        <div id="absolute-error" class="output"></div>
 
         <h2>Percent Error</h2>
+        <p>Solutions will round to 2 decimal places.</p>
+        <table>
+            <tr>
+                <td>Absolute Error:</td>
+                <td><input type="text" id="absolute-error" placeholder="Absolute Error" /></td>
+            </tr>
+            <tr>
+                <td>True Value:</td>
+                <td><input type="text" id="true-value" placeholder="True Value" /></td>
+            </tr>
+        </table>
+        <input type="button" value="Calculate Percent Error" onclick="calculatePercentError()" /><br />
+        <div id="percent-error" class="output"></div>
+
     </body>
 </html>

@@ -10,5 +10,15 @@ function calculatePercentComposition() {
 }
 
 function calculateAbsError() {
-    // do later
+    let measured = $('#measured-value').val()
+    let theoretical = $('#theoretical-value').val()
+    let errorNum = measured - theoretical
+
+    let absoluteError = Math.abs(errorNum)
+    let roundedAbsError = Math.round(absoluteError*1000) /1000
+    $('#absolute-error').html(roundedAbsError)
+}
+
+function calculatePercentError() {
+    
 }
