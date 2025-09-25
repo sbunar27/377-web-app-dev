@@ -1,3 +1,14 @@
+function calculateAbsError() {
+    let measured = $('#measured-value').val()
+    let theoretical = $('#theoretical-value').val()
+    let errorNum = measured - theoretical
+
+    let absoluteError = Math.abs(errorNum)
+    let roundedAbsError = Math.round(absoluteError*1000) /1000
+
+    $('#absolute-error').html(roundedAbsError)
+}
+
 function calculatePercentComposition() {
     let elementMass = $('#element-mass').val()
     let compoundMass = $('#compound-mass').val()
@@ -12,17 +23,6 @@ function calculatePercentComposition() {
     } else {
         $('#percent-composition').html('Error. Please check your input values and try again.')
     }
-}
-
-function calculateAbsError() {
-    let measured = $('#measured-value').val()
-    let theoretical = $('#theoretical-value').val()
-    let errorNum = measured - theoretical
-
-    let absoluteError = Math.abs(errorNum)
-    let roundedAbsError = Math.round(absoluteError*1000) /1000
-
-    $('#absolute-error').html(roundedAbsError)
 }
 
 function calculatePercentError() {
@@ -46,16 +46,39 @@ function calculateTripleM() {
     let mol = $('#mol').val()
     let units = $('#units').val()
 
-    for (let i = 0; i < 3; i++) {
+    // mass = parseInt(mass)
+    // molarMass = parseInt(molarMass)
+    // mol = parseInt(mol)
+    // units = parseInt(units)
+
+    for (let i = 0; i < 4; i++) {
         if (mass == '') {
-            $('#mass').val(molarMass*mol + ' g')
-        } else if (mol == '') {
+            $('#mass').val(molarMass*mol)
+        }
+        if (mol == '') {
             let moles = Math.round((mass/molarMass)*1000)/1000
             $('#mol').val(moles)
-        // THIS PART IS BROKEN
-        } else if (units == '') {
-            let unitNum = Math.round((molarMass*moles)*1000)/1000
+        }
+        // still doesnt work :(
+        if (units == '') {
+            let unitNum = (mol*(6.02(10**23)))
             $('#units').val(unitNum)
         }
     }
 }
+
+// function convertValues() {
+//     // CONVERSION FACTORS AND PREFIXES (RESPECTFUL)
+//     let prefixes = ['giga', 'mega', 'kilo', 'centi', 'milli', 'micro', 'nano', 'pico']
+//     let conversions = [10**9, 10**6, 10**3, 10**(-2), 10**(-3), 10**(-6), 10**(-9), 10**(-12)]
+    
+//     let num = $('#num').val()
+//     let prefix = $('#prefix').val().toLowerCase()
+//     for (let i = 0; i < prefixes.length; i++) {
+//             if (prefix == prefixes[i]) {
+//                 let number = parseInt(num)*parseInt(conversions[i])
+//                 break
+//             }
+//     }
+//     $('#converted-values').html(number + ' ' + prefix + 'grams')
+// }
