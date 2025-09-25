@@ -37,9 +37,28 @@
         <input type="button" value="Calculate % Composition" onclick="calculatePercentComposition()" /><br />
         <div id="percent-composition" class="output"></div>
 
-        <h1>Average Atomic Mass</h1>
-
-        <h1>Mass, Moles, and Counts</h1>
+        <h2>Mass, Moles, and Molecules/Formula Units</h2>
+        <p>This function will convert one value to two others. Input 2 integer values: the Molar Mass and one other value.</p>
+        <p><strong>Input Molar Mass Last.</strong></p>
+        <table>
+            <tr>
+                <td>Mass:</td>
+                <td><input type="text" id="mass" placeholder="Mass" /></td>
+            </tr>
+            <tr>
+                <td>Molar Mass of Element:</td>
+                <td><input type="text" id="mol-mass" placeholder="Molar Mass" onchange="calculateTripleM()" /></td>
+            </tr>
+            <tr>
+                <td>Moles:</td>
+                <td><input type="text" id="mol" placeholder="Moles" /></td>
+            </tr>
+            <tr>
+                <!-- THIS PART DOESNT WORK -->
+                <td>Molecules/Formula Units:</td>
+                <td><input type="text" id="units" placeholder="Count" /></td>
+            </tr>
+        </table>
 
         <h1>Error Calculations</h1>
         <h2>Absolute Error</h2>
@@ -62,7 +81,7 @@
         <table>
             <tr>
                 <td>Absolute Error:</td>
-                <td><input type="text" id="absolute-error" placeholder="Absolute Error" /></td>
+                <td><input type="text" id="abs-error" placeholder="Absolute Error" /></td>
             </tr>
             <tr>
                 <td>True Value:</td>
