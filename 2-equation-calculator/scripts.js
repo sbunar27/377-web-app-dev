@@ -54,7 +54,6 @@ function calculateTripleM() {
             let moles = Math.round((mass/molarMass)*1000)/1000
             $('#mol').val(moles)
         }
-        // still doesnt work :(
         if (units == '') {
             let unitNum = (mol*(6.02*(10**23)))
             $('#units').val(unitNum)
