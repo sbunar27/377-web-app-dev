@@ -6,134 +6,102 @@
         <title>Chemistry Formulas</title>
         
         <link rel="stylesheet" href="styles.css">
+        <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/10555/10555261.png" />
+        <!-- Image credits: Flaticon ^^^ -->
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script src="scripts.js"></script>
     </head>
     <body>
-        <h1>Chemistry Formulas</h1>
+        <div class="white-bg">
+            <h1>Chemistry Formulas</h1>
 
-        <h2>Percent Composition of an Element</h2>
-        <p>Please input only integers (other than the Element Symbol value). The result will be rounded to 2 decimal places.</p>
-        <table>
-            <tbody>
+            <h2>Percent Composition of an Element by Mass</h2>
+            <p>Please input only integers (other than the Element Symbol value). The result will be rounded to 2 decimal places.</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Element Symbol:</td>
+                        <td><input type="text" id="element-name" placeholder="Element Symbol" /></td>
+                    </tr>
+                    <tr>
+                        <td>Amount of Element in Compound:</td>
+                        <td><input type="text" id="element-amount" placeholder="Amount of Element" /></td>
+                    </tr>
+                    <tr>
+                        <td>Molar Mass (1 mol) of Element:</td>
+                        <td><input type="text" id="element-mass" placeholder="Molar Mass of Element" /></td>
+                    </tr>
+                    <tr>
+                        <td>Molar Mass of Compound:</td>
+                        <td><input type="text" id="compound-mass" placeholder="Molar Mass of Compound" /></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="button" value="Calculate % Composition" onclick="calculatePercentComposition()" /><br />
+            <div id="percent-composition" class="output"></div>
+            <!-- VIDEO ON SUBJECT -->
+            <iframe width="300" height="169" src="https://www.youtube.com/embed/bGmbyztdCHE?si=3KSb0e3QgvWUnYkF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+            <h2>Mass, Moles, and Molecules/Formula Units</h2>
+            <p>This function will convert one value to two others. Input 2 integer values: the Molar Mass and one other chosen value.</p>
+            <p><strong>You must also clear all boxes or refresh before inputting new values.</strong></p>
+            <table>
                 <tr>
-                    <td>Element Symbol:</td>
-                    <td><input type="text" id="element-name" placeholder="Element Symbol" /></td>
+                    <td>Mass (g):</td>
+                    <td><input type="text" id="mass" placeholder="Mass" /></td>
                 </tr>
                 <tr>
-                    <td>Amount of Element in Compound:</td>
-                    <td><input type="text" id="element-amount" placeholder="Amount of Element" /></td>
+                    <td>Molar Mass of Element:</td>
+                    <td><input type="text" id="mol-mass" placeholder="Molar Mass" /></td>
                 </tr>
                 <tr>
-                    <td>Molar Mass (1 mol) of Element:</td>
-                    <td><input type="text" id="element-mass" placeholder="Molar Mass of Element" /></td>
+                    <td>Moles:</td>
+                    <td><input type="text" id="mol" placeholder="Moles" /></td>
                 </tr>
                 <tr>
-                    <td>Molar Mass of Compound:</td>
-                    <td><input type="text" id="compound-mass" placeholder="Molar Mass of Compound" /></td>
+                    <td>Molecules/Formula Units:</td>
+                    <td><input type="text" id="units" placeholder="Count" /></td>
                 </tr>
-            </tbody>
-        </table>
-        <input type="button" value="Calculate % Composition" onclick="calculatePercentComposition()" /><br />
-        <div id="percent-composition" class="output"></div>
+            </table>
+            <input type="button" value="Calculate Other Values" onclick="calculateTripleM()" /><br />
+            <div id="triple-m" class="output"></div>
+            <!-- VIDEO ON CONTENT -->
+            <iframe width="300" height="169" src="https://www.youtube.com/embed/HMAOrGpkTsQ?si=G4msHOlrcyqa73wW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-        <h2>Mass, Moles, and Molecules/Formula Units</h2>
-        <p>This function will convert one value to two others. Input 2 integer values: the Molar Mass and one other value.</p>
-        <p><strong>Input Molar Mass Last.</strong></p>
-        <table>
-            <tr>
-                <td>Mass (g):</td>
-                <td><input type="text" id="mass" placeholder="Mass" /></td>
-            </tr>
-            <tr>
-                <td>Molar Mass of Element:</td>
-                <td><input type="text" id="mol-mass" placeholder="Molar Mass" onchange="calculateTripleM()" /></td>
-            </tr>
-            <tr>
-                <td>Moles:</td>
-                <td><input type="text" id="mol" placeholder="Moles" /></td>
-            </tr>
-            <tr>
-                <!-- THIS PART DOESNT WORK -->
-                <td>Molecules/Formula Units:</td>
-                <td><input type="text" id="units" placeholder="Count" /></td>
-            </tr>
-        </table>
+            <h1>Error Calculations</h1>
+            <h2>Absolute Error</h2>
+            <p>All solutions will round to 3 decimal places.</p>
+            <table>
+                <tr>
+                    <td>Measured Value:</td>
+                    <td><input type="text" id="measured-value" placeholder="Measured Value" /></td>
+                </tr>
+                <tr>
+                    <td>Theoretical Value:</td>
+                    <td><input type="text" id="theoretical-value" placeholder="Theoretical Value" /></td>
+                </tr>
+            </table>
+            <input type="button" value="Calculate Absolute Error" onclick="calculateAbsError()" /><br />
+            <div id="absolute-error" class="output"></div>
+            <!-- VIDEO AT END -->
 
-        <!-- <h2>Conversion Factors</h2>
-        <p>Input one value and get the rest.</p>
-        <p><strong>Prefixes included:</strong> Giga, Mega, Kilo, centi, milli, micro, nano, pico</p>
-        <table>
-            <tr>
-                <td>Original Value:</td>
-                <td><input type="text" id="num" placeholder="Original Value" /></td>
-            </tr>
-            <tr>
-                <td>Value in Giga:</td>
-                <td><input type="text" id="giga" placeholder="Giga Value" onchange="convertValuesGiga()" /></td>
-            </tr>
-            <tr>
-                <td>Value in Mega:</td>
-                <td><input type="text" id="mega" placeholder="Mega Value" onchange="convertValuesMega()" /></td>
-            </tr>
-            <tr>
-                <td>Value in Kilo:</td>
-                <td><input type="text" id="kilo" placeholder="Kilo Value" onchange="convertValuesKilo()" /></td>
-            </tr>
-            <tr>
-                <td>Value in Centi:</td>
-                <td><input type="text" id="centi" placeholder="centi Value" onchange="convertValuesCenti()"/></td>
-            </tr>
-            <tr>
-                <td>Value in Milli:</td>
-                <td><input type="text" id="milli" placeholder="milli Value" onchange="convertValuesMilli()" /></td>
-            </tr>
-            <tr>
-                <td>Value in Micro:</td>
-                <td><input type="text" id="micro" placeholder="micro Value" onchange="convertValuesMicro()" /></td>
-            </tr>
-            <tr>
-                <td>Value in Nano:</td>
-                <td><input type="text" id="nano" placeholder="nano Value" onchange="convertValuesNano()" /></td>
-            </tr>
-            <tr>
-                <td>Value in Pico:</td>
-                <td><input type="text" id="pico" placeholder="pico Value" onchange="convertValuesPico()" /></td>
-            </tr>
-        </table>
-        <input type="button" value="Convert" onclick="convertValues()" />
-        <div id="converted-values" class="output"></div> -->
+            <h2>Percent Error</h2>
+            <p>Solutions will round to 2 decimal places.</p>
+            <table>
+                <tr>
+                    <td>Absolute Error:</td>
+                    <td><input type="text" id="abs-error" placeholder="Absolute Error" /></td>
+                </tr>
+                <tr>
+                    <td>True Value:</td>
+                    <td><input type="text" id="true-value" placeholder="True Value" /></td>
+                </tr>
+            </table>
+            <input type="button" value="Calculate Percent Error" onclick="calculatePercentError()" /><br />
+            <div id="percent-error" class="output"></div>
+            <!-- VIDEO ON CONTENT -->
+            <iframe width="300" height="169" src="https://www.youtube.com/embed/JbEo46uV6d4?si=S0CD0qp5a5hb01fO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-        <h1>Error Calculations</h1>
-        <h2>Absolute Error</h2>
-        <p>All solutions will round to 3 decimal places.</p>
-        <table>
-            <tr>
-                <td>Measured Value:</td>
-                <td><input type="text" id="measured-value" placeholder="Measured Value" /></td>
-            </tr>
-            <tr>
-                <td>Theoretical Value:</td>
-                <td><input type="text" id="theoretical-value" placeholder="Theoretical Value" /></td>
-            </tr>
-        </table>
-        <input type="button" value="Calculate Absolute Error" onclick="calculateAbsError()" /><br />
-        <div id="absolute-error" class="output"></div>
-
-        <h2>Percent Error</h2>
-        <p>Solutions will round to 2 decimal places.</p>
-        <table>
-            <tr>
-                <td>Absolute Error:</td>
-                <td><input type="text" id="abs-error" placeholder="Absolute Error" /></td>
-            </tr>
-            <tr>
-                <td>True Value:</td>
-                <td><input type="text" id="true-value" placeholder="True Value" /></td>
-            </tr>
-        </table>
-        <input type="button" value="Calculate Percent Error" onclick="calculatePercentError()" /><br />
-        <div id="percent-error" class="output"></div>
-
+        </div>
     </body>
 </html>

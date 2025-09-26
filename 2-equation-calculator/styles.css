@@ -9,6 +9,18 @@
     margin-right: auto;
     margin-left: auto;
     font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.white-bg {
+    background-color: rgb(244, 245, 252);
+    padding: 10px;
+    margin: 50px;
+    width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 20px;
+    box-shadow: rgb(64, 76, 155) 2px 2px 20px;
 }
 
 h1, h2, p, input, td {
@@ -17,6 +29,10 @@ h1, h2, p, input, td {
     text-align: center;
     margin-right: auto;
     margin-left: auto;
+}
+
+h1, h2 {
+    text-decoration: underline;
 }
 
 body {
@@ -30,4 +46,28 @@ table {
 
 input {
     display: block;
+}
+
+input[type="button"] {
+    margin-top: 10px;
+    background-color: rgb(64, 76, 155);
+    color: rgb(246, 247, 253);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+iframe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    border-color:rgb(29, 37, 88);
+    border-width: 4px;
+    border-style: solid;
 }

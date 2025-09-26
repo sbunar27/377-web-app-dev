@@ -46,11 +46,6 @@ function calculateTripleM() {
     let mol = $('#mol').val()
     let units = $('#units').val()
 
-    // mass = parseInt(mass)
-    // molarMass = parseInt(molarMass)
-    // mol = parseInt(mol)
-    // units = parseInt(units)
-
     for (let i = 0; i < 4; i++) {
         if (mass == '') {
             $('#mass').val(molarMass*mol)
@@ -61,24 +56,8 @@ function calculateTripleM() {
         }
         // still doesnt work :(
         if (units == '') {
-            let unitNum = (mol*(6.02(10**23)))
+            let unitNum = (mol*(6.02*(10**23)))
             $('#units').val(unitNum)
         }
     }
 }
-
-// function convertValues() {
-//     // CONVERSION FACTORS AND PREFIXES (RESPECTFUL)
-//     let prefixes = ['giga', 'mega', 'kilo', 'centi', 'milli', 'micro', 'nano', 'pico']
-//     let conversions = [10**9, 10**6, 10**3, 10**(-2), 10**(-3), 10**(-6), 10**(-9), 10**(-12)]
-    
-//     let num = $('#num').val()
-//     let prefix = $('#prefix').val().toLowerCase()
-//     for (let i = 0; i < prefixes.length; i++) {
-//             if (prefix == prefixes[i]) {
-//                 let number = parseInt(num)*parseInt(conversions[i])
-//                 break
-//             }
-//     }
-//     $('#converted-values').html(number + ' ' + prefix + 'grams')
-// }
