@@ -23,7 +23,15 @@
     box-shadow: rgb(64, 76, 155) 2px 2px 20px;
 }
 
-h1, h2, p, input, td {
+body {
+    background-color: rgb(223, 225, 244);
+}
+
+h1, h2 {
+    text-decoration: underline;
+}
+
+h1, h2, p, input, span, td {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color:rgb(29, 37, 88);
     text-align: center;
@@ -31,17 +39,16 @@ h1, h2, p, input, td {
     margin-left: auto;
 }
 
-h1, h2 {
-    text-decoration: underline;
-}
-
-body {
-    background-color: rgb(223, 225, 244);
-}
-
-table {
-    margin: auto;
-    border: 0;
+iframe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    border-color:rgb(29, 37, 88);
+    border-width: 4px;
+    border-style: solid;
 }
 
 input {
@@ -60,14 +67,7 @@ input[type="button"] {
     cursor: pointer;
 }
 
-iframe {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    float: none;
-    margin-bottom: 10px;
-    border-radius: 12px;
-    border-color:rgb(29, 37, 88);
-    border-width: 4px;
-    border-style: solid;
+table {
+    margin: auto;
+    border: 0;
 }
