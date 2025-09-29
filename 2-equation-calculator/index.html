@@ -15,6 +15,7 @@
         <div class="white-bg">
             <h1>Chemistry Formulas</h1>
 
+            
             <h2>Percent Composition of an Element by Mass</h2>
             <p>Please input only integers (other than the Element Symbol value). The result will be rounded to 2 decimal places.</p>
             <table>
@@ -42,6 +43,7 @@
             <!-- VIDEO ON SUBJECT -->
             <iframe width="300" height="169" src="https://www.youtube.com/embed/bGmbyztdCHE?si=3KSb0e3QgvWUnYkF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+
             <h2>Mass, Moles, and Molecules/Formula Units</h2>
             <p>This function will convert one value to two others. Input 2 integer values: the Molar Mass and one other chosen value.</p>
             <p><strong>You must also clear all boxes or refresh before inputting new values.</strong></p>
@@ -68,7 +70,25 @@
             <!-- VIDEO ON CONTENT -->
             <iframe width="300" height="169" src="https://www.youtube.com/embed/HMAOrGpkTsQ?si=G4msHOlrcyqa73wW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+
+            <h2>Energy of a Photon</h2>
+            <p>You must input either wavelength or frequency. Otherwise, the calculations will not work. You must only input <strong>one</strong> value.</p>
+            <table>
+                <tr>
+                    <td>Frequency:</td>
+                    <td><input type="text" id="frequency" placeholder="Frequency" /></td>
+                </tr>
+                <tr>
+                    <td>Wavelength:</td>
+                    <td><input type="text" id="wavelength" placeholder="Wavelength" /></td>
+                </tr>
+            </table>
+            <input type="button" value="Calculate Energy" onclick="calculateEnergyOfPhoton()" />
+            <div id="energy" class="output"></div>
+
+
             <h1>Error Calculations</h1>
+
             <h2>Absolute Error</h2>
             <p>All solutions will round to 3 decimal places.</p>
             <table>
@@ -84,6 +104,7 @@
             <input type="button" value="Calculate Absolute Error" onclick="calculateAbsError()" /><br />
             <div id="absolute-error" class="output"></div>
             <!-- VIDEO AT END -->
+
 
             <h2>Percent Error</h2>
             <p>Solutions will round to 2 decimal places.</p>

@@ -9,6 +9,25 @@ function calculateAbsError() {
     $('#absolute-error').html(roundedAbsError);
 }
 
+function calculateEnergyOfPhoton() {
+    let frequency = $('#frequency').val();
+    let wavelength = $('#wavelength').val();
+    let h = 6.626 * (10**-34);
+    let c = 3 * (10**8);
+    
+    if (frequency == '' && wavelength != '') {
+        let energy = (h*c)/wavelength;
+        let roundedEnergy = energy.toExponential(3);
+        $('#energy').html(roundedEnergy + ' J');
+    } else if (wavelength == '' && frequency != '') {
+        let energy = h*frequency;
+        let roundedEnergy = energy.toExponential(3);
+        $('#energy').html(roundedEnergy + ' J');
+    } else {
+        $('#energy').html('Error. Please input either frequency or wavelength.');
+    }
+}
+
 function calculatePercentComposition() {
     let elementMass = $('#element-mass').val();
     let compoundMass = $('#compound-mass').val();
