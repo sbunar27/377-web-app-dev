@@ -31,7 +31,7 @@ h1, h2 {
     text-decoration: underline;
 }
 
-h1, h2, p, input, span, td {
+h1, h2, p, input, td {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color:rgb(29, 37, 88);
     text-align: center;
