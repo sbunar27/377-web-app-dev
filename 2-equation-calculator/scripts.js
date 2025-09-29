@@ -4,7 +4,7 @@ function calculateAbsError() {
     let errorNum = measured - theoretical;
 
     let absoluteError = Math.abs(errorNum);
-    let roundedAbsError = Math.round(absoluteError, 3);
+    let roundedAbsError = absoluteError.toFixed(3);
 
     $('#absolute-error').html(roundedAbsError);
 }
@@ -35,7 +35,7 @@ function calculatePercentComposition() {
     let elementName = $('#element-name').val();
     
     let percentComposition = ((elementMass*elementAmount)/compoundMass)*100;
-    let roundedComposition = Math.round(percentComposition, 2);
+    let roundedComposition = percentComposition.toFixed(2);
 
     if (percentComposition > 0 && percentComposition <= 100) {
         $('#percent-composition').html(roundedComposition + '% ' + elementName);
@@ -50,7 +50,7 @@ function calculatePercentError() {
 
     let percentErr = (absError/trueVal)*100;
     let percentError = Math.abs(percentErr);
-    let roundedPercentErr = Math.round(percentError, 2);
+    let roundedPercentErr = percentError.toFixed(2);
 
     if (percentError > 0) {
         $('#percent-error').html(roundedPercentErr + '% Error');
@@ -70,8 +70,9 @@ function calculateTripleM() {
             $('#mass').val(molarMass*mol);
         }
         if (mol == '') {
-            let moles = Math.round((mass/molarMass), 3);
-            $('#mol').val(moles);
+            let moles = (mass/molarMass);
+            let roundedMoles = moles.toFixed(2);
+            $('#mol').val(roundedMoles);
         }
         if (units == '') {
             let unitNum = (mol*(6.02*(10**23)));
@@ -79,13 +80,4 @@ function calculateTripleM() {
             $('#units').val(resultNum);
         }
     }
-}
-
-function stretchTextBox() {
-    let input = $('input');
-    let span = $('span');
-    input.addEventListener('input', function (event) {
-        span.innerHTML = this.value.replace(/\s/g, '&nbsp;');
-        this.style.width = span.offsetWidth + 'px';
-    });
 }
