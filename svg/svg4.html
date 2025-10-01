@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SVG Practice 4</title>
+    </head>
+    <body>
+        
+        <svg width="500" height="500">
+
+            <!--smiley face-->
+            <g id="face">
+                <circle cx="100"
+                        cy="100"
+                        r="50"
+                        stroke="black"
+                        stroke-width="2"
+                        fill="rebeccapurple" />
+            
+                <!--eyes-->
+                <circle cx="85" cy="95" r="7"></circle>
+                <circle cx="115" cy="95" r="7"></circle>
+
+                <!--mouth-->
+                <circle cx="100" cy="120" r="5"></circle>
+        </g>
+
+        <use href="#face" transform="translate(50,50)" fill="red"></use>
+
+        <use href="#face" transform="translate(0,200) scale(0.75)" fill="magenta"></use>
+        <use href="#face" transform="translate(0,250) scale(0.5)" fill="white"></use>
+        <use href="#face" transform="translate(0,300) scale(0.25)" fill="cyan"></use>
+
+        </svg>
+
+    </body>
+</html>

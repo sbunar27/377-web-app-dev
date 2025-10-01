@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SVG Lesson 3</title>
+    </head>
+    <body>
+        <svg width="500" height="500" style="background-color: white; border: solid 1px black;">
+
+            <rect width="50" height="50" />
+
+            <!--translation examples-->
+            <rect width="50" height="50" transform="translate(60)" fill="red" />
+            <rect width="50" height="50" transform="translate(0, 60)" fill="green" />
+            <rect width="50" height="50" transform="translate(60, 60)" fill="blue" />
+
+            <!--scale examples-->
+            <rect width="50" height="50" transform="translate(0 120) scale(0.5 3)" fill="orange" />
+            <rect width="50" height="50" transform="translate(120 0) scale(3 0.5)" fill="rebeccapurple" />
+
+            <!--rotation examples-->
+            <rect width="50" height="50" x="0" y="300" transform="rotate(-45)" fill="pink" />
+            <rect width="50" height="50" x="0" y="300" transform="rotate(-45 35,325)" fill="magenta" />
+
+            <!--skew examples-->
+            <rect width="50" height="50" x="0" y="0" fill="black" />
+            <rect  x="0" y="0" width="50" height="50" fill="gold" transform="skewX(30)" />
+            <rect  x="0" y="0" width="50" height="50" fill="yellow" transform="skewY(30)" />
+
+        </svg>
+    </body>
+</html>
