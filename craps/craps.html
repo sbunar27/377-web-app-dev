@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CRAPS Game</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script src="scripts.js"></script>
+    </head>
+
+    <body>
+        
+        <h1>Craps</h1>
+
+        <svg width="600" height="300" style="background-color: green;">
+
+            <rect id="d1" class="die" width="100" height="100" x="100" y="100" rx="20" ry="20" />
+            <circle id="d1p1" class="pip" cx="125" cy="125" r="7" />
+            <circle id="d1p2" class="pip" cx="125" cy="150" r="7" />
+            <circle id="d1p3" class="pip" cx="125" cy="175" r="7" />
+            <circle id="d1p4" class="pip" cx="150" cy="150" r="7" />
+            <circle id="d1p5" class="pip" cx="175" cy="125" r="7" />
+            <circle id="d1p6" class="pip" cx="175" cy="150" r="7" />
+            <circle id="d1p7" class="pip" cx="175" cy="175" r="7" />
+
+        </svg>
+        <br />
+        <button onlcick="rollDie()">Roll the Die!</button>
+
+    </body>
+</html>

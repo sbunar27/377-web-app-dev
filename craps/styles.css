@@ -1,0 +1,36 @@
+.die {
+    fill: white;
+    border: 3px solid black;
+}
+
+.pip {
+    fill: black;
+    visibility: visible;
+}
+
+button {
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    background-color: green;
+    color: white;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+h1, svg {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: darkgreen;
+}
