@@ -5,6 +5,9 @@ largest_nums = []
 file = open('day1.txt', 'r')
 lines = file.readlines()
 
+# PT TWO
+totals = []
+
 # PART ONE
 for line in lines:
     line = line.strip()
@@ -16,14 +19,54 @@ for line in lines:
         # It's blank, update the max (if necessary) and reset the current (always)
         if current > max:
             max = current
-            # PART TWO
-            largest_nums.append(max)
+        totals.append(current)
         current = 0
+totals.append(current)
     
 
 print('Part one: ' + str(max))
 
-# DOES NOT WORK
-maxes = sorted(largest_nums)
-sum_maxes = maxes[-1] + maxes[-2] + maxes[-3]
+totals.sort(reverse=True)
+print(str(totals[0]) + ' ' + str(totals[1]) + ' ' + str(totals[2]))
+sum_maxes = sum(totals[0:3])
 print('Part two: ' + str(sum_maxes))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# THE LONG WAY...
+
+# for line in lines:
+#     line=line.strip()
+#     if line == '':
+#         if current > max:
+#             temp = max2
+#             max2 =max
+#             max = current
+#             max3 = temp
+#         else:
+#             if current > max2:
+#                 max3=max2
+#                 max2=current
+#             else:
+#                 if current > max3:
+#                     max3 = current
+
+#             current = 0
+#     else:
+#         current += int(line)
+
+# print(str(max1) + ' ' + str(max2) + ' ' + str(max3))
