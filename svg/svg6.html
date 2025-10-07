@@ -1,0 +1,41 @@
+<!--PATHS-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Paths</title>
+    </head>
+    <body>
+
+        <svg width="1000" height="700" style="border: 1px black solid;">
+            <g id="svg-content">
+                <line x1="100" y1="100" x2="300" y2="100" stroke="black" stroke-width="2"></line>
+
+                <polyline points="100, 200, 300, 200" stroke="black" stroke-width="2"></polyline>
+
+                <rect x="100" y="300" width="200" height="50" stroke="black" fill="rebeccapurple" opacity="0.67"></rect>
+
+                <ellipse cx="500" cy="100" rx="125" ry="90" fill="rebeccapurple"></ellipse>
+            </g>
+
+            <!--M - Move, L - Line, V - Vertical move (absolute), lowercase - relatively speaking, move 100px, Z - close--->
+
+            <path d="M 100,300 L 100,400 L 200,400 L 200,300 Z" stroke="black" stroke-width="6" fill="none" />
+
+            <path d="M 100,300 v100 h100 v-100 Z" stroke="white" stroke-width="2" fill="none" />
+
+            <!--Quadratic - Q-->
+            <path d="M 500,300 Q 600,300 600,400" stroke="rebeccapurple" stroke-width="6" fill="none"></path>
+
+            <!--Cubic - C-->
+            <path d="M 700,500 C 650,400 900,400 850,500" stroke="rebeccapurple" stroke-width="6" fill="none"></path>
+
+            <!--Arc - A-->
+            <!--5 attributes: curve in x direction, curve in y direction, s1, s2, s3 (all either 0s or 1s), ending location-->
+            <path d="M 450,450 A 50 50 0 0 1 550,450" stroke="rebeccapurple" stroke-width="5" fill="none" />
+        </svg>
+        
+    </body>
+</html>
