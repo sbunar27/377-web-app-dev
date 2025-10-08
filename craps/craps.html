@@ -13,7 +13,9 @@
         
         <h1>&spades; &hearts; Craps &clubs; &diams;</h1>
 
-        <svg width="600" height="300" style="background-color: green; border: 6px solid black; border-radius: 20px;">
+        <svg width="600" height="300">
+
+            <rect id="background" x="0" y="0" width="600" height="300" rx="50" ry="50" />
 
             <!--dice one-->
             <g transform="translate(100, 100)">
@@ -21,7 +23,7 @@
                 <circle id="d1p1" class="pip" cx="25" cy="25" r="7" />
                 <circle id="d1p2" class="pip" cx="25" cy="50" r="7" />
                 <circle id="d1p3" class="pip" cx="25" cy="75" r="7" />
-                <circle id="d1p4" class="pip" cx="50" cy="50" r="7" />
+                <circle id="d1p4" class="pip" cx="50" cy="50" r="7" style="visibility: visible;" />
                 <circle id="d1p5" class="pip" cx="75" cy="25" r="7" />
                 <circle id="d1p6" class="pip" cx="75" cy="50" r="7" />
                 <circle id="d1p7" class="pip" cx="75" cy="75" r="7" />
@@ -33,15 +35,24 @@
                 <circle id="d2p1" class="pip" cx="25" cy="25" r="7" />
                 <circle id="d2p2" class="pip" cx="25" cy="50" r="7" />
                 <circle id="d2p3" class="pip" cx="25" cy="75" r="7" />
-                <circle id="d2p4" class="pip" cx="50" cy="50" r="7" />
+                <circle id="d2p4" class="pip" cx="50" cy="50" r="7" style="visibility: visible;" />
                 <circle id="d2p5" class="pip" cx="75" cy="25" r="7" />
                 <circle id="d2p6" class="pip" cx="75" cy="50" r="7" />
                 <circle id="d2p7" class="pip" cx="75" cy="75" r="7" />
             </g>
 
+            
+            <circle id="puck" cx="300"cy="150" r="25" fill="red" stroke="white" stroke-width="4px" />
+            <text id="point" x="300" y="160">X</text>
+
+            <text id="message" x="300" y="250">message will go here</text>
+            
+
         </svg>
         <br />
-        <button onclick="rollDice()">Roll the Die!</button>
 
+
+
+        <button onclick="rollDice()">Roll the Dice!</button>
     </body>
 </html>
