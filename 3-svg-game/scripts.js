@@ -26,6 +26,7 @@ function findCard() {
     let card = deck.pop()
     let shownCard = []
 
+    // 2. Find suit
     if (card.suit == 'Hearts') {
         shownCard.append('H')
     } else if (card.suit == 'Diamonds') {
@@ -34,5 +35,12 @@ function findCard() {
         shownCard.append('C')
     } else if (card.suit == 'Spades') {
         shownCard.append('S')
+    }
+
+    // 1. Find rank
+    for (let i = 0; i < ranks.length; i++) {
+        if (card.rank == ranks[i]) {
+            shownCard.append(ranks[i])
+        }
     }
 }
