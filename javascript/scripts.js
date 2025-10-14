@@ -35,9 +35,10 @@ function shuffleDeck() {
     }
 
     // Use a readily available shuffle algorithm (give proper credit to author)
+    deck.sort(() => Math.random() - 0.5)
 }
 
 function dealCard() {
     let nextCard = deck.pop()
-    $('#card').html(nextCard)
+    $('#card').html(nextCard.rank + " of " + nextCard.suit) 
 }
