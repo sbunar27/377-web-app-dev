@@ -4,6 +4,11 @@
         <title>Blackjack</title>
         <link rel="stylesheet" href="styles.css">
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script src="scripts.js"></script>
+        <!--google fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     </head>
 
     <body>
@@ -12,8 +17,77 @@
 
         <svg width="800" height="500" style="background-color: green; border-radius: 40px;">
 
-            <rect x="100" y="150" width="600px" height="200px" fill="#8b2b1c"></rect>
+            <rect x="0" y="150" width="100%" height="200px" fill="black" stroke-width="4px" stroke="red" />
 
+            <!--SOURCE NEEDS TO BE HREF-->
+            <image src="poker-qr/1B.svg"></image>
+            <image src="poker-qr/2H.svg"></image>
+            <image src="poker-qr/2S.svg"></image>
+            <image src="poker-qr/2C.svg"></image>
+            <image src="poker-qr/2D.svg"></image>
+            <image src="poker-qr/3H.svg"></image>
+            <image src="poker-qr/3S.svg"></image>
+            <image src="poker-qr/3C.svg"></image>
+            <image src="poker-qr/3D.svg"></image>
+            <image src="poker-qr/4H.svg"></image>
+            <image src="poker-qr/4S.svg"></image>
+            <image src="poker-qr/4C.svg"></image>
+            <image src="poker-qr/4D.svg"></image>
+            <image src="poker-qr/5H.svg"></image>
+            <image src="poker-qr/5S.svg"></image>
+            <image src="poker-qr/5C.svg"></image>
+            <image src="poker-qr/5D.svg"></image>
+            <image src="poker-qr/6H.svg"></image>
+            <image src="poker-qr/6S.svg"></image>
+            <image src="poker-qr/6C.svg"></image>
+            <image src="poker-qr/6D.svg"></image>
+            <image src="poker-qr/7H.svg"></image>
+            <image src="poker-qr/7S.svg"></image>
+            <image src="poker-qr/7C.svg"></image>
+            <image src="poker-qr/7D.svg"></image>
+            <image src="poker-qr/8H.svg"></image>
+            <image src="poker-qr/8S.svg"></image>
+            <image src="poker-qr/8C.svg"></image>
+            <image src="poker-qr/8D.svg"></image>
+            <image src="poker-qr/9H.svg"></image>
+            <image src="poker-qr/9S.svg"></image>
+            <image src="poker-qr/9C.svg"></image>
+            <image src="poker-qr/9D.svg"></image>
+            <image src="poker-qr/TH.svg"></image>
+            <image src="poker-qr/TS.svg"></image>
+            <image src="poker-qr/TC.svg"></image>
+            <image src="poker-qr/TD.svg"></image>
+            <image src="poker-qr/JH.svg"></image>
+            <image src="poker-qr/JS.svg"></image>
+            <image src="poker-qr/JC.svg"></image>
+            <image src="poker-qr/JD.svg"></image>
+            <image src="poker-qr/KH.svg"></image>
+            <image src="poker-qr/KS.svg"></image>
+            <image src="poker-qr/KC.svg"></image>
+            <image src="poker-qr/KD.svg"></image>
+            <image src="poker-qr/QH.svg"></image>
+            <image src="poker-qr/QS.svg"></image>
+            <image src="poker-qr/QC.svg"></image>
+            <image src="poker-qr/QD.svg"></image>
+            <image src="poker-qr/AH.svg"></image>
+            <image src="poker-qr/AS.svg"></image>
+            <image src="poker-qr/AC.svg"></image>
+            <image src="poker-qr/AD.svg"></image>
+            
+            <!--transparent start screen-->
+            <rect class="start" x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.54)" />
+            <text class="start" x="400" y="275">Blackjack</text>
         </svg>
+
+        <table>
+            <td>
+                <input type="button" class="game" id="hit" value="HIT!" onclick="hit()" />
+            </td>
+            <td>
+                <input type="button" class="game" id="stand" value="STAND!" onclick="stand()" />
+            </td>
+        </table>
+
+        <input type="button" class="start" value="START" onclick="createDeck()" />
     </body>
 </html>
