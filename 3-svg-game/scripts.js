@@ -8,7 +8,7 @@ function Card(suit, rank, value) {
 
 const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '10', '10', '10', 'DECIDE'];
+const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 'DECIDE'];
 
 function createDeck() {
     // CREATES AND SHUFFLES THE DECK
@@ -26,7 +26,7 @@ function createDeck() {
     // Shuffles deck
     deck.sort(() => Math.random() - 0.5);
 
-    // Gives the player their first card
+    console.log(deck)
 }
 
 function findCard() {
@@ -38,36 +38,41 @@ function findCard() {
     // 1. Find rank
     for (let i = 0; i < ranks.length; i++) {
         if (card.rank == ranks[i]) {
-            shownCard.append(ranks[i]);
+            shownCard.push(ranks[i]);
         }
     }
 
     // 2. Find suit
     if (card.suit == 'Hearts') {
-        shownCard.append('H');
+        shownCard.push('H');
     } else if (card.suit == 'Diamonds') {
-        shownCard.append('D');
+        shownCard.push('D');
     } else if (card.suit == 'Clubs') {
-        shownCard.append('C');
+        shownCard.push('C');
     } else if (card.suit == 'Spades') {
-        shownCard.append('S');
+        shownCard.push('S');
     }
 
     // 3. Assign value
 
     for (let i = 0; i < values.length; i++) {
         if (card.rank == values[i]) {
-            shownCard.append(ranks[i]);
+            shownCard.push(ranks[i]);
         } else if (card.rank == "T") {
-            shownCard.append(10)
+            shownCard.push(10)
+            break
         } else if (card.rank == "J") {
-            shownCard.append(10)
+            shownCard.push(10)
+            break
         } else if (card.rank == "K") {
-            shownCard.append(10)
+            shownCard.push(10)
+            break
         } else if (card.rank == "Q") {
-            shownCard.append(10)
+            shownCard.push(10)
+            break
         } else if (card.rank == "A") {
-            shownCard.append('DECIDE')
+            shownCard.push('DECIDE')
+            break
         }
     }
 
@@ -82,5 +87,20 @@ pscore = 0
 dscore = 0
 
 function hit() {
-    card = findCard()
+    newCard = findCard()
+    cardRank = newCard[1]
+    cardSuit = newCard[2]
+    cardValue = newCard[3]
+
+    $('#' + cardRank + cardSuit).css('visibility', 'visible')
+
+    if (cardValue == 'DECIDE') {
+        if ((pscore + 11) > 21){
+            pscore += 1
+        } else {
+            pscore += 11
+        }
+    } else {
+        pscore += cardValue
+    }
 }

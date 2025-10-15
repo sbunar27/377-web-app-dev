@@ -1,3 +1,11 @@
+#score {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-anchor: middle;
+    visibility: hidden;
+}
+
 .game {
     visibility: hidden;
 }
@@ -13,6 +21,15 @@ body {
     margin-right: auto;
     color: green;
     background-color: rgb(2, 26, 2);
+}
+
+.cards {
+    visibility: hidden;
+    width: 100px;
+    height: auto;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 input[type='button'] {
