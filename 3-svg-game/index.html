@@ -16,10 +16,14 @@
         <p>Playing card SVGs created by <a href="https://www.me.uk/cards/">Adrian Kennard (RevK®)</a></p>
 
         <svg width="800" height="500" style="background-color: green; border-radius: 40px;">
+            
+            <!--dealer's "deck"-->
+            <image id="dealer-deck" href="poker-qr/1B.svg" width="100px" x="350" y="50"></image>
 
+            <!--table-->
             <rect x="0" y="150" width="100%" height="200px" fill="black" stroke-width="4px" stroke="red" />
 
-            <image class="cards" href="poker-qr/1B.svg"></image>
+            <!--CARDS - 52-->
             <image id="2H" class="cards" href="poker-qr/2H.svg"></image>
             <image id="2S" class="cards" href="poker-qr/2S.svg"></image>
             <image id="2C" class="cards" href="poker-qr/2C.svg"></image>
@@ -73,11 +77,12 @@
             <image id="AC" class="cards" href="poker-qr/AC.svg"></image>
             <image id="AD" class="cards" href="poker-qr/AD.svg"></image>
             
-            <text id="score" x="400" y="285">Score: -</text>
+            <text id="score" x="400" y="285">Your Score: -</text>
 
             <!--transparent start screen-->
-            <rect class="start" x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.54)" />
+            <rect id="start-fog" class="start" x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.54)" />
             <text class="start" x="400" y="275">Blackjack</text>
+            <text id="message" x="400" y="275">NOTHING</text>
         </svg>
 
         <table>
@@ -86,6 +91,12 @@
             </td>
             <td>
                 <input type="button" class="game" id="stand" value="STAND!" onclick="stand()" />
+            </td>
+            <td>
+                <input type="button" class="game" id="end" value="END!" onclick="endGame()" />
+            </td>
+            <td>
+                Bet: <input type="text" id="bet" class="game" name="bet" size="5" />
             </td>
         </table>
 

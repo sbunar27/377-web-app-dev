@@ -1,9 +1,23 @@
+#dealer-deck {
+    visibility: hidden;
+}
+
+#message {
+    fill: white;
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-anchor: middle;
+    visibility: hidden;
+}
+
 #score {
-    color: white;
+    fill: white;
     font-size: 20px;
     font-weight: bold;
     text-anchor: middle;
     visibility: hidden;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .game {
@@ -20,7 +34,8 @@ body {
     margin-left: auto;
     margin-right: auto;
     color: green;
-    background-color: rgb(2, 26, 2);
+    font-size: 18px;
+    background-color: rgb(229, 240, 229);
 }
 
 .cards {
@@ -30,6 +45,29 @@ body {
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
+    x: 350px;
+    y: 350px;
+}
+
+input {
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+input[type='button']:hover {
+    background-color: rgb(20, 169, 20);
+    transform: scale(1.05);
+}
+
+input[type='button']:disabled {
+    background-color: rgba(0, 112, 0, 0.333);
+    transform: none;
+    cursor: not-allowed;
 }
 
 input[type='button'] {

@@ -1,4 +1,5 @@
 let deck = [];
+let bust = false
 
 function Card(suit, rank, value) {
     this.suit = suit;
@@ -11,11 +12,13 @@ const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 'DECIDE'];
 
 function createDeck() {
-    // CREATES AND SHUFFLES THE DECK
-
+    // changes the screen to the actual game
     $('.start').css('visibility', 'hidden');
     $('.game').css('visibility', 'visible');
+    $('#score').css('visibility', 'visible');
+    $('#dealer-deck').css('visibility', 'visible');
 
+    // CREATES AND SHUFFLES THE DECK
     for (let i = 0; i < suits.length; i++) {
         for (let j = 0; j < ranks.length; j++) {
             const card = { rank: ranks[j], suit: suits[i] };
@@ -87,20 +90,80 @@ pscore = 0
 dscore = 0
 
 function hit() {
-    newCard = findCard()
-    cardRank = newCard[1]
-    cardSuit = newCard[2]
-    cardValue = newCard[3]
+    // figure out the player's new score based on the card they got
+    newCard = findCard();
+    cardRank = newCard[1];
+    cardSuit = newCard[0];
+    cardValue = newCard[2];
 
-    $('#' + cardRank + cardSuit).css('visibility', 'visible')
+    $('#' + cardRank + cardSuit).css('visibility', 'visible');
+    console.log(cardRank + cardSuit)
 
     if (cardValue == 'DECIDE') {
         if ((pscore + 11) > 21){
-            pscore += 1
+            pscore += 1;
         } else {
-            pscore += 11
+            pscore += 11;
         }
     } else {
-        pscore += cardValue
+        pscore += parseInt(cardValue);
+    }
+    
+    $('#score').html("Your Score: " + pscore);
+    console.log("Player: " + pscore)
+
+    // finds the card given to the dealer (if their score is under 17)
+    if (dscore < 17) {
+        dealerCard = findCard();
+        dealerCardRank = dealerCard[1];
+        dealerCardSuit = dealerCard[0];
+        dealerCardValue = dealerCard[2];
+
+        console.log(dealerCardRank + dealerCardSuit)
+
+        if (dealerCardValue == 'DECIDE') {
+            if ((dscore + 11) > 21){
+                dscore += 1;
+            } else {
+                dscore += 11;
+            }
+        } else {
+            dscore += parseInt(dealerCardValue);
+        }
+    }
+
+    console.log("Dealer: " + dscore)
+
+    // if the player's score is over 21, end the game
+    if (pscore > 21) {
+        bust = true
+        endGame()
+    }
+}
+
+function stand() {
+    if (pscore > 21) {
+        bust = true
+        endGame()
+    }
+}
+
+function endGame() {
+    $(".game").prop("disabled", true);
+    $('#dealer-deck').css('visibility', 'hidden');
+    $('.cards').css('visibility', 'hidden');
+    $('#dealer-deck').css('visibility', 'hidden');
+    $('#start-fog').css('visibility', 'visible');
+    $('#score').css('visibility', 'hidden');
+
+    if (bust) {
+        $('#message').html("BUST! Dealer's score: " + dscore);
+        $('#message').css('visibility', 'visible');
+    } else if (Math.abs(21 - pscore) < (Math.abs(21 - dscore))) {
+        $('#message').html("YOU WIN! Dealer's score: " + dscore);
+        $('#message').css('visibility', 'visible');
+    } else {
+        $('#message').html("YOU LOSE! Dealer's score: " + dscore);
+        $('#message').css('visibility', 'visible');
     }
 }
