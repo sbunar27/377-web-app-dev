@@ -146,6 +146,27 @@ function stand() {
         bust = true
         endGame()
     }
+
+    // lets the dealer hit (if their score is under 17)
+    if (dscore < 17) {
+        dealerCard = findCard();
+        dealerCardRank = dealerCard[1];
+        dealerCardSuit = dealerCard[0];
+        dealerCardValue = dealerCard[2];
+
+        console.log(dealerCardRank + dealerCardSuit)
+
+        if (dealerCardValue == 'DECIDE') {
+            if ((dscore + 11) > 21){
+                dscore += 1;
+            } else {
+                dscore += 11;
+            }
+        } else {
+            dscore += parseInt(dealerCardValue);
+        }
+        console.log("Dealer: " + dscore)
+    }
 }
 
 function endGame() {
