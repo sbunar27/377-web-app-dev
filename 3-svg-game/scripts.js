@@ -89,13 +89,20 @@ pscore = 0
 // dealer's score
 dscore = 0
 
+oldCardRank = 0
+oldCardSuit = 0
+
 function hit() {
     // figure out the player's new score based on the card they got
     newCard = findCard();
-    cardRank = newCard[1];
-    cardSuit = newCard[0];
+    console.log(newCard)
+    cardRank = newCard[0];
+    cardSuit = newCard[1];
     cardValue = newCard[2];
 
+    if (oldCardRank != 0) {
+        $('#' + oldCardRank + oldCardSuit).css('visibility', 'hidden');
+    }
     $('#' + cardRank + cardSuit).css('visibility', 'visible');
     console.log(cardRank + cardSuit)
 
@@ -115,8 +122,8 @@ function hit() {
     // finds the card given to the dealer (if their score is under 17)
     if (dscore < 17) {
         dealerCard = findCard();
-        dealerCardRank = dealerCard[1];
-        dealerCardSuit = dealerCard[0];
+        dealerCardRank = dealerCard[0];
+        dealerCardSuit = dealerCard[1];
         dealerCardValue = dealerCard[2];
 
         console.log(dealerCardRank + dealerCardSuit)
@@ -139,6 +146,10 @@ function hit() {
         bust = true
         endGame()
     }
+
+    oldCardRank = newCard[0];
+    oldCardSuit = newCard[1];
+    
 }
 
 function stand() {
@@ -150,8 +161,8 @@ function stand() {
     // lets the dealer hit (if their score is under 17)
     if (dscore < 17) {
         dealerCard = findCard();
-        dealerCardRank = dealerCard[1];
-        dealerCardSuit = dealerCard[0];
+        dealerCardRank = dealerCard[0];
+        dealerCardSuit = dealerCard[1];
         dealerCardValue = dealerCard[2];
 
         console.log(dealerCardRank + dealerCardSuit)

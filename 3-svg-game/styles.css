@@ -24,13 +24,23 @@
     visibility: hidden;
 }
 
+text.game {
+    fill: white;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    stroke: red;
+    stroke-width: 3px;
+    paint-order: stroke;
+}
+
 .start {
     visibility: visible;
 }
 
 body {
     text-align: center;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     margin-left: auto;
     margin-right: auto;
     color: green;
@@ -46,12 +56,14 @@ body {
     margin-left: auto;
     margin-right: auto;
     x: 350px;
-    y: 350px;
+    y: 300px;
+    z-index: 10;
+    position: relative;
 }
 
 input {
     font-size: 18px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     margin-left: auto;
     margin-right: auto;
     padding: 10px;
@@ -72,8 +84,9 @@ input[type='button']:disabled {
 
 input[type='button'] {
     display: block;
+    font-weight: bold;
     font-size: 18px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family:  'Courier New', Courier, monospace;
     margin-left: auto;
     margin-right: auto;
     padding: 15px;
