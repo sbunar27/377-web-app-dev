@@ -1,5 +1,22 @@
+#bet-message {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+    visibility: hidden;
+}
+
 #dealer-deck {
     visibility: hidden;
+}
+
+#dealer-move {
+    fill: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-anchor: middle;
+    visibility: hidden;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #message {
@@ -20,6 +37,19 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
+#winnings {
+    visibility: hidden;
+    fill: rgb(255, 217, 0);
+    font-size: 30px;
+    stroke: white;
+    stroke-width: 3px;
+    paint-order: stroke;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-anchor: middle;
+
+}
+
 .game {
     visibility: hidden;
 }
@@ -38,6 +68,11 @@ text.game {
     visibility: visible;
 }
 
+.subtext {
+    font-style: italic;
+    font-size: 12px;
+}
+
 body {
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
@@ -46,6 +81,11 @@ body {
     color: green;
     font-size: 18px;
     background-color: rgb(229, 240, 229);
+}
+
+p, #bet-message {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
 }
 
 .cards {

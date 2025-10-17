@@ -12,99 +12,130 @@
     </head>
 
     <body>
-        <h1>Blackjack</h1>
+        <h1>BLACKJACK</h1>
         <p>Playing card SVGs created by <a href="https://www.me.uk/cards/">Adrian Kennard (RevK®)</a></p>
-
-        <svg width="800" height="500" style="background-color: green; border-radius: 40px;">
-
-            <!--underneath the dealer card-->
-            <rect class="game" width="115" height="155" fill="white" x="340" y="40" rx="10" ry="10"></rect>
-            
-            <!--dealer's "deck"-->
-            <image id="dealer-deck" href="poker-qr/1B.svg" width="100px" x="350" y="50"></image>
-
-            <!--table-->
-            <!-- <rect x="0" y="150" width="100%" height="200px" fill="black" stroke-width="4px" stroke="red" /> -->
-
-            <!--underneath the player card-->
-            <rect class="game" width="115" height="155" fill="white" x="340" y="290" rx="10" ry="10"></rect>
-
-            <!--CARDS - 52-->
-            <image id="2H" class="cards" href="poker-qr/2H.svg"></image>
-            <image id="2S" class="cards" href="poker-qr/2S.svg"></image>
-            <image id="2C" class="cards" href="poker-qr/2C.svg"></image>
-            <image id="2D" class="cards" href="poker-qr/2D.svg"></image>
-            <image id="3H" class="cards" href="poker-qr/3H.svg"></image>
-            <image id="3S" class="cards" href="poker-qr/3S.svg"></image>
-            <image id="3C" class="cards" href="poker-qr/3C.svg"></image>
-            <image id="3D" class="cards" href="poker-qr/3D.svg"></image>
-            <image id="4H" class="cards" href="poker-qr/4H.svg"></image>
-            <image id="4S" class="cards" href="poker-qr/4S.svg"></image>
-            <image id="4C" class="cards" href="poker-qr/4C.svg"></image>
-            <image id="4D" class="cards" href="poker-qr/4D.svg"></image>
-            <image id="5H" class="cards" href="poker-qr/5H.svg"></image>
-            <image id="5S" class="cards" href="poker-qr/5S.svg"></image>
-            <image id="5C" class="cards" href="poker-qr/5C.svg"></image>
-            <image id="5D" class="cards" href="poker-qr/5D.svg"></image>
-            <image id="6H" class="cards" href="poker-qr/6H.svg"></image>
-            <image id="6S" class="cards" href="poker-qr/6S.svg"></image>
-            <image id="6C" class="cards" href="poker-qr/6C.svg"></image>
-            <image id="6D" class="cards" href="poker-qr/6D.svg"></image>
-            <image id="7H" class="cards" href="poker-qr/7H.svg"></image>
-            <image id="7S" class="cards" href="poker-qr/7S.svg"></image>
-            <image id="7C" class="cards" href="poker-qr/7C.svg"></image>
-            <image id="7D" class="cards" href="poker-qr/7D.svg"></image>
-            <image id="8H" class="cards" href="poker-qr/8H.svg"></image>
-            <image id="8S" class="cards" href="poker-qr/8S.svg"></image>
-            <image id="8C" class="cards" href="poker-qr/8C.svg"></image>
-            <image id="8D" class="cards" href="poker-qr/8D.svg"></image>
-            <image id="9H" class="cards" href="poker-qr/9H.svg"></image>
-            <image id="9S" class="cards" href="poker-qr/9S.svg"></image>
-            <image id="9C" class="cards" href="poker-qr/9C.svg"></image>
-            <image id="9D" class="cards" href="poker-qr/9D.svg"></image>
-            <image id="TH" class="cards" href="poker-qr/TH.svg"></image>
-            <image id="TS" class="cards" href="poker-qr/TS.svg"></image>
-            <image id="TC" class="cards" href="poker-qr/TC.svg"></image>
-            <image id="TD" class="cards" href="poker-qr/TD.svg"></image>
-            <image id="JH" class="cards" href="poker-qr/JH.svg"></image>
-            <image id="JS" class="cards" href="poker-qr/JS.svg"></image>
-            <image id="JC" class="cards" href="poker-qr/JC.svg"></image>
-            <image id="JD" class="cards" href="poker-qr/JD.svg"></image>
-            <image id="KH" class="cards" href="poker-qr/KH.svg"></image>
-            <image id="KS" class="cards" href="poker-qr/KS.svg"></image>
-            <image id="KC" class="cards" href="poker-qr/KC.svg"></image>
-            <image id="KD" class="cards" href="poker-qr/KD.svg"></image>
-            <image id="QH" class="cards" href="poker-qr/QH.svg"></image>
-            <image id="QS" class="cards" href="poker-qr/QS.svg"></image>
-            <image id="QC" class="cards" href="poker-qr/QC.svg"></image>
-            <image id="QD" class="cards" href="poker-qr/QD.svg"></image>
-            <image id="AH" class="cards" href="poker-qr/AH.svg"></image>
-            <image id="AS" class="cards" href="poker-qr/AS.svg"></image>
-            <image id="AC" class="cards" href="poker-qr/AC.svg"></image>
-            <image id="AD" class="cards" href="poker-qr/AD.svg"></image>
-            
-            <text id="score" x="400" y="265">Your Score: -</text>
-
-            <text class="game" x="400" y="100">DEALER</text>
-
-            <!--transparent start screen-->
-            <rect id="start-fog" class="start" x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.54)" />
-            <text class="start" x="400" y="275">Blackjack</text>
-            <text id="message" x="400" y="275">NOTHING</text>
-        </svg>
 
         <table>
             <td>
-                <input type="button" class="game" id="hit" value="HIT!" onclick="hit()" />
+                <svg width="800" height="500" style="background-color: green; border-radius: 40px;">
+
+                    <!--underneath the dealer card-->
+                    <rect class="game table" width="115" height="155" fill="green" stroke="white" stroke-width="3px" x="342.5" y="42.5" rx="10" ry="10"></rect>
+                    
+                    <!--dealer's "deck"-->
+                    <image id="dealer-deck" href="poker-qr/1B.svg" width="100px" x="350" y="50"></image>
+
+                    <!--table-->
+                    <!-- <rect x="0" y="150" width="100%" height="200px" fill="black" stroke-width="4px" stroke="red" /> -->
+
+                    <!--underneath the player card-->
+                    <rect class="game table" width="115" height="155" fill="green" stroke="white" stroke-width="3px" x="342.5" y="292.5" rx="10" ry="10"></rect>
+
+                    <!--CARDS - 52-->
+                    <image id="2H" class="cards" href="poker-qr/2H.svg"></image>
+                    <image id="2S" class="cards" href="poker-qr/2S.svg"></image>
+                    <image id="2C" class="cards" href="poker-qr/2C.svg"></image>
+                    <image id="2D" class="cards" href="poker-qr/2D.svg"></image>
+                    <image id="3H" class="cards" href="poker-qr/3H.svg"></image>
+                    <image id="3S" class="cards" href="poker-qr/3S.svg"></image>
+                    <image id="3C" class="cards" href="poker-qr/3C.svg"></image>
+                    <image id="3D" class="cards" href="poker-qr/3D.svg"></image>
+                    <image id="4H" class="cards" href="poker-qr/4H.svg"></image>
+                    <image id="4S" class="cards" href="poker-qr/4S.svg"></image>
+                    <image id="4C" class="cards" href="poker-qr/4C.svg"></image>
+                    <image id="4D" class="cards" href="poker-qr/4D.svg"></image>
+                    <image id="5H" class="cards" href="poker-qr/5H.svg"></image>
+                    <image id="5S" class="cards" href="poker-qr/5S.svg"></image>
+                    <image id="5C" class="cards" href="poker-qr/5C.svg"></image>
+                    <image id="5D" class="cards" href="poker-qr/5D.svg"></image>
+                    <image id="6H" class="cards" href="poker-qr/6H.svg"></image>
+                    <image id="6S" class="cards" href="poker-qr/6S.svg"></image>
+                    <image id="6C" class="cards" href="poker-qr/6C.svg"></image>
+                    <image id="6D" class="cards" href="poker-qr/6D.svg"></image>
+                    <image id="7H" class="cards" href="poker-qr/7H.svg"></image>
+                    <image id="7S" class="cards" href="poker-qr/7S.svg"></image>
+                    <image id="7C" class="cards" href="poker-qr/7C.svg"></image>
+                    <image id="7D" class="cards" href="poker-qr/7D.svg"></image>
+                    <image id="8H" class="cards" href="poker-qr/8H.svg"></image>
+                    <image id="8S" class="cards" href="poker-qr/8S.svg"></image>
+                    <image id="8C" class="cards" href="poker-qr/8C.svg"></image>
+                    <image id="8D" class="cards" href="poker-qr/8D.svg"></image>
+                    <image id="9H" class="cards" href="poker-qr/9H.svg"></image>
+                    <image id="9S" class="cards" href="poker-qr/9S.svg"></image>
+                    <image id="9C" class="cards" href="poker-qr/9C.svg"></image>
+                    <image id="9D" class="cards" href="poker-qr/9D.svg"></image>
+                    <image id="TH" class="cards" href="poker-qr/TH.svg"></image>
+                    <image id="TS" class="cards" href="poker-qr/TS.svg"></image>
+                    <image id="TC" class="cards" href="poker-qr/TC.svg"></image>
+                    <image id="TD" class="cards" href="poker-qr/TD.svg"></image>
+                    <image id="JH" class="cards" href="poker-qr/JH.svg"></image>
+                    <image id="JS" class="cards" href="poker-qr/JS.svg"></image>
+                    <image id="JC" class="cards" href="poker-qr/JC.svg"></image>
+                    <image id="JD" class="cards" href="poker-qr/JD.svg"></image>
+                    <image id="KH" class="cards" href="poker-qr/KH.svg"></image>
+                    <image id="KS" class="cards" href="poker-qr/KS.svg"></image>
+                    <image id="KC" class="cards" href="poker-qr/KC.svg"></image>
+                    <image id="KD" class="cards" href="poker-qr/KD.svg"></image>
+                    <image id="QH" class="cards" href="poker-qr/QH.svg"></image>
+                    <image id="QS" class="cards" href="poker-qr/QS.svg"></image>
+                    <image id="QC" class="cards" href="poker-qr/QC.svg"></image>
+                    <image id="QD" class="cards" href="poker-qr/QD.svg"></image>
+                    <image id="AH" class="cards" href="poker-qr/AH.svg"></image>
+                    <image id="AS" class="cards" href="poker-qr/AS.svg"></image>
+                    <image id="AC" class="cards" href="poker-qr/AC.svg"></image>
+                    <image id="AD" class="cards" href="poker-qr/AD.svg"></image>
+                    
+                    <text id="score" x="400" y="265">Your Score: -</text>
+
+                    <text id="dealer" class="game" x="400" y="100">DEALER</text>
+                    <text id="dealer-move" class="game table" x="400" y="225">Dealer chose: -</text>
+
+                    <!--lighter start screen-->
+                    <rect id="start-fog" class="start" x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.54)" />
+                    <text class="start" x="400" y="275">Blackjack</text>
+                    <!--win/lose message-->
+                    <text id="message" x="400" y="275">N/A</text>
+                    <text id="winnings" class="game table" x="400" y="325"></text>
+                </svg>
+
+                <table>
+                    <!--user interface-->
+                    <td>
+                        <input type="button" class="game" id="hit" value="HIT!" onclick="hit()" />
+                    </td>
+                    <td>
+                        <input type="button" class="game" id="stand" value="STAND!" onclick="stand()" />
+                    </td>
+                    <td>
+                        <input type="button" class="game" id="end" value="END!" onclick="endGame()" />
+                    </td>
+                    <td>
+                        <div class="game">BET:</div>
+                        <input type="text" class="game board" id="bet" name="bet" size="5" />
+                        <div id="bet-message"></div>
+                    </td>
+                </table>
+
+                <input type="button" class="start" value="START" onclick="createDeck()" />
             </td>
             <td>
-                <input type="button" class="game" id="stand" value="STAND!" onclick="stand()" />
-            </td>
-            <td>
-                <input type="button" class="game" id="end" value="END!" onclick="endGame()" />
+                <!--GAME INSTRUCTIONS/RULES/CARD VALUES-->
+                <h2>Instructions and Rules</h2>
+                <h3>Basic Controls</h3>
+                <p>1. Press the start button to begin the game</p>
+                <p>2. Enter a bet between 5 - 50</p>
+                <p>3a. If you would like to draw a card, click 'HIT!'</p>
+                <p>3b. If you would like to hold your current hand and wait, click 'STAND!'</p>
+                <p>4. If you think your score is close enough to 21, hit 'END!' to end the game.</p>
+                <h3>The Rules of the Game</h3>
+                <p>You must get a score the <strong>closest to (but not over!)</strong> 21 to win.</p>
+                <p class="subtext">The dealer is also drawing cards, so you have to get closer to 21 than they do.</p>
+                <p>If you get a score over 21, that's called a bust (meaning you lose).</p>
+                <h3>Card Values</h3>
+                <p>All cards are at face value, excluding the King, Queen, and Jack</p>
+                <p>Kings, Queens, and Jacks are all worth <strong>10</strong> points</p>
+                <p>An Ace will have a value of <strong>11</strong> unless that would make the dealer/player's score go above 21. In that case, it has a value of <strong>1</strong>.</p>
             </td>
         </table>
-
-        <input type="button" class="start" value="START" onclick="createDeck()" />
     </body>
 </html>

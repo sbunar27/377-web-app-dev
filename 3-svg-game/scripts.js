@@ -1,6 +1,11 @@
 let deck = [];
 let bust = false
 
+const MINIMUM_BET = 5;
+const STARTING_FUNDS = 50;
+let winnings = STARTING_FUNDS;
+let bet = 0;
+
 function Card(suit, rank, value) {
     this.suit = suit;
     this.rank = rank;
@@ -17,6 +22,7 @@ function createDeck() {
     $('.game').css('visibility', 'visible');
     $('#score').css('visibility', 'visible');
     $('#dealer-deck').css('visibility', 'visible');
+    $('#bet-message').css('visibility', 'visible')
 
     // CREATES AND SHUFFLES THE DECK
     for (let i = 0; i < suits.length; i++) {
@@ -93,63 +99,73 @@ oldCardRank = 0
 oldCardSuit = 0
 
 function hit() {
-    // figure out the player's new score based on the card they got
-    newCard = findCard();
-    console.log(newCard)
-    cardRank = newCard[0];
-    cardSuit = newCard[1];
-    cardValue = newCard[2];
+    if (validateBet()) {
+        $('#bet-message').css('visibility', 'hidden')
 
-    if (oldCardRank != 0) {
-        $('#' + oldCardRank + oldCardSuit).css('visibility', 'hidden');
-    }
-    $('#' + cardRank + cardSuit).css('visibility', 'visible');
-    console.log(cardRank + cardSuit)
+        // figure out the player's new score based on the card they got
+        newCard = findCard();
+        console.log(newCard)
+        cardRank = newCard[0];
+        cardSuit = newCard[1];
+        cardValue = newCard[2];
 
-    if (cardValue == 'DECIDE') {
-        if ((pscore + 11) > 21){
-            pscore += 1;
-        } else {
-            pscore += 11;
+        if (oldCardRank != 0) {
+            $('#' + oldCardRank + oldCardSuit).css('visibility', 'hidden');
         }
-    } else {
-        pscore += parseInt(cardValue);
-    }
-    
-    $('#score').html("Your Score: " + pscore);
-    console.log("Player: " + pscore)
+        $('#' + cardRank + cardSuit).css('visibility', 'visible');
+        console.log(cardRank + cardSuit)
 
-    // finds the card given to the dealer (if their score is under 17)
-    if (dscore < 17) {
-        dealerCard = findCard();
-        dealerCardRank = dealerCard[0];
-        dealerCardSuit = dealerCard[1];
-        dealerCardValue = dealerCard[2];
-
-        console.log(dealerCardRank + dealerCardSuit)
-
-        if (dealerCardValue == 'DECIDE') {
-            if ((dscore + 11) > 21){
-                dscore += 1;
+        if (cardValue == 'DECIDE') {
+            if ((pscore + 11) > 21){
+                pscore += 1;
             } else {
-                dscore += 11;
+                pscore += 11;
             }
         } else {
-            dscore += parseInt(dealerCardValue);
+            pscore += parseInt(cardValue);
         }
+        
+        $('#score').text("Your Score: " + pscore);
+        console.log("Player: " + pscore)
+
+        // finds the card given to the dealer (if their score is under 17)
+        if (dscore < 17) {
+            dealerCard = findCard();
+            dealerCardRank = dealerCard[0];
+            dealerCardSuit = dealerCard[1];
+            dealerCardValue = dealerCard[2];
+
+            console.log(dealerCardRank + dealerCardSuit)
+
+            if (dealerCardValue == 'DECIDE') {
+                if ((dscore + 11) > 21){
+                    dscore += 1;
+                } else {
+                    dscore += 11;
+                }
+            } else {
+                dscore += parseInt(dealerCardValue);
+            }
+
+            $('#dealer-move').text("Dealer chose: Hit");
+        } else {
+            $('#dealer-move').text("Dealer chose: Stand")
+        }
+
+        console.log("Dealer: " + dscore)
+
+        // if the player's score is over 21, end the game
+        if (pscore > 21) {
+            bust = true
+            endGame()
+        }
+
+        oldCardRank = newCard[0];
+        oldCardSuit = newCard[1];
+    } else {
+        $('#bet-message').css('visibility', 'visible')
+        $('#bet-message').html('Please enter a valid bet.')
     }
-
-    console.log("Dealer: " + dscore)
-
-    // if the player's score is over 21, end the game
-    if (pscore > 21) {
-        bust = true
-        endGame()
-    }
-
-    oldCardRank = newCard[0];
-    oldCardSuit = newCard[1];
-    
 }
 
 function stand() {
@@ -158,25 +174,31 @@ function stand() {
         endGame()
     }
 
-    // lets the dealer hit (if their score is under 17)
-    if (dscore < 17) {
-        dealerCard = findCard();
-        dealerCardRank = dealerCard[0];
-        dealerCardSuit = dealerCard[1];
-        dealerCardValue = dealerCard[2];
+    if (validateBet()) {
+        // lets the dealer hit (if their score is under 17)
+        if (dscore < 17) {
+            dealerCard = findCard();
+            dealerCardRank = dealerCard[0];
+            dealerCardSuit = dealerCard[1];
+            dealerCardValue = dealerCard[2];
 
-        console.log(dealerCardRank + dealerCardSuit)
+            console.log(dealerCardRank + dealerCardSuit)
 
-        if (dealerCardValue == 'DECIDE') {
-            if ((dscore + 11) > 21){
-                dscore += 1;
+            if (dealerCardValue == 'DECIDE') {
+                if ((dscore + 11) > 21){
+                    dscore += 1;
+                } else {
+                    dscore += 11;
+                }
             } else {
-                dscore += 11;
+                dscore += parseInt(dealerCardValue);
             }
+            console.log("Dealer: " + dscore)
+
+            $('#dealer-move').text("Dealer chose: Hit")
         } else {
-            dscore += parseInt(dealerCardValue);
+            $('#dealer-move').text("Dealer chose: Stand")
         }
-        console.log("Dealer: " + dscore)
     }
 }
 
@@ -187,15 +209,44 @@ function endGame() {
     $('#dealer-deck').css('visibility', 'hidden');
     $('#start-fog').css('visibility', 'visible');
     $('#score').css('visibility', 'hidden');
+    $('.table').css('visibility', 'hidden');
+    $('#dealer').css('visibility', 'hidden');
 
     if (bust) {
-        $('#message').html("BUST! Dealer's score: " + dscore);
+        $('#message').text("BUST! Dealer's score: " + dscore);
         $('#message').css('visibility', 'visible');
+
+        winnings -= bet;
+        $("#winnings").text("Winnings: $" + winnings);
+        console.log("Winnings: " + winnings);
     } else if (Math.abs(21 - pscore) < (Math.abs(21 - dscore))) {
-        $('#message').html("YOU WIN! Dealer's score: " + dscore);
+        $('#message').text("YOU WIN! Dealer's score: " + dscore);
         $('#message').css('visibility', 'visible');
+
+        winnings += bet;
+        $("#winnings").text("Winnings: $" + winnings);
+        console.log("Winnings: $" + winnings);
     } else {
-        $('#message').html("YOU LOSE! Dealer's score: " + dscore);
+        $('#message').text("YOU LOSE! Dealer's score: " + dscore);
         $('#message').css('visibility', 'visible');
+
+        winnings -= bet;
+        $("#winnings").text("Winnings: $" + winnings);
+        console.log("Winnings: " + winnings);
+    }
+
+    $('#winnings').css('visibility', 'visible');
+}
+
+function validateBet() {
+    bet = parseInt($("#bet").val());
+
+    console.log("Bet: " + bet);
+
+    if (isNaN(bet) || bet < MINIMUM_BET || bet > winnings) {
+        return false;
+    } else {
+        $("#bet").prop("disabled", true);
+        return true;
     }
 }
