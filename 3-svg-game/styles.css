@@ -1,5 +1,5 @@
 #bet-message {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 14px;
     color: red;
     font-weight: bold;
@@ -58,7 +58,7 @@ text.game {
     fill: white;
     font-weight: bold;
     font-size: 20px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     stroke: red;
     stroke-width: 3px;
     paint-order: stroke;
@@ -75,7 +75,7 @@ text.game {
 
 body {
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-left: auto;
     margin-right: auto;
     color: green;
@@ -84,7 +84,7 @@ body {
 }
 
 p, #bet-message {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 14px;
 }
 
@@ -103,7 +103,7 @@ p, #bet-message {
 
 input {
     font-size: 18px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-left: auto;
     margin-right: auto;
     padding: 10px;
@@ -126,7 +126,7 @@ input[type='button'] {
     display: block;
     font-weight: bold;
     font-size: 18px;
-    font-family:  'Courier New', Courier, monospace;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-left: auto;
     margin-right: auto;
     padding: 15px;

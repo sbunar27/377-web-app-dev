@@ -226,6 +226,11 @@ function endGame() {
         winnings += bet;
         $("#winnings").text("Winnings: $" + winnings);
         console.log("Winnings: $" + winnings);
+    } else if (Math.abs(21 - pscore) == (Math.abs(21 - dscore))) {
+        $('#message').text("DRAW! Dealer's score: " + dscore);
+        $('#message').css('visibility', 'visible');
+
+        $("#winnings").text("Winnings: None");
     } else {
         $('#message').text("YOU LOSE! Dealer's score: " + dscore);
         $('#message').css('visibility', 'visible');
