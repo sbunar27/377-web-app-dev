@@ -199,6 +199,9 @@ function stand() {
         } else {
             $('#dealer-move').text("Dealer chose: Stand")
         }
+    } else {
+        $('#bet-message').css('visibility', 'visible')
+        $('#bet-message').html('Please enter a valid bet.')
     }
 }
 
