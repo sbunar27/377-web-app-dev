@@ -32,7 +32,7 @@
     visibility: hidden;
 }
 
-#score {
+#score, #beginning {
     fill: white;
     font-size: 20px;
     font-weight: bold;

@@ -85,6 +85,8 @@
                     
                     <text id="score" x="400" y="265">Your Score: -</text>
 
+                    <text id="beginning" class="game table" x="400" y="280">Click 'HIT!' two times to take your beginning cards.</text>
+
                     <text id="dealer" class="game" x="400" y="100">DEALER</text>
                     <text id="dealer-move" class="game table" x="400" y="225">Dealer chose: -</text>
 
@@ -105,7 +107,7 @@
                         <input type="button" class="game" id="stand" value="STAND!" onclick="stand()" />
                     </td>
                     <td>
-                        <input type="button" class="game" id="end" value="END!" onclick="endGame()" />
+                        <input type="button" class="game" id="end" value="END!" onclick="endTurn()" />
                     </td>
                     <td>
                         <div id="player-money"></div>
