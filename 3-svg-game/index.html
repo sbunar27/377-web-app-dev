@@ -92,8 +92,8 @@
                     <rect id="start-fog" class="start" x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.54)" />
                     <text class="start" x="400" y="275">Blackjack</text>
                     <!--win/lose message-->
-                    <text id="message" x="400" y="275">N/A</text>
-                    <text id="winnings" class="game table" x="400" y="325"></text>
+                    <text id="message" class="endings" x="400" y="275">N/A</text>
+                    <text id="winnings" class="endings" class="game table" x="400" y="325"></text>
                 </svg>
 
                 <table>
@@ -108,13 +108,14 @@
                         <input type="button" class="game" id="end" value="END!" onclick="endGame()" />
                     </td>
                     <td>
+                        <div id="player-money"></div>
                         <div class="game">BET:</div>
                         <input type="text" class="game board" id="bet" name="bet" size="5" />
                         <div id="bet-message"></div>
                     </td>
                 </table>
 
-                <input type="button" class="start" value="START" onclick="createDeck()" />
+                <input type="button" id="start-button" class="start" value="START" onclick="createDeck()" />
             </td>
             <td>
                 <!--GAME INSTRUCTIONS/RULES/CARD VALUES-->

@@ -6,23 +6,26 @@ const STARTING_FUNDS = 50;
 let winnings = STARTING_FUNDS;
 let bet = 0;
 
-function Card(suit, rank, value) {
-    this.suit = suit;
-    this.rank = rank;
-    this.value = value;
-}
-
 const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 'DECIDE'];
 
 function createDeck() {
+    pscore = 0
+    dscore = 0
+
+    $('#score').text("Your Score: " + pscore);
+
     // changes the screen to the actual game
+    $('#player-money').html('Your money: ' + winnings);
     $('.start').css('visibility', 'hidden');
     $('.game').css('visibility', 'visible');
+    $('.endings').css('visibility', 'hidden');
     $('#score').css('visibility', 'visible');
     $('#dealer-deck').css('visibility', 'visible');
-    $('#bet-message').css('visibility', 'visible')
+    $('#bet-message').css('visibility', 'visible');
+    // $('.table').css('visibility', 'hidden');
+    $('.game').prop('disabled', false);
 
     // CREATES AND SHUFFLES THE DECK
     for (let i = 0; i < suits.length; i++) {
@@ -91,12 +94,14 @@ function findCard() {
 }
 
 // player's score
-pscore = 0
+let pscore = 0
 // dealer's score
-dscore = 0
+let dscore = 0
 
-oldCardRank = 0
-oldCardSuit = 0
+let oldCardRank = 0
+let oldCardSuit = 0
+
+let playerCards = []
 
 function hit() {
     if (validateBet()) {
@@ -220,14 +225,14 @@ function endGame() {
         $('#message').css('visibility', 'visible');
 
         winnings -= bet;
-        $("#winnings").text("Winnings: $" + winnings);
+        $("#winnings").text("Total Payout: $" + winnings);
         console.log("Winnings: " + winnings);
     } else if (Math.abs(21 - pscore) < (Math.abs(21 - dscore))) {
         $('#message').text("YOU WIN! Dealer's score: " + dscore);
         $('#message').css('visibility', 'visible');
 
         winnings += bet;
-        $("#winnings").text("Winnings: $" + winnings);
+        $("#winnings").text("Total Payout: $" + winnings);
         console.log("Winnings: $" + winnings);
     } else if (Math.abs(21 - pscore) == (Math.abs(21 - dscore))) {
         $('#message').text("DRAW! Dealer's score: " + dscore);
@@ -239,11 +244,12 @@ function endGame() {
         $('#message').css('visibility', 'visible');
 
         winnings -= bet;
-        $("#winnings").text("Winnings: $" + winnings);
-        console.log("Winnings: " + winnings);
+        $("#winnings").text("Total Payout: $" + winnings);
+        console.log("Winnings: None");
     }
 
     $('#winnings').css('visibility', 'visible');
+    $('#start-button').css('visibility', 'visible');
 }
 
 function validateBet() {
