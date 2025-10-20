@@ -1,5 +1,7 @@
 let deck = [];
-let bust = false
+let bust = false;
+
+let dealerBust = false;
 
 const MINIMUM_BET = 5;
 const STARTING_FUNDS = 50;
@@ -9,6 +11,12 @@ let bet = 0;
 const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 'DECIDE'];
+
+async function startCards() {
+        hit();
+        await delay(5000); // Wait for 5 seconds
+        hit();
+    }
 
 function createDeck() {
     pscore = 0
@@ -105,6 +113,11 @@ let playerCards = []
 
 function hit() {
     if (validateBet()) {
+        startCards();
+    }
+
+    if (validateBet()) {
+
         $('#bet-message').css('visibility', 'hidden')
 
         // figure out the player's new score based on the card they got
@@ -152,6 +165,10 @@ function hit() {
                 dscore += parseInt(dealerCardValue);
             }
 
+            if (dscore > 21) {
+                dealerBust = true;
+            }
+
             $('#dealer-move').text("Dealer chose: Hit");
         } else {
             $('#dealer-move').text("Dealer chose: Stand")
@@ -162,7 +179,6 @@ function hit() {
         // if the player's score is over 21, end the game
         if (pscore > 21) {
             bust = true
-            endGame()
         }
 
         oldCardRank = newCard[0];
@@ -176,7 +192,6 @@ function hit() {
 function stand() {
     if (pscore > 21) {
         bust = true
-        endGame()
     }
 
     if (validateBet()) {
@@ -201,6 +216,10 @@ function stand() {
             console.log("Dealer: " + dscore)
 
             $('#dealer-move').text("Dealer chose: Hit")
+
+            if (dscore > 21) {
+                dealerBust = true;
+            }
         } else {
             $('#dealer-move').text("Dealer chose: Stand")
         }
@@ -227,14 +246,14 @@ function endGame() {
         winnings -= bet;
         $("#winnings").text("Total Payout: $" + winnings);
         console.log("Winnings: " + winnings);
-    } else if (Math.abs(21 - pscore) < (Math.abs(21 - dscore))) {
+    } else if (Math.abs(21 - pscore) < (Math.abs(21 - dscore)) || (dealerBust)) {
         $('#message').text("YOU WIN! Dealer's score: " + dscore);
         $('#message').css('visibility', 'visible');
 
         winnings += bet;
         $("#winnings").text("Total Payout: $" + winnings);
         console.log("Winnings: $" + winnings);
-    } else if (Math.abs(21 - pscore) == (Math.abs(21 - dscore))) {
+    } else if (Math.abs(21 - pscore) == (Math.abs(21 - dscore)) && (dscore < 21)) {
         $('#message').text("DRAW! Dealer's score: " + dscore);
         $('#message').css('visibility', 'visible');
 
