@@ -10,6 +10,10 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
+#end-button {
+    visibility: hidden;
+}
+
 #hits {
     font-size: 13px;
 }
@@ -31,7 +35,7 @@
     visibility: hidden;
 }
 
-#score, #beginning {
+#score, #beginning, #dealer-score {
     fill: white;
     font-size: 20px;
     font-weight: bold;
