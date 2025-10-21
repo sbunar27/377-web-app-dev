@@ -22,6 +22,7 @@
                     
                     <!--dealer's "deck"-->
                     <image id="dealer-deck" href="poker-qr/1B.svg" width="100px" x="350" y="50"></image>
+                    <image id="dealer-end" class="table" href="poker-qr/2B.svg" width="100px" x="350" y="50"></image>
 
                     <!--table-->
                     <!-- <rect x="0" y="150" width="100%" height="200px" fill="black" stroke-width="4px" stroke="red" /> -->
@@ -85,10 +86,8 @@
                     
                     <text id="score" x="400" y="265">Your Score: -</text>
 
-                    <text id="beginning" class="game table" x="400" y="280">Click 'HIT!' two times to take your beginning cards.</text>
-
                     <text id="dealer" class="game" x="400" y="100">DEALER</text>
-                    <text id="dealer-move" class="game table" x="400" y="225">Dealer chose: -</text>
+                    <text id="hits" class="game" x="400" y="285">Please press 'HIT' two times to get your first two cards.</text>
 
                     <!--lighter start screen-->
                     <rect id="start-fog" class="start" x="0" y="0" width="100%" height="100%" fill="rgba(255, 255, 255, 0.54)" />
@@ -107,12 +106,12 @@
                         <input type="button" class="game" id="stand" value="STAND!" onclick="stand()" />
                     </td>
                     <td>
-                        <input type="button" class="game" id="end" value="END!" onclick="endTurn()" />
+                        <input type="button" class="game" id="end" value="PLAY HAND!" onclick="endTurn()" />
                     </td>
                     <td>
                         <div id="player-money"></div>
                         <div class="game">BET:</div>
-                        <input type="text" class="game" id="bet" name="bet" size="5" />
+                        <input type="text" class="game board" id="bet" name="bet" size="5" />
                         <div id="bet-message"></div>
                     </td>
                 </table>
@@ -124,11 +123,10 @@
                 <h2>Instructions and Rules</h2>
                 <h3>Basic Controls</h3>
                 <p>1. Press the start button to begin the game</p>
-                <p>2. Enter your <strong>starting</strong> bet between 5 - 50</p>
-                <p><strong>3. You must press 'HIT!' for your first two cards.</strong></p>
-                <p>4a. If you would like to draw a card, click 'HIT!'</p>
-                <p>4b. If you would like to hold your current hand and wait, click 'STAND!'</p>
-                <p>5. If you think your score is close enough to 21, hit 'END!' to end the game.</p>
+                <p>2. Enter a bet between 5 - 50</p>
+                <p>3a. If you would like to draw a card, click 'HIT!'</p>
+                <p>3b. If you would like to hold your current hand and wait, click 'STAND!'</p>
+                <p>4. If you think your score is close enough to 21, hit 'END!' to end the game.</p>
                 <h3>The Rules of the Game</h3>
                 <p>You must get a score the <strong>closest to (but not over!)</strong> 21 to win.</p>
                 <p class="subtext">The dealer is also drawing cards, so you have to get closer to 21 than they do.</p>

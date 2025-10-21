@@ -6,21 +6,20 @@
     visibility: hidden;
 }
 
-#dealer {
+#dealer, #hits {
     font-family: 'Courier New', Courier, monospace;
+}
+
+#hits {
+    font-size: 13px;
 }
 
 #dealer-deck {
     visibility: hidden;
 }
 
-#dealer-move {
-    fill: white;
-    font-size: 20px;
-    font-weight: bold;
-    text-anchor: middle;
+#dealer-end {
     visibility: hidden;
-    font-family: 'Courier New', Courier, monospace;
 }
 
 #message {
@@ -147,6 +146,10 @@ input[type='button'] {
     border: none;
     cursor: pointer;
     color: white;
+}
+
+image {
+    position: absolute;
 }
 
 svg {
