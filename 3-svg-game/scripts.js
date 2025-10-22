@@ -18,6 +18,7 @@ function createDeck() {
     dscore = 0;
     hits = 0;
     bust = false;
+    deck = [];
 
     $('#score').text("Your Score: " + pscore);
 
@@ -153,6 +154,7 @@ function hit() {
         if (oldCardRank != 0) {
             $('#' + oldCardRank + oldCardSuit).css('visibility', 'hidden');
         }
+        $('#' + cardRank + cardSuit).css('y', 300);
         $('#' + cardRank + cardSuit).css('visibility', 'visible');
         console.log(cardRank + cardSuit)
 
@@ -318,6 +320,14 @@ function endGame() {
         console.log("Winnings: None");
 
     } else if ((Math.abs(21 - pscore) < (Math.abs(21 - dscore)) && dscore > 21)) {
+        $('#message').text("YOU WIN! Dealer's score: " + dscore);
+        $('#message').css('visibility', 'visible');
+
+        winnings += bet;
+        $("#winnings").text("Total Payout: $" + winnings);
+        console.log("Winnings: $" + winnings);
+    // If you didn't bust and the dealer's score is over 21, you win
+    } else if (bust == false && dscore > 21) {
         $('#message').text("YOU WIN! Dealer's score: " + dscore);
         $('#message').css('visibility', 'visible');
 

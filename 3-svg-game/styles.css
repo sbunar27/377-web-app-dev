@@ -35,6 +35,12 @@
     visibility: hidden;
 }
 
+#turn-notif {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+
 #score, #beginning, #dealer-score {
     fill: white;
     font-size: 20px;
