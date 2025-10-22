@@ -81,3 +81,21 @@ function calculateTripleM() {
         }
     }
 }
+
+function calculateMolarity() {
+    let molarity = $('#molarity').val();
+    let volume = $('#vol').val();
+    let moles = $('#moles').val();
+
+    for (let i = 0; i < 3; i++) {
+        if (molarity == '' && volume != '' && moles !='') {
+            $('#molarity').val((moles/volume));
+        }
+        if (volume == '' && molarity != '' && moles !='') {
+            $('#vol').val((moles/molarity));
+        }
+        if (moles == '' && volume != '' && molarity !='') {
+            $('#molarity').val((molarity*volume));
+        }
+    }
+}

@@ -70,6 +70,25 @@
             <!-- VIDEO ON CONTENT -->
             <iframe width="300" height="169" src="https://www.youtube.com/embed/HMAOrGpkTsQ?si=G4msHOlrcyqa73wW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+            <h2>Molarity</h2>
+            <p>This function will take two values and find the third.</p>
+            <p><strong>You must also clear all boxes or refresh before inputting new values.</strong></p>
+            <table>
+                <tr>
+                    <td>Concentration (mol/L):</td>
+                    <td><input type="text" id="molarity" placeholder="Concentration/Molarity" /></td>
+                </tr>
+                <tr>
+                    <td>Volume (L):</td>
+                    <td><input type="text" id="volume" placeholder="Volume" /></td>
+                </tr>
+                <tr>
+                    <td>Moles:</td>
+                    <td><input type="text" id="moles" placeholder="Moles" /></td>
+                </tr>
+            </table>
+            <input type="button" value="Calculate Other Values" onclick="calculateMolarity()" /><br />
+            <div id="triple-m" class="output"></div>
 
             <h2>Energy of a Photon</h2>
             <p>You must input either wavelength or frequency. Otherwise, the calculations will not work. You must only input <strong>one</strong> value.</p>
