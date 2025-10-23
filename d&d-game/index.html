@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>D&D Character Sheet</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script src="scripts.js"></script>
+    </head>
+
+    <body>
+        
+        <table>
+            <tr>
+                <td>
+                    <p>Character Name: </p>
+                    <input id="char-name" type="text" placeholder="Name" />
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p>Class</p>
+                                <select>
+                                    <option value="barbarian">Barbarian</option>
+                                    <option value="bard">Bard</option>
+                                    <option value="cleric">Cleric</option>
+                                    <option value="druid">Druid</option>
+                                    <option value="fighter">Fighter</option>
+                                    <option value="monk">Monk</option>
+                                    <option value="paladin">Paladin</option>
+                                    <option value="ranger">Ranger</option>
+                                    <option value="rogue">Rogue</option>
+                                    <option value="sorcerer">Sorcerer</option>
+                                    <option value="warlock">Warlock</option>
+                                    <option value="wizard">Wizard</option>
+                                </select>
+                            </td>
+                            <td>
+                                <p>Background</p>
+                                <input id="background" type="text" placeholder="Background" />
+                            </td>
+                            <td>
+                                <p>Player Name</p>
+                                <input id="play-name" type="text" placeholder="Player Name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Race</p>
+                                <select>
+                                    <option value="dragonborn">Dragonborn</option>
+                                    <option value="dwarf">Dwarf</option>
+                                    <option value="elf">Elf</option>
+                                    <option value="gnome">Gnome</option>
+                                    <option value="half-elf">Half-Elf</option>
+                                    <option value="half-orc">Half-Orc</option>
+                                    <option value="halfling">Halfling</option>
+                                    <option value="human">Human</option>
+                                    <option value="tiefling">Tiefling</option>
+                                </select>
+                            </td>
+                            <td>
+                                <p>Alignment</p>
+                                <select>
+                                    <option value="lawful">Lawful</option>
+                                    <option value="a-neutral">Neutral/True</option>
+                                    <option value="chaotic">Chaotic</option>
+                                </select>
+                                <select>
+                                    <option value="good">Good</option>
+                                    <option value="b-neutral">Neutral</option>
+                                    <option value="evil">Evil</option>
+                                </select>
+                            </td>
+                            <td>
+                                <p>Level</p>
+                                <input id="level" type="number" min="0" max="20" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Strength</p>
+                    <p>Dexterity</p>
+                    <p>Constitution</p>
+                    <p>Intelligence</p>
+                    <p>Wisdom</p>
+                    <p>Charisma</p>
+                </td>
+                <td>
+                    <p>Inspiration</p>
+                    <p>Proficiency Bonus</p>
+                    <p><strong>Saving Throws</strong></p>
+                    <table>
+                        <tr>
+                            <td>
+                                <p>Strength</p>
+                                <input id="level" type="number" min="0" max="20" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Dexterity</p>
+                                <input id="dex" type="number" min="0" max="20" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Constitution</p>
+                                <input id="const" type="number" min="0" max="20" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Intelligence</p>
+                                <input id="intell" type="number" min="0" max="20" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Wisdom</p>
+                                <input id="wis" type="number" min="0" max="20" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Charisma</p>
+                                <input id="rizz" type="number" min="0" max="20" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </body>
+</html>
