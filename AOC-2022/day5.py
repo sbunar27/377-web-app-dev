@@ -13,6 +13,29 @@ stacks = [
     ['B','H','G','N','F','Z','L','D']
 ]
 
+# PART 1
+# for line in lines:
+#     line = line.strip().split()
+#     print(line)
+
+#     num_blocks = int(line[1])
+#     source = int(line[3]) - 1
+#     destination = int(line[5]) - 1
+
+#     print('Move ' + str(num_blocks))
+#     print('From ' + str(stacks[source]))
+#     print('To ' + str(stacks[destination]))
+
+#     for i in range(num_blocks):
+#         block = stacks[source].pop()
+#         stacks[destination].append(block)
+
+
+# for i in range(len(stacks)):
+#     print(stacks[i][-1], end='')
+# PART 1
+
+# PART 2
 for line in lines:
     line = line.strip().split()
     print(line)
@@ -25,11 +48,9 @@ for line in lines:
     print('From ' + str(stacks[source]))
     print('To ' + str(stacks[destination]))
 
-    for i in range(num_blocks):
-        block = stacks[source].pop()
-        stacks[destination].append(block)
+    stacks[destination] = stacks[destination] + stacks[source][-num_blocks:]
+    del stacks[source][-num_blocks:]
 
-
-for i in range(len(stacks)):
-    print(stacks[i][-1], end='')
-
+    for i in range(len(stacks)):
+        print(stacks[i][-1], end='')
+# PART 2
