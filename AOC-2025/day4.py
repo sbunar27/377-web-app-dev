@@ -9,7 +9,7 @@ for line in lines:
 
 H, W = len(grid), len(grid[0])
 
-# PART 2
+# PART 1
 ans = 0
 removable = 0
 for r in range(len(grid)):
