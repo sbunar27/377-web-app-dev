@@ -12,13 +12,13 @@ for line in lines:
     index = -1
 
     for j in range(1, numNums + 1):
-        max = 0
+        maxNumNumNums = 0
         for i in range(index+1, len(line) - numNums + j):
-            digit = int(line[i])
-            if digit > max:
-                max = digit
+            numNumNum = int(line[i])
+            if numNumNum > maxNumNumNums:
+                maxNumNumNums = numNumNum
                 index = i
-        num+=str(max)
+        num+=str(maxNumNumNums)
 
     total += int(num)
 
