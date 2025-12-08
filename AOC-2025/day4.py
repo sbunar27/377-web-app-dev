@@ -1,4 +1,3 @@
-# grid = open("day4.txt").read().splitlines()
 file = open('day4.txt', 'r')
 lines = file.readlines()
 grid = []
