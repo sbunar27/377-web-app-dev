@@ -86,5 +86,5 @@ def solve(block):
     return product
 
 # found on google, gets it done quicker than a full loop <3
-total = sum(solve(p) for p in problems)
+total = sum(solve(problem) for problem in problems)
 print(total)

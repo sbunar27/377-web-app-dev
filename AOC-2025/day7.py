@@ -1,3 +1,5 @@
+# with lots of help from father <3
+
 file = open('day7.txt', 'r')
 lines = file.readlines()
 
