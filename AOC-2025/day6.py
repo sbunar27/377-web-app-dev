@@ -79,11 +79,11 @@ def solve(block):
 
     if op == "+":
         return sum(nums)
-
-    product = 1
-    for n in nums:
-        product *= n
-    return product
+    else:
+        product = 1
+        for n in nums:
+            product *= n
+        return product
 
 # found on google, gets it done quicker than a full loop <3
 total = sum(solve(problem) for problem in problems)
