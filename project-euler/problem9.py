@@ -9,7 +9,14 @@
 target = 1000
 
 for a in range(1, target//3):
-    for b in range(a+1, target//2):
+    for b in range(a+1, target):
         c = target - a - b
         if a**2 + b**2 == c**2:
             print(a*b*c)
+
+# 31875000
+
+import time
+start_time = time.time()
+# Your code here
+print("Process finished --- %s seconds ---" % (time.time() - start_time))
