@@ -24,3 +24,17 @@ for i in range(999, 99, -1):
 print(maxPal)
 
 # 906609
+
+# Mr. Ciccolo's way
+
+max = 0
+
+for f1 in range(100,1000):
+    for f2 in range(100,1000):
+        prod = f1*f2
+        fact = str(prod)
+        if fact == fact[::-1] and prod > max:
+            max = prod
+
+print(max)
+
