@@ -3,17 +3,27 @@
 import random
 from sys import argv
 
+#python3 password-generator.py 10 Aa0!
+
 script, l, p = argv
 
 # step 1: get input
 if len(argv) == 3:
     length = int(argv[1])
-else:
+    includeNum = "0" in argv[2]
+    includeLower = "a" in argv[2]
+    includeUpper = "A" in argv[2]
+    includeSpecial = "!" in argv[2]
+elif len(argv) == 1:
     length = int(input("What is the required length of the password? "))
     includeNum = input("Should it include a number? [Y/N] ").upper()[0] == "Y"
     includeLower = input("Should it include lowercase characters? [Y/N] ").upper()[0] == "Y"
     includeUpper = input("Should it include uppercase characters? [Y/N] ").upper()[0] == "Y"
     includeSpecial = input("Should it include special characters? [Y/N] ").upper()[0] == "Y"
+else:
+    print("Expected usage: password-generator.py [length] [pattern]")
+    print("Where [pattern] contains: Aa0!")
+    exit()
 
 #step 2: create password
 password = []
