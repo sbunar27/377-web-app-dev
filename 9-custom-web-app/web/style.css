@@ -1,0 +1,400 @@
+/* https://coolors.co/palette/ccd5ae-dbe1bc-e9edc9-f4f4d5-fefae0-fcf4d7-faedcd-e7c8a0-deb68a-d4a373 */
+
+#icon {
+    font-size: 18px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.filter-form {
+    display: block;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+#reviewInput {
+  width: 500px;  /* Sets the width of the input box */
+  height: 100px;  /* Sets the height of the input box */
+  padding: 10px; /* Adds space inside the box around the text */
+}
+
+/************************** THEMES *************************/
+
+/* brown sugar theme */
+
+body[data-theme="brownSugar"] #icon {
+    color: #40270e;
+}
+
+body[data-theme="brownSugar"] .main {
+    align-self: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+    background-color: #fffbf3;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+body[data-theme="brownSugar"] {
+    color: #D4A373;
+    background-color: #fef3e0;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+body[data-theme="brownSugar"] a {
+    color: #fef3e0;
+    text-decoration: none;
+}
+
+/* repetitive styles */
+body[data-theme="brownSugar"] a:visited,
+body[data-theme="brownSugar"] a:link {
+    color: #fef3e0;
+    text-decoration: none;
+}
+
+body[data-theme="brownSugar"] a:hover {
+    color: #f1e4cd;
+    text-decoration: none;
+}
+
+body[data-theme="brownSugar"] input[type='text'],
+body[data-theme="brownSugar"] input[type='number'],
+body[data-theme="brownSugar"] input[type='datetime'],
+body[data-theme="brownSugar"] textarea,
+body[data-theme="brownSugar"] select {
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid #D4A373;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+body[data-theme="brownSugar"] input[type='button'],
+body[data-theme="brownSugar"] button,
+body[data-theme="brownSugar"] .button {
+    background-color: #D4A373;
+    color: #FEFAE0;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+body[data-theme="brownSugar"] input[type='button']:hover,
+body[data-theme="brownSugar"] button:hover,
+body[data-theme="brownSugar"] .button:hover {
+    background-color: #c39465;
+    color: #FEFAE0;
+}
+
+body[data-theme="brownSugar"] td,
+body[data-theme="brownSugar"] th {
+    padding: 10px;
+    min-width: 120px;
+    max-width: 120px;
+    text-align: center;
+    background-color: rgba(212, 163, 115, 0.66);
+    border: none;
+    color: #fef3e0;
+    border-collapse: collapse;
+}
+
+
+
+/*************************/
+
+
+/* taro theme */
+
+/* https://coolors.co/palette/dec9e9-dac3e8-d2b7e5-c19ee0-b185db-a06cd5-9163cb-815ac0-7251b5-6247aa */
+
+body[data-theme="taro"] #icon {
+    color: #4d2d74;
+}
+
+body[data-theme="taro"] .main {
+    align-self: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+    background-color: #f7f1fa;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+body[data-theme="taro"] {
+    color: #9163CB;
+    background-color: #ede1f4;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+body[data-theme="taro"] a {
+    color: #ede1f4;
+    text-decoration: none;
+}
+
+/* repetitive styles */
+body[data-theme="taro"] a:visited,
+body[data-theme="taro"] a:link {
+    color: #ede1f4;
+    text-decoration: none;
+}
+
+body[data-theme="taro"] a:hover {
+    color: #d4bce1;
+    text-decoration: none;
+}
+
+body[data-theme="taro"] input[type='text'],
+body[data-theme="taro"] input[type='number'],
+body[data-theme="taro"] input[type='datetime'],
+body[data-theme="taro"] textarea,
+body[data-theme="taro"] select {
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid #9163CB;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+body[data-theme="taro"] input[type='button'],
+body[data-theme="taro"] button,
+body[data-theme="taro"] .button {
+    background-color: #9163CB;
+    color: #ede1f4;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+body[data-theme="taro"] input[type='button']:hover,
+body[data-theme="taro"] button:hover,
+body[data-theme="taro"] .button:hover {
+    background-color: #8458bb;
+    color: #ede1f4;
+}
+
+body[data-theme="taro"] td,
+body[data-theme="taro"] th {
+    padding: 10px;
+    min-width: 120px;
+    max-width: 120px;
+    text-align: center;
+    background-color: #9263cbd2;
+    border: none;
+    color: #ede1f4;
+    border-collapse: collapse;
+}
+
+/***********************/
+
+/* matcha theme */
+
+/* https://coolors.co/palette/dad7cd-a3b18a-588157-3a5a40-344e41 */
+
+body[data-theme="matcha"] #icon {
+    color: #3a5739;
+}
+
+body[data-theme="matcha"] .main {
+    align-self: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+    background-color: #e9ede5;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+body[data-theme="matcha"] {
+    color: #588157;
+    background-color: #d3dacd;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+body[data-theme="matcha"] a {
+    color: #DEC9E9;
+    text-decoration: none;
+}
+
+/* repetitive styles */
+body[data-theme="matcha"] a:visited,
+body[data-theme="matcha"] a:link {
+    color: #d3dacd;
+    text-decoration: none;
+}
+
+body[data-theme="matcha"] a:hover {
+    color: #c8d1c0;
+    text-decoration: none;
+}
+
+body[data-theme="matcha"] input[type='text'],
+body[data-theme="matcha"] input[type='number'],
+body[data-theme="matcha"] input[type='datetime'],
+body[data-theme="matcha"] textarea,
+body[data-theme="matcha"] select {
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid #588157;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+body[data-theme="matcha"] input[type='button'],
+body[data-theme="matcha"] button,
+body[data-theme="matcha"] .button {
+    background-color: #588157;
+    color: #d3dacd;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+body[data-theme="matcha"] input[type='button']:hover,
+body[data-theme="matcha"] button:hover,
+body[data-theme="matcha"] .button:hover {
+    background-color: #4b724a;
+    color: #d3dacd;
+}
+
+body[data-theme="matcha"] td,
+body[data-theme="matcha"] th {
+    padding: 10px;
+    min-width: 120px;
+    max-width: 120px;
+    text-align: center;
+    background-color: #588157d2;
+    border: none;
+    color: #d3dacd;
+    border-collapse: collapse;
+}
+
+
+/***********************/
+
+/* strawberry theme */
+
+/* https://coolors.co/palette/590d22-800f2f-a4133c-c9184a-ff4d6d-ff758f-ff8fa3-ffb3c1-ffccd5-fff0f3 */
+
+body[data-theme="strawberry"] #icon {
+    color: #590D22;
+}
+
+body[data-theme="strawberry"] .main {
+    align-self: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+body[data-theme="strawberry"] {
+    color: #FF758F;
+    background-color: #FFF0F3;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+body[data-theme="strawberry"] a:visited,
+body[data-theme="strawberry"] a:link {
+    color: #FFF0F3;
+    text-decoration: none;
+}
+
+body[data-theme="strawberry"] a:hover {
+    color: #f1dee2;
+    text-decoration: none;
+}
+
+body[data-theme="strawberry"] input[type='text'],
+body[data-theme="strawberry"] input[type='number'],
+body[data-theme="strawberry"] input[type='datetime'],
+body[data-theme="strawberry"] textarea,
+body[data-theme="strawberry"] select {
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid #FF758F;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+body[data-theme="strawberry"] input[type='button'],
+body[data-theme="strawberry"] button,
+body[data-theme="strawberry"] .button {
+    background-color: #FF758F;
+    color: #FFF0F3;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+body[data-theme="strawberry"] input[type='button']:hover,
+body[data-theme="strawberry"] button:hover,
+body[data-theme="strawberry"] .button:hover {
+    background-color: #FF758F;
+    color: #FFF0F3;
+}
+
+body[data-theme="strawberry"] td,
+body[data-theme="strawberry"] th {
+    padding: 10px;
+    min-width: 120px;
+    max-width: 120px;
+    text-align: center;
+    background-color: #FF758Fd2;
+    border: none;
+    color: #FFF0F3;
+    border-collapse: collapse;
+}
+
+
+/* GLOBAL STYLES */
+table {
+    margin: 20px auto;
+    table-layout: fixed;
+}
+
+h1, h2 {
+    font-family: 'Playfair Display', serif;
+}
+
+input, p, a, label, td, th, button, .button {
+    font-family: 'DM Sans', sans-serif;
+}
