@@ -1,18 +1,20 @@
-<h2>Books ( <span id="recordCount"></span> )</h2>
+<h2>books ( <span id="recordCount"></span> )</h2>
 
 
 <!-- SELECTS THE PAGE THEME AND ALTERS THE CSS -->
-
-<label for="theme">Theme: </label>
+<label for="theme-selector">Theme: </label>
 <select id="theme-selector">
     <option value="brownSugar">Brown Sugar</option>
     <option value="taro">Taro</option>
     <option value="matcha">Matcha</option>
     <option value="strawberry">Strawberry</option>
+    <option value="butterfly">Butterfly</option>
 </select>
 
+
+<!-- COOKIES! WITH HELP FROM GOOGLE! -->
 <script>
-    // uses cookies to save the user's choice across pages or on reloads
+    // uses cookies to save the user's theme across pages or on reloads
     function setCookie(name, value, days) {
         const expires = new Date(Date.now() + days*24*60*60*1000).toUTCString();
         document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
@@ -26,14 +28,14 @@
         setCookie('selectedTheme', selectedTheme, 365);
     });
 
-    // Apply saved theme on page load
+    // apply saved theme on page load
     window.onload = () => {
         const savedTheme = localStorage.getItem('selectedTheme') || 'brownSugar';
         document.body.setAttribute('data-theme', savedTheme);
         themeSelector.value = savedTheme;
     };
 
-    // Change theme instantly on user selection and save it
+    // change theme instantly on user selection and save it
     themeSelector.addEventListener('change', (event) => {
         const selectedTheme = event.target.value;
         document.body.setAttribute('data-theme', selectedTheme);
@@ -41,93 +43,216 @@
     });
 </script>
 
-<!-- -->
 
 <br><br><br>
 
 <a class="button" href="index.php?nav=detail" role="button">Create Record</a>
 
-<br>
-
-<table>
-    <tr>
-        <td class="t-header">Title</td>
-        <td class="t-header">Author</td>
-        <td class="t-header">Rating</td>
-        <td class="t-header"># of Pages</td>
-        <td class="t-header">Date started</td>
-        <td class="t-header">Date finished</td>
-    </tr>
+<br><br>
 
 <?php 
 
 $connection = getConnection();
 
-?>
-
-<!-- APPLIES A FILTER TO THE LIST -->
-<span class="filter-form">
-    <form action="index.php" method="POST">
-        <label for="filter">Filter by: </label>
-        <select name="filter" id="filter">
-            <option value="date-finished">Date Finished</option>
-            <option value="date-started">Date Started</option>
-            <option value="book-title">Book Title</option>
-        </select>
-
-        <label for="order">Order: </label>
-        <select name="order" id="order">
-            <option value="DESC">Descending</option>
-            <option value="ASC">Ascending</option>
-        </select>
-
-        <button type="submit" name="submit-filter">Apply</button>
-    </form>
-</span>
-
-<?php
-
+// use an associative array (with keys and values)
 $allowedFilters = [
-    'date-finished' => 'book_date_finished',
-    'date-started' => 'book_date_started',
-    'book-title' => 'book_title'
+    'book_title',
+    'book_rating',
+    'book_date_started',
+    'book_date_finished'
 ];
 
 $allowedOrders = ['ASC', 'DESC'];
 
-$orderColumn = 'book_date_finished';
-$orderDirection = 'DESC';
+// the ?? operator says that if something is null, make it this instead (google)
+$statusFilters = $_GET['status'] ?? [];
+$currentFilter = $_GET['filter'] ?? 'book_date_finished';
+$currentOrder = $_GET['order'] ?? 'DESC';
 
+$orderColumn = 'book_date_finished'; // default column
+$orderDirection = 'DESC'; // default direction
 
-// checks if form was submitted and the filter field exists in that data
-// if both conditions are true, sets $orderColumn to the corresponding
-// database column name from $allowedFilters
-if (isset($_POST['submit-filter'], $_POST['filter']) && array_key_exists($_POST['filter'], $allowedFilters)) {
-    $orderColumn = $allowedFilters[$_POST['filter']];
+if (isset($_GET['filter'])) {
+    $filter = $_GET['filter']; // get the filter from the URL
+
+    // check if the filter is one of the allowed options
+    if (in_array($filter, $allowedFilters)) {
+        $orderColumn = $filter;
+    }
 }
 
-// if both conditions are true, sets $orderDirection to the corresponding
-// database column name from $allowedOrders
-if (isset($_POST['order']) && in_array($_POST['order'], $allowedOrders)) {
-    $orderDirection = $_POST['order'];
+$allowedOrders = ['ASC', 'DESC'];
+
+if (isset($_GET['order'])) {
+    $order = $_GET['order']; // get the order from the URL
+
+    if (in_array($order, $allowedOrders)) {
+        $orderDirection = $order;
+    }
 }
 
-$sql = <<<SQL
-    SELECT *
-    FROM book
-    ORDER BY $orderColumn $orderDirection;
-SQL;
+?>
+
+<table>
+
+    <tr>
+        <?= sortHeader('Title', 'book_title', $currentFilter, $currentOrder) ?>
+        <th>Author</th>
+        <?= sortHeader('Rating', 'book_rating', $currentFilter, $currentOrder) ?>
+        <th>Status</th>
+        <th># of Pages</th>
+        <?= sortHeader('Date Started', 'book_date_started', $currentFilter, $currentOrder) ?>
+        <?= sortHeader('Date Finished', 'book_date_finished', $currentFilter, $currentOrder) ?>
+    </tr>
+
+
+<?php 
+
+
+function buildSortURL($filterKey, $currentFilter, $currentOrder) {
+    // copy current GET parameters
+    $parameters = $_GET;
+
+    // toggle order if clicking the same filter, else default to DESC
+    if ($filterKey === $currentFilter && $currentOrder === 'DESC') {
+        $parameters['order'] = 'ASC';
+    } else {
+        $parameters['order'] = 'DESC';
+    }
+
+    $parameters['filter'] = $filterKey;
+
+    // build link
+    return 'index.php?' . http_build_query($parameters);
+}
+
+function sortHeader($label, $filterKey, $currentFilter, $currentOrder) {
+    $url = buildSortURL($filterKey, $currentFilter, $currentOrder);
+    if ($filterKey === $currentFilter) {
+        if ($currentOrder === 'ASC') {
+            $arrow = ' ▲';
+        } else {
+            $arrow = ' ▼';
+        }
+    } else {
+        $arrow = '';
+    }
+    return '<th><a href="' . $url . '">' . $label . $arrow . '</a></th>';
+}
+
+
+?>
+
+<!-- APPLIES FILTER BASED ON READ, NOT READ, OR NOT FINISHED -->
+<span>
+  <form id="statusFilterForm" action="index.php" method="GET">
+    <fieldset>
+      <legend>Read Status</legend>
+      <label>
+        <?php
+            $checked = '';
+            if (isset($_GET['status'])) {
+                if (in_array('R', $_GET['status'])) {
+                $checked = 'checked';
+                }
+            }
+        ?>
+        <input type="checkbox" name="status[]" value="R" <?php echo $checked; ?>
+          onclick="statusChange(this)">
+        Read
+      </label>
+      <label>
+        <?php
+            $checked = '';
+            if (isset($_GET['status'])) {
+                if (in_array('NR', $_GET['status'])) {
+                $checked = 'checked';
+                }
+            }
+        ?>
+        <input type="checkbox" name="status[]" value="NR" <?php echo $checked; ?>
+          onclick="statusChange(this)">
+        Not Read (TBR)
+      </label>
+      <label>
+        <?php
+            $checked = '';
+            if (isset($_GET['status'])) {
+                if (in_array('NF', $_GET['status'])) {
+                $checked = 'checked';
+                }
+            }
+        ?>
+        <input type="checkbox" name="status[]" value="NF" <?php echo $checked; ?>
+          onclick="statusChange(this)">
+        Not Finished
+      </label>
+    </fieldset>
+
+    <!-- preserve current filter and order, use htmlspecialchars to make input safer (special characters turn into html entities)  -->
+    <input type="hidden" name="filter" value="<?= htmlspecialchars($_GET['filter'] ?? 'book_date_finished') ?>">
+    <input type="hidden" name="order" value="<?= htmlspecialchars($_GET['order'] ?? 'DESC') ?>">
+  </form>
+</span>
+
+<script>
+    function statusChange(checkbox){
+        document.getElementById('statusFilterForm').submit();
+    }
+</script>
+
+<?php 
+
+$sql = "SELECT * FROM book";
+
+// check if there are any status filters selected and if it's an array
+if (!empty($statusFilters) && is_array($statusFilters)) {
+    $validStatuses = ['R', 'NR', 'NF'];
+    $filteredStatuses = [];
+
+    // look at each status the user selected
+    foreach ($statusFilters as $status) {
+        // if the status is one of the allowed ones, 
+        // add it to the filtered list
+        if (in_array($status, $validStatuses)) {
+            $filteredStatuses[] = $status;
+        }
+    }
+
+    if (!empty($filteredStatuses)) {
+        // start building SQL WHERE clause
+        $sql .= " WHERE book_status IN (";
+
+        // add each status to the SQL query, wrapped in quotes
+        $first = true; // to handle commas correctly
+        foreach ($filteredStatuses as $status) {
+            if ($first) {
+                $sql .= "'$status'"; // add the first status without a comma
+                $first = false;
+            } else {
+                $sql .= ", '$status'"; // add a comma before the next statuses
+            }
+        }
+        $sql .= ")";
+    }
+}
+
+// Add ORDER BY clause
+$sql .= " ORDER BY $orderColumn $orderDirection";
+
 
 $result = $connection->query($sql);
 
+
 $recordCount = 0;
-echo "<table border='1'>";
 while ($row = $result->fetch_assoc()) {
+    $rowClass = ($row['book_status'] === 'R') ? 'read-row' : '';
 
     echo "<tr>";
     echo "<td><a href='index.php?nav=detail&id=" . $row["book_id"] . "'>" . $row["book_title"] . "</a></td>";
     echo "<td>" . $row["book_author"] . "</td>";
     echo "<td>" . $row["book_rating"] . "</td>";
+    echo "<td class='{$rowClass}'>" . $row["book_status"] . "</td>";
     echo "<td>" . $row["book_length"] . "</td>";
     echo "<td>" . $row["book_date_started"] . "</td>";
     echo "<td>" . $row["book_date_finished"] . "</td>";

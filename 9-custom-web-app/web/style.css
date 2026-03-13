@@ -4,6 +4,10 @@
     font-size: 18px;
 }
 
+#title-box {
+    width: 50%;
+}
+
 .form-label {
     font-weight: bold;
 }
@@ -17,7 +21,25 @@
 #reviewInput {
   width: 500px;  /* Sets the width of the input box */
   height: 100px;  /* Sets the height of the input box */
-  padding: 10px; /* Adds space inside the box around the text */
+  padding: 20px; /* Adds space inside the box around the text */
+}
+
+body {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+legend {
+    margin-bottom: 10px;
+}
+
+fieldset {
+    width: 350px;
+}
+
+th {
+    height: 70px;
+    opacity: 0.8;
 }
 
 /************************** THEMES *************************/
@@ -26,6 +48,12 @@
 
 body[data-theme="brownSugar"] #icon {
     color: #40270e;
+}
+
+body[data-theme="brownSugar"] .read-row {
+    background-color: rgba(212, 163, 115, 0.466);
+    color: #fef3e0;
+    text-decoration: none;
 }
 
 body[data-theme="brownSugar"] .main {
@@ -43,8 +71,7 @@ body[data-theme="brownSugar"] .main {
 body[data-theme="brownSugar"] {
     color: #D4A373;
     background-color: #fef3e0;
-    margin-left: 20%;
-    margin-right: 20%;
+    
 }
 
 body[data-theme="brownSugar"] a {
@@ -68,7 +95,8 @@ body[data-theme="brownSugar"] input[type='text'],
 body[data-theme="brownSugar"] input[type='number'],
 body[data-theme="brownSugar"] input[type='datetime'],
 body[data-theme="brownSugar"] textarea,
-body[data-theme="brownSugar"] select {
+body[data-theme="brownSugar"] select,
+body[data-theme="brownSugar"] fieldset {
     font-family: 'DM Sans', sans-serif;
     border: 1px solid #D4A373;
     border-radius: 5px;
@@ -78,7 +106,8 @@ body[data-theme="brownSugar"] select {
 
 body[data-theme="brownSugar"] input[type='button'],
 body[data-theme="brownSugar"] button,
-body[data-theme="brownSugar"] .button {
+body[data-theme="brownSugar"] .button,
+body[data-theme="brownSugar"] legend {
     background-color: #D4A373;
     color: #FEFAE0;
     border: none;
@@ -100,9 +129,9 @@ body[data-theme="brownSugar"] .button:hover {
 
 body[data-theme="brownSugar"] td,
 body[data-theme="brownSugar"] th {
-    padding: 10px;
-    min-width: 120px;
-    max-width: 120px;
+    padding: 20px;
+    min-width: 130px;
+    max-width: 130px;
     text-align: center;
     background-color: rgba(212, 163, 115, 0.66);
     border: none;
@@ -123,6 +152,12 @@ body[data-theme="taro"] #icon {
     color: #4d2d74;
 }
 
+body[data-theme="taro"] .read-row {
+    background-color: #9263cb9c;
+    color: #ede1f4;
+    text-decoration: none;
+}
+
 body[data-theme="taro"] .main {
     align-self: center;
     align-items: center;
@@ -138,8 +173,7 @@ body[data-theme="taro"] .main {
 body[data-theme="taro"] {
     color: #9163CB;
     background-color: #ede1f4;
-    margin-left: 20%;
-    margin-right: 20%;
+    
 }
 
 body[data-theme="taro"] a {
@@ -163,7 +197,8 @@ body[data-theme="taro"] input[type='text'],
 body[data-theme="taro"] input[type='number'],
 body[data-theme="taro"] input[type='datetime'],
 body[data-theme="taro"] textarea,
-body[data-theme="taro"] select {
+body[data-theme="taro"] select,
+body[data-theme="taro"] fieldset {
     font-family: 'DM Sans', sans-serif;
     border: 1px solid #9163CB;
     border-radius: 5px;
@@ -173,7 +208,8 @@ body[data-theme="taro"] select {
 
 body[data-theme="taro"] input[type='button'],
 body[data-theme="taro"] button,
-body[data-theme="taro"] .button {
+body[data-theme="taro"] .button,
+body[data-theme="taro"] legend {
     background-color: #9163CB;
     color: #ede1f4;
     border: none;
@@ -195,9 +231,9 @@ body[data-theme="taro"] .button:hover {
 
 body[data-theme="taro"] td,
 body[data-theme="taro"] th {
-    padding: 10px;
-    min-width: 120px;
-    max-width: 120px;
+    padding: 20px;
+    min-width: 130px;
+    max-width: 130px;
     text-align: center;
     background-color: #9263cbd2;
     border: none;
@@ -215,6 +251,12 @@ body[data-theme="matcha"] #icon {
     color: #3a5739;
 }
 
+body[data-theme="matcha"] .read-row {
+    background-color: #5881579c;
+    color: #d3dacd;
+    text-decoration: none;
+}
+
 body[data-theme="matcha"] .main {
     align-self: center;
     align-items: center;
@@ -230,16 +272,9 @@ body[data-theme="matcha"] .main {
 body[data-theme="matcha"] {
     color: #588157;
     background-color: #d3dacd;
-    margin-left: 20%;
-    margin-right: 20%;
+    
 }
 
-body[data-theme="matcha"] a {
-    color: #DEC9E9;
-    text-decoration: none;
-}
-
-/* repetitive styles */
 body[data-theme="matcha"] a:visited,
 body[data-theme="matcha"] a:link {
     color: #d3dacd;
@@ -255,7 +290,8 @@ body[data-theme="matcha"] input[type='text'],
 body[data-theme="matcha"] input[type='number'],
 body[data-theme="matcha"] input[type='datetime'],
 body[data-theme="matcha"] textarea,
-body[data-theme="matcha"] select {
+body[data-theme="matcha"] select,
+body[data-theme="matcha"] fieldset {
     font-family: 'DM Sans', sans-serif;
     border: 1px solid #588157;
     border-radius: 5px;
@@ -265,7 +301,8 @@ body[data-theme="matcha"] select {
 
 body[data-theme="matcha"] input[type='button'],
 body[data-theme="matcha"] button,
-body[data-theme="matcha"] .button {
+body[data-theme="matcha"] .button,
+body[data-theme="matcha"] legend {
     background-color: #588157;
     color: #d3dacd;
     border: none;
@@ -287,9 +324,9 @@ body[data-theme="matcha"] .button:hover {
 
 body[data-theme="matcha"] td,
 body[data-theme="matcha"] th {
-    padding: 10px;
-    min-width: 120px;
-    max-width: 120px;
+    padding: 20px;
+    min-width: 130px;
+    max-width: 130px;
     text-align: center;
     background-color: #588157d2;
     border: none;
@@ -308,6 +345,12 @@ body[data-theme="strawberry"] #icon {
     color: #590D22;
 }
 
+body[data-theme="strawberry"] .read-row {
+    background-color: #FF758F9c;
+    color: #FFF0F3;
+    text-decoration: none;
+}
+
 body[data-theme="strawberry"] .main {
     align-self: center;
     align-items: center;
@@ -323,8 +366,7 @@ body[data-theme="strawberry"] .main {
 body[data-theme="strawberry"] {
     color: #FF758F;
     background-color: #FFF0F3;
-    margin-left: 20%;
-    margin-right: 20%;
+    
 }
 
 body[data-theme="strawberry"] a:visited,
@@ -342,7 +384,8 @@ body[data-theme="strawberry"] input[type='text'],
 body[data-theme="strawberry"] input[type='number'],
 body[data-theme="strawberry"] input[type='datetime'],
 body[data-theme="strawberry"] textarea,
-body[data-theme="strawberry"] select {
+body[data-theme="strawberry"] select,
+body[data-theme="strawberry"] fieldset {
     font-family: 'DM Sans', sans-serif;
     border: 1px solid #FF758F;
     border-radius: 5px;
@@ -352,7 +395,8 @@ body[data-theme="strawberry"] select {
 
 body[data-theme="strawberry"] input[type='button'],
 body[data-theme="strawberry"] button,
-body[data-theme="strawberry"] .button {
+body[data-theme="strawberry"] .button,
+body[data-theme="strawberry"] legend  {
     background-color: #FF758F;
     color: #FFF0F3;
     border: none;
@@ -368,15 +412,15 @@ body[data-theme="strawberry"] .button {
 body[data-theme="strawberry"] input[type='button']:hover,
 body[data-theme="strawberry"] button:hover,
 body[data-theme="strawberry"] .button:hover {
-    background-color: #FF758F;
+    background-color: #f15f7a;
     color: #FFF0F3;
 }
 
 body[data-theme="strawberry"] td,
 body[data-theme="strawberry"] th {
-    padding: 10px;
-    min-width: 120px;
-    max-width: 120px;
+    padding: 20px;
+    min-width: 130px;
+    max-width: 130px;
     text-align: center;
     background-color: #FF758Fd2;
     border: none;
@@ -384,8 +428,110 @@ body[data-theme="strawberry"] th {
     border-collapse: collapse;
 }
 
+/************************/
+
+/* butterfly theme */
+
+/* https://coolors.co/palette/f7f4ea-ded9e2-c0b9dd-80a1d4-75c9c8 */
+
+body[data-theme="butterfly"] #icon {
+    color: #223a5e;
+}
+
+body[data-theme="butterfly"] .read-row {
+    background-color: #cadbf59c;
+    color: #3f5f8e;
+    text-decoration: none;
+}
+
+body[data-theme="butterfly"] .main {
+    align-self: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+    background-color: #acc7f0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+body[data-theme="butterfly"] {
+    color: #3f5f8e;
+    background-color: #80A1D4;
+    
+}
+
+body[data-theme="butterfly"] a:visited,
+body[data-theme="butterfly"] a:link {
+    color: #3f5f8e;
+    text-decoration: none;
+}
+
+body[data-theme="butterfly"] a:hover {
+    color: #33507c;
+    text-decoration: none;
+}
+
+body[data-theme="butterfly"] input[type='text'],
+body[data-theme="butterfly"] input[type='number'],
+body[data-theme="butterfly"] input[type='datetime'],
+body[data-theme="butterfly"] textarea,
+body[data-theme="butterfly"] select,
+body[data-theme="butterfly"] fieldset {
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid #3f5f8e;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+body[data-theme="butterfly"] input[type='button'],
+body[data-theme="butterfly"] button,
+body[data-theme="butterfly"] .button,
+body[data-theme="butterfly"] legend {
+    background-color: #cadbf5;
+    color: #3f5f8e;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+body[data-theme="butterfly"] input[type='button']:hover,
+body[data-theme="butterfly"] button:hover,
+body[data-theme="butterfly"] .button:hover {
+    background-color: #b2c5e3;
+    color: #3f5f8e;
+}
+
+body[data-theme="butterfly"] td,
+body[data-theme="butterfly"] th {
+    padding: 20px;
+    min-width: 130px;;
+    max-width: 130px;
+    text-align: center;
+    background-color: #cadbf5d2;
+    border: none;
+    color: #3f5f8e;
+    border-collapse: collapse;
+}
+
+
+/************************/
+
 
 /* GLOBAL STYLES */
+
+body {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
 table {
     margin: 20px auto;
     table-layout: fixed;

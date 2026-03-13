@@ -52,52 +52,58 @@ if (isset($id)){
 <span class="main">
     <h2><?php echo $title; ?></h2>
     <form action="save.php" method="POST">
-        <input type="hidden" class="form-control" name="id" value="<?php echo $id; ?>">
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
 
         <div>
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" name="title" value="<?php echo $title; ?>">
+            <label for="title">Title</label>
+            <input type="text" id="title-box" name="title" value="<?php echo $title; ?>">
         </div>
 
         <div>
-            <label for="title" class="form-label">Author</label>
-            <input type="text" class="form-control" name="author" value="<?php echo $author; ?>">
+            <label for="title">Author</label>
+            <input type="text" name="author" value="<?php echo $author; ?>">
         </div>
 
         <div>
-            <label for="title" class="form-label">Read Status (R, NR, NF)</label>
-            <input type="text" class="form-control" name="status" value="<?php echo $status; ?>">
+            <label for="title">Read Status</label>
+            <!-- <input type="text"  name="status" value="<?php echo $status; ?>"> -->
+            <select name="status">
+                <option value="R" <?php if ($status == 'R') echo 'selected'; ?>>R</option>
+                <option value="NR" <?php if ($status == 'NR') echo 'selected'; ?>>NR</option>
+                <option value="NF" <?php if ($status == 'NF') echo 'selected'; ?>>NF</option>
+            </select>
+
         </div>
 
         <div>
-            <label for="genre" class="form-label">Genre</label>
-            <input type="text" class="form-control" name="genre" value="<?php echo $genre; ?>">
+            <label for="genre">Genre</label>
+            <input type="text" name="genre" value="<?php echo $genre; ?>">
         </div>
 
         <div>
-            <label for="rating" class="form-label">Rating</label>
-            <input type="text" class="form-control" name="rating" value="<?php echo $rating; ?>">
+            <label for="rating">Rating</label>
+            <input type="number" name="rating" value="<?php echo $rating; ?>">
         </div>
 
         <div>
-            <label for="review" class="form-label">Review</label>
+            <label for="review"  style="float:inline-start;">Review&ensp;</label>
             <textarea id="reviewInput" name="review" rows="5" cols="40"><?php echo $review; ?></textarea>
 
         </div>
 
         <div>
-            <label for="length" class="form-label">Length</label>
-            <input type="text" class="form-control" name="length" value="<?php echo $length; ?>">
+            <label for="length">Length (Pages)</label>
+            <input type="number" name="length" value="<?php echo $length; ?>">
         </div>
 
         <div>
-            <label for="date_started" class="form-label">Date Started (YYYY/MM/DD)</label>
-            <input type="datetime" class="form-control" name="dateStarted" value="<?php echo $dateStarted; ?>">
+            <label for="date_started">Date Started (YYYY/MM/DD)</label>
+            <input type="datetime" name="dateStarted" value="<?php echo $dateStarted; ?>">
         </div>
 
         <div>
-            <label for="date_finished" class="form-label">Date Finished (YYYY/MM/DD)</label>
-            <input type="datetime" class="form-control" name="dateFinished" value="<?php echo $dateFinished; ?>">
+            <label for="date_finished">Date Finished (YYYY/MM/DD)</label>
+            <input type="datetime" name="dateFinished" value="<?php echo $dateFinished; ?>">
         </div>
 
         <button type="submit">Save</button>
