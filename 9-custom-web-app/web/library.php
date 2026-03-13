@@ -6,10 +6,10 @@
 extract($_REQUEST);
 
 function getConnection(){
-    $servername = "";
-    $username = "";
-    $password = "";
-    $dbname = "";
+    $servername = "localhost";
+    $username = "root";
+    $password = "password";
+    $dbname = "booknook";
 
     // connect to database and make sure it was successful
     $connection = new mysqli($servername, $username, $password, $dbname);
