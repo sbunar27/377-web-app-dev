@@ -1,7 +1,7 @@
 <?php
 
 /*************************************************************************************************
- * This page deletes a single movie record based on the values submitted by the user
+ * This page deletes a single book record based on the values submitted by the user
 *************************************************************************************************/
 
 include("library.php");
