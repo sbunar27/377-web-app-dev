@@ -49,23 +49,33 @@ if (isset($id)){
 
 ?>
 
+<br><br><br><br><br><br><br>
+
 <span class="main">
-    <h2><?php echo $title; ?></h2>
-    <form action="save.php" method="POST">
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
+    <h2 id="title-header">
+    <?php
+        if (isset($id) && $id > 0) {
+            echo "$title";
+        } else {
+            echo "Add New Book Review";
+        }
+    ?></h2>
+
+    <form id="bookForm" action="save.php" method="POST">
+        <input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
 
         <div>
-            <label for="title">Title</label>
-            <input type="text" id="title-box" name="title" value="<?php echo $title; ?>">
+            <label for="title">Title *</label>
+            <input type="text" name="title" id="title" value="<?php echo $title; ?>">
         </div>
 
         <div>
             <label for="title">Author</label>
-            <input type="text" name="author" value="<?php echo $author; ?>">
+            <input type="text" name="author" id="author" value="<?php echo $author; ?>">
         </div>
 
         <div>
-            <label for="title">Read Status</label>
+            <label for="title">Read Status *</label>
             <!-- <input type="text"  name="status" value="<?php echo $status; ?>"> -->
             <select name="status">
                 <option value="R" <?php if ($status == 'R') echo 'selected'; ?>>R</option>
@@ -77,12 +87,12 @@ if (isset($id)){
 
         <div>
             <label for="genre">Genre</label>
-            <input type="text" name="genre" value="<?php echo $genre; ?>">
+            <input type="text" name="genre" id="genre" value="<?php echo $genre; ?>">
         </div>
 
         <div>
             <label for="rating">Rating</label>
-            <input type="number" name="rating" value="<?php echo $rating; ?>">
+            <input type="number" name="rating" id="rating" value="<?php echo $rating; ?>">
         </div>
 
         <div>
@@ -93,26 +103,87 @@ if (isset($id)){
 
         <div>
             <label for="length">Length (Pages)</label>
-            <input type="number" name="length" value="<?php echo $length; ?>">
+            <input type="number" name="length" id="length" value="<?php echo $length; ?>">
         </div>
 
         <div>
-            <label for="date_started">Date Started (YYYY/MM/DD)</label>
-            <input type="datetime" name="dateStarted" value="<?php echo $dateStarted; ?>">
+            <label for="date_started">Date Started *</label>
+            <input type="date" name="dateStarted" id="dateStarted" value="<?php echo $dateStarted; ?>">
         </div>
 
         <div>
-            <label for="date_finished">Date Finished (YYYY/MM/DD)</label>
-            <input type="datetime" name="dateFinished" value="<?php echo $dateFinished; ?>">
+            <label for="date_finished">Date Finished</label>
+            <input type="date" name="dateFinished" id="dateFinished" value="<?php echo $dateFinished; ?>">
         </div>
 
-        <button type="submit">Save</button>
+        <br>
+
+        <p><em>* indicates a required field</em></p>
+
+        <button type="button" onclick="save()">Save</button>
         <?php
-        if ($id != "" || !isset($id))
-        {
+        if (isset($id) && $id > 0) {
             echo "<a class='button' href='delete.php?id=$id' role='button'>Delete</a>";
         }
         ?>
         <a class="button" href="index.php?content=list" role="button">Cancel</a>
     </form>
 </span>
+
+<script>
+    function save(){
+        var settings = {
+            'async': true,
+            'url': 'save.php?id=' + $('#id').val() +
+            '&title=' + $('#title').val() +
+            '&dateStarted=' + $('#dateStarted').val() +
+            '&dateFinished=' + $('#dateFinished').val() +
+            '&author=' + $('#author').val() +
+            '&status=' + $('select[name="status"]').val() +
+            '&genre=' + $('#genre').val() +
+            '&rating=' + $('#rating').val() +
+            '&review=' + $('#reviewInput').val() +
+            '&length=' + $('#length').val(),
+            'method': 'POST',
+            'headers': {
+                'Cache-Control': 'no-cache'
+            }
+        };
+
+        $.ajax(settings).done(function(response) {
+            console.log(response);
+            const id = $('#id').val();
+            if (id == "") {
+                $('#id').val(response);
+            }
+
+            $('#title-header').html($('#title').val());
+            showAlert('success', 'Save Successful!', 'Your book review has been saved.');
+            $('#results').html('Record saved successfully!');
+        }).fail(function() {
+            // showAlert('danger', 'Save Failed!', 'Check your input and try again.');
+            $('#results').html('Error saving record. Please check your input and try again.');
+        });
+    }
+
+    // function save() {
+    //     const formData = $('#bookForm').serialize();
+
+    //     $.ajax({
+    //         url: 'save.php',
+    //         type: 'POST',
+    //         data: formData,
+    //         success: function(response) {
+    //             showAlert('success', 'Save Successful!', 'Your book review has been saved. It has id ' + response.id);
+    //         },
+    //         error: function(xhr) {
+    //             try {
+    //                 const error = JSON.parse(xhr.responseText);
+    //                 showAlert('danger', 'Save Failed!', 'Error: ' + error.error);
+    //             } catch (e) {
+    //                 showAlert('danger', 'Save Failed!', 'Request failed. Please try again.');
+    //             }
+    //         }
+    //     });
+    // }
+</script>

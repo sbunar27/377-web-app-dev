@@ -1,5 +1,29 @@
 /* https://coolors.co/palette/ccd5ae-dbe1bc-e9edc9-f4f4d5-fefae0-fcf4d7-faedcd-e7c8a0-deb68a-d4a373 */
 
+.alert-position {
+    display: none;
+    position: fixed;
+    margin-right: auto;
+    margin-left: auto;
+    top: 100px;
+    width: 500px;
+    z-index: 10000;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    font-family: 'DM Sans', sans-serif;
+}
+
 #icon {
     font-size: 18px;
 }
@@ -543,4 +567,12 @@ h1, h2 {
 
 input, p, a, label, td, th, button, .button {
     font-family: 'DM Sans', sans-serif;
+}
+
+.close {
+    color: #0000005d;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
 }

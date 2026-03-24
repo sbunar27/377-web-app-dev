@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="style.css"/>
-
 <?php
+
+error_reporting(0);
 
 // This is the repository of all common functions for the book nook website
 extract($_REQUEST);
