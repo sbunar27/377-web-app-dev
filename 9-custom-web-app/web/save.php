@@ -33,98 +33,28 @@ if ($connection->connect_error) {
     exit;
 }
 
-// Get POST data
-$title = $connection->real_escape_string($title);
-$author = $connection->real_escape_string($author);
-$genre = $connection->real_escape_string($genre);
-$rating = $connection->real_escape_string($rating);
-$review = $connection->real_escape_string($review);
-$status = $connection->real_escape_string($status);
-$length = $connection->real_escape_string($length);
-$dateStarted = $connection->real_escape_string($dateStarted);
-$dateFinished = $connection->real_escape_string($dateFinished);
-
 // Validate required fields
 if ($title === "" || !isset($title) || empty($status)) {
     http_response_code(500);
-    echo json_encode(['error' => 'Title and status are required.']);
     exit;
 }
 
-// After fetching $row
-$dateStarted = $row["book_date_started"] ?? '';
-if ($dateStarted != '0000-00-00' || $dateStarted == null) {
-    $dateStarted = '';
+if ($author_last === "" || !isset($author_last) || empty($author_last)) {
+    $author_last = "Unknown"; // set to unknown if left empty
 }
 
-$dateFinished = $row["book_date_finished"] ?? '';
-if ($dateFinished != '0000-00-00' || $dateFinished == null) {
-    $dateFinished = '';
-}
+// // After fetching $row (datetime date)
+// $dateStarted = $row["book_date_started"] ?? '';
+// if ($dateStarted != '0000-00-00' || $dateStarted == null) {
+//     $dateStarted = '';
+// }
 
-$sql = "";
+// $dateFinished = $row["book_date_finished"] ?? '';
+// if ($dateFinished != '0000-00-00' || $dateFinished == null) {
+//     $dateFinished = '';
+// }
 
-if ($id === "" || !isset($id)) {
-    $sql =<<<SQL
-    INSERT INTO book 
-    (book_title, book_author, book_genre, book_rating, book_review, book_status, book_length, book_date_started, book_date_finished)
-    VALUES ('$title', '$author', '$genre', $rating, '$review', '$status', $length, '$dateStarted', '$dateFinished')
-    SQL;
-}
-else {
-    $sql =<<<SQL
-    UPDATE book
-    SET book_title = '$title',
-        book_author = '$author',
-        book_genre = '$genre',
-        book_rating = $rating,
-        book_review = '$review',
-        book_status = '$status',
-        book_length = $length,
-        book_date_started = '$dateStarted',
-        book_date_finished = '$dateFinished'
-    WHERE book_id = $id
-    SQL;
-}
-
-try {
-    if ($connection->query($sql) === TRUE) {
-        // can't send data AND a response code, so just send the code and handle the message in the frontend
-        // http_response_code(200);
-        $id=$connection->insert_id;
-
-        // echo json_encode(['message' => 'Book saved successfully']);
-        echo $id;
-    } else {
-        // http_response_code(500);
-        echo json_encode(['error' => 'Error saving book: ' . $connection->error]);
-    }
-} catch (Exception $e) {
-    // http_response_code(500);
-    echo json_encode(['error' => 'An unexpected error occurred: ' . $e->getMessage()]);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // OLD CODE!!!
+// // FOR VARCHAR DATE
 // function isValidDate($date) {
 //     // split the date string by '/' into parts (explode = split)
 //     $parts = explode('/', $date);
@@ -170,15 +100,76 @@ try {
 // // if either of these are true, it takes the user to an error page
 // if ($dateStarted != ''){
 //     if (!isValidDate($dateStarted)) {
-//         die('<h1>ERROR: Invalid Date Started</h1><br><a href="index.php?content=list">Return to List</a>');
+//         http_response_code(500);
 //     }
 // }
 
 // if ($dateFinished != ''){
 //     if (!isValidDate($dateFinished)) {
-//         die('<h1>ERROR: Invalid Date Finished</h1><br><a href="index.php?content=list">Return to List</a>');
+//         http_response_code(500);
 //     }
 // }
+
+$sql = "";
+
+if ($id === "" || !isset($id)) {
+    $sql =<<<SQL
+    INSERT INTO book 
+    (book_title, book_author_first, book_author_last, book_genre, book_rating, book_review, book_status, book_length, book_date_started, book_date_finished)
+    VALUES ('$title', '$author_first', '$author_last', '$genre', $rating, '$review', '$status', $length, '$dateStarted', '$dateFinished')
+    SQL;
+}
+else {
+    $sql =<<<SQL
+    UPDATE book
+    SET book_title = '$title',
+        book_author_first = '$author_first',
+        book_author_last = '$author_last',
+        book_genre = '$genre',
+        book_rating = $rating,
+        book_review = '$review',
+        book_status = '$status',
+        book_length = $length,
+        book_date_started = '$dateStarted',
+        book_date_finished = '$dateFinished'
+    WHERE book_id = $id
+    SQL;
+}
+
+try {
+    if ($connection->query($sql) === TRUE) {
+        // can't send data AND a response code, so just send the code and handle the message in the frontend
+        // http_response_code(200);
+        $id=$connection->insert_id;
+
+        // echo json_encode(['message' => 'Book saved successfully']);
+        echo $id;
+    } else {
+        // http_response_code(500);
+        echo json_encode(['error' => 'Error saving book: ' . $connection->error]);
+    }
+} catch (Exception $e) {
+    // http_response_code(500);
+    echo json_encode(['error' => 'An unexpected error occurred: ' . $e->getMessage()]);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // $sql = "";
 

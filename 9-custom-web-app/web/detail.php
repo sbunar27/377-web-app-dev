@@ -8,7 +8,8 @@
 
 // define variable for each book review attribute
 $title = "";
-$author = "";
+$author_first = "";
+$author_last = "";
 $rating = "";
 $review = "";
 $status = "";
@@ -34,7 +35,8 @@ if (isset($id)){
     $row = $result->fetch_assoc();
 
     $id = $row["book_id"];
-    $author = $row["book_author"];
+    $author_first = $row["book_author_first"];
+    $author_last = $row["book_author_last"];
     $title = $row["book_title"];
     $genre = $row["book_genre"];
     $status = $row["book_status"];
@@ -70,8 +72,13 @@ if (isset($id)){
         </div>
 
         <div>
-            <label for="title">Author</label>
-            <input type="text" name="author" id="author" value="<?php echo $author; ?>">
+            <label for="title">Author First Name</label>
+            <input type="text" name="author_first" id="author_first" value="<?php echo $author_first; ?>">
+        </div>
+
+        <div>
+            <label for="title">Author Last Name</label>
+            <input type="text" name="author_last" id="author_last" value="<?php echo $author_last; ?>">
         </div>
 
         <div>
@@ -107,13 +114,13 @@ if (isset($id)){
         </div>
 
         <div>
-            <label for="date_started">Date Started *</label>
-            <input type="date" name="dateStarted" id="dateStarted" value="<?php echo $dateStarted; ?>">
+            <label for="date_started">Date Started YYYY-MM-DD </label>
+            <input type="text" name="dateStarted" id="dateStarted" value="<?php echo $dateStarted; ?>">
         </div>
 
         <div>
-            <label for="date_finished">Date Finished</label>
-            <input type="date" name="dateFinished" id="dateFinished" value="<?php echo $dateFinished; ?>">
+            <label for="date_finished">Date Finished YYYY-MM-DD </label>
+            <input type="text" name="dateFinished" id="dateFinished" value="<?php echo $dateFinished; ?>">
         </div>
 
         <br>
@@ -138,7 +145,8 @@ if (isset($id)){
             '&title=' + $('#title').val() +
             '&dateStarted=' + $('#dateStarted').val() +
             '&dateFinished=' + $('#dateFinished').val() +
-            '&author=' + $('#author').val() +
+            '&author_first=' + $('#author_first').val() +
+            '&author_last=' + $('#author_last').val() +
             '&status=' + $('select[name="status"]').val() +
             '&genre=' + $('#genre').val() +
             '&rating=' + $('#rating').val() +
@@ -163,27 +171,7 @@ if (isset($id)){
         }).fail(function() {
             // showAlert('danger', 'Save Failed!', 'Check your input and try again.');
             $('#results').html('Error saving record. Please check your input and try again.');
+            showAlert('danger', 'Save Failed!', 'Error saving record. Please check your input and try again.');
         });
     }
-
-    // function save() {
-    //     const formData = $('#bookForm').serialize();
-
-    //     $.ajax({
-    //         url: 'save.php',
-    //         type: 'POST',
-    //         data: formData,
-    //         success: function(response) {
-    //             showAlert('success', 'Save Successful!', 'Your book review has been saved. It has id ' + response.id);
-    //         },
-    //         error: function(xhr) {
-    //             try {
-    //                 const error = JSON.parse(xhr.responseText);
-    //                 showAlert('danger', 'Save Failed!', 'Error: ' + error.error);
-    //             } catch (e) {
-    //                 showAlert('danger', 'Save Failed!', 'Request failed. Please try again.');
-    //             }
-    //         }
-    //     });
-    // }
 </script>

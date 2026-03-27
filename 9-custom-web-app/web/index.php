@@ -16,6 +16,8 @@ if (isset($_COOKIE['selectedTheme'])) {
         <link rel="icon" type="image/png" href="favicon.png">
         <link href='https://fonts.googleapis.com/css?family=Playfair Display' rel='stylesheet'>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="//cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css">
+        <script src="//cdn.datatables.net/2.3.7/js/dataTables.min.js"></script>
         <script>
             function showAlert(type, title, message) {
                 $('#alert').hide();
@@ -33,7 +35,7 @@ if (isset($_COOKIE['selectedTheme'])) {
         <div id="alert" class="alert alert-position alert-success">
             <strong id="alertTitle">Success!</strong> <span id="alertMessage"> Success message.</span>
             <!-- NOT WORKING -->
-            <a class="close" style="color: #0000005d; cursor: pointer;" onclick="$('#alert').fadeOut()"><span aria-hidden="true">close</span></a>
+            <a class="close" style="color: #0000005d; cursor: pointer;" onclick="$('#alert').fadeOut()"><span aria-hidden="true">&times;</span></a>
         </div>
 
         <?php

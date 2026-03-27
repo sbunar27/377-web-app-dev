@@ -48,6 +48,69 @@
 
 <a class="button" href="index.php?nav=detail" role="button">Create Record</a>
 
+
+
+<!-- datatables way -->
+
+<table id="bookTable" class="stripe hover"></table>
+<?php
+
+$sql =<<<SQL
+SELECT *, date_format(book_date_started, '%m/%d/%Y') as 'formatted_date_started', date_format(book_date_finished, '%m/%d/%Y') as 'formatted_date_finished'
+FROM book
+ORDER BY book_title ASC
+SQL;
+
+$connection = getConnection();
+
+$rows = [];
+$result = $connection->query($sql);
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
+
+print('<script>');
+print('var data = ' . json_encode($rows, JSON_PARTIAL_OUTPUT_ON_ERROR) . ';');
+print('</script>');
+?>
+
+<script>
+    var dataTable = $('#bookTable').DataTable({
+        data: data,
+        columns: [
+            { title: "Title", data: "book_title", render: function(data, type, row) {
+                if (type === 'display') {
+                    return '<a href="index.php?nav=detail&id=' + row.book_id + '">' + data + '</a>';
+                }
+                return data;
+            }},
+            // { title: "Author Full Name", data: "book_author_last", render: function(data, type, row) {
+            //     if (type === 'display') {
+            //         return row.book_author_first + ' ' + data;
+            //     }
+            //     return data;
+            // }},
+            { title: "Author Surname", data: "book_author_last" },
+            { title: "Rating", data: "book_rating" },
+            { title: "Status", data: "book_status" },
+            { title: "# of Pages", data: "book_length" },
+            { title: "Date Started", data: "formatted_date_started" },
+            { title: "Date Finished", data: "formatted_date_finished" }
+        ]
+    });
+</script>
+
+<hr>
+
+
+
+
+
+<!-- boo old table -->
+
+
+
+
 <br><br>
 
 <?php 
