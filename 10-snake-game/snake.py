@@ -6,9 +6,7 @@ CAN CONTROL WITH ARROW KEYS OR WASD
 CAN WRAP AROUND THE SCREEN INSTEAD OF DYING WHEN HITTING THE EDGE (EASY MODE) OR CAN DIE WHEN HITTING THE EDGE (HARD MODE)
 PAUSE FUNCTIONALITY (PRESS P TO PAUSE/UNPAUSE)
 SNAKE GRADIENT COLOR (PINK TO PURPLE) INSTEAD OF SOLID COLOR 
-"""
 
-"""
 Sound effects from Roblox and Pokemon Music Collection (links in code comments)
 Text font from Grand9K Pixel (Minecraft-style font) (link in code comments)
 """
