@@ -1,13 +1,17 @@
 #######################################################################################################################
-# SNAKE GAME ENHANCEMENTS: 
-# SOUND EFFECTS WHEN EATING FOOD AND DYING (AND BG MUSIC)
-# CAN CONTROL WITH ARROW KEYS OR WASD
-# CAN WRAP AROUND THE SCREEN INSTEAD OF DYING WHEN HITTING THE EDGE (EASY MODE) OR CAN DIE WHEN HITTING THE EDGE (HARD MODE)
-# PAUSE FUNCTIONALITY (PRESS P TO PAUSE/UNPAUSE)
-# SNAKE GRADIENT COLOR (PINK TO PURPLE) INSTEAD OF SOLID COLOR
+""" 
+SNAKE GAME ENHANCEMENTS: 
+SOUND EFFECTS WHEN EATING FOOD AND DYING (AND BG MUSIC)
+CAN CONTROL WITH ARROW KEYS OR WASD
+CAN WRAP AROUND THE SCREEN INSTEAD OF DYING WHEN HITTING THE EDGE (EASY MODE) OR CAN DIE WHEN HITTING THE EDGE (HARD MODE)
+PAUSE FUNCTIONALITY (PRESS P TO PAUSE/UNPAUSE)
+SNAKE GRADIENT COLOR (PINK TO PURPLE) INSTEAD OF SOLID COLOR 
+"""
 
-# Sound effects from Roblox and Pokemon Music Collection (links in code comments)
-# Text font from Grand9K Pixel (Minecraft-style font) (link in code comments)
+"""
+Sound effects from Roblox and Pokemon Music Collection (links in code comments)
+Text font from Grand9K Pixel (Minecraft-style font) (link in code comments)
+"""
 #######################################################################################################################
 
 
@@ -52,9 +56,8 @@ def Your_score(score):
     value = score_font.render("  Your Score: " + str(score), True, yellow)
     dis.blit(value, [0, 0])
 
-
+# GRADIENT SNAKE FUNCTION
 def our_snake(snake_list):
-    # GRADIENT SNAKE
     global color, x1, y1, pastelPink, purple
 
     snake_block = 10
@@ -168,6 +171,8 @@ def gameLoop():
                     if event.key == pygame.K_c:
                         gameLoop()
  
+
+        # PAUSE FUNCTIONALITY (PRESS P TO PAUSE/UNPAUSE)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game_over = True
@@ -188,6 +193,7 @@ def gameLoop():
                     elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         y1_change = snake_block
                         x1_change = 0
+        # PAUSE SCREEN
         if paused:
             dis.fill(black)
             pause_text = font_style.render("Game Paused. Press P to Resume.", True, yellow)
