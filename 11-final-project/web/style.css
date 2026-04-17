@@ -1,0 +1,155 @@
+/* https://coolors.co/palette/dad7cd-a3b18a-588157-3a5a40-344e41 */
+
+body {
+    background-color: #dad7cd;
+    color: #344e41;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+}
+
+h1 {
+    font-family: 'Pixelify Sans', sans-serif;
+    font-weight: 300;
+}
+
+h2, h3 {
+    font-family: 'Pixelify Sans', sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    color: #3a5a40;
+}
+
+a {
+    text-decoration: none;
+    color: #3a5a40;
+}
+
+button, input[type="submit"], .button {
+    background-color: #588157;
+    color: #e6e3db;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Work Sans', sans-serif;
+    cursor: pointer;
+}
+
+input[type="text"], input[type="mediumtext"], textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-family: 'Work Sans', sans-serif;
+}
+
+li:hover {
+    color: #779976;
+    text-decoration: line-through;
+}
+
+td.dataTables {
+    border: 1px solid #ccc;
+    padding: 10px;
+    vertical-align: top;
+    background-color: #344e41;
+    color:#e6e3db
+}
+
+#calendar {
+  width: 700px;
+  font-family: Arial, sans-serif;
+  user-select: none;
+}
+
+#calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#calendar-days, #calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+#calendar-days div {
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0;
+  background-color: #588157;
+  color: #e6e3db;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+#calendar-dates div {
+  background-color: #e6e3db;
+  min-height: 100px;
+  border: 0px solid #ccc;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+#event-section {
+  display: flex;
+  gap: 10px;           /* Puts space between items */
+  align-items: flex-start; 
+  margin-top: 20px;
+  background: #e6e3db;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+#event-section input, 
+#event-section textarea, 
+#event-section button {
+  padding: 8px;
+  border: 1px solid #e6e3db;
+  border-radius: 4px;
+  font-family: sans-serif;
+}
+
+/* Give the description more space since it's a textarea */
+#event-desc {
+  flex-grow: 1; 
+  height: 38px;       /* Matches a standard input height initially */
+  resize: vertical;   /* Allows user to pull it down if needed */
+}
+
+td {
+  vertical-align: top;
+  padding: 20px;
+}
+
+/* #calendar-dates div:hover {
+  background-color: #e6e3db;
+} */
+
+.date-number {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.selected, .selected:hover {
+  background-color: #588157;
+  color: #e6e3db;
+}
+
+.event {
+  background-color: #A3B18A;
+  color: #344E41;
+  margin: 2px 0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  overflow-wrap: break-word;
+}
