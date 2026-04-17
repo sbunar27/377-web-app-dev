@@ -2,7 +2,7 @@
 // USING THE NUMBER OF EVENTS TO FIGURE OUT HEATMAP COLORS:
 $connection = get_connection();
 
-// We add "WHERE ev_completed = 0" so completed events are ignored by the count
+// Add "WHERE ev_completed = 0" so completed events are ignored by the count
 $countSql = "SELECT ev_date, COUNT(*) as total 
              FROM events 
              WHERE ev_completed = 0 
@@ -204,8 +204,6 @@ print('</script>');
           cell.style.backgroundColor = '#5f7b5eff'; // Darker shade for many events
           cell.style.color = '#ddebdcff'; // White text for contrast
         }
-        // Optional: Add a small dot or text to show the number
-        cell.title = count + " events"; 
       }
       // --- HEATMAP LOGIC ---
 

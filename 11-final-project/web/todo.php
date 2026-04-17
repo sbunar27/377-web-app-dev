@@ -37,7 +37,6 @@ if (($action = $_POST['action'] ?? '') === 'delete') {
 
     $sql = "INSERT INTO todos (todo_task, todo_date) VALUES ('$task_escaped', CURDATE())";
 
-    // FIX: Only run the query ONCE
     if ($connection->query($sql) === TRUE) {
         echo $connection->insert_id; // Return the ID for the JS to use
     } else {

@@ -16,7 +16,6 @@ if (isset($_GET['id'])) {
 
     if ($connection->query($sql)) {
         // 3. Success! Redirect back to the agenda. 
-        // If you have the date handy, you could pass it back here too.
         header("Location: index.php"); 
         exit();
     } else {

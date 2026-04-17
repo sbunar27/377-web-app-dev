@@ -24,7 +24,7 @@ if ($event_id === 0) {
     die("Invalid Event ID.");
 }
 
-// Fetch the event data securely using a prepared statement
+// Fetch the event data securely using a prepared statement (Google help)
 $stmt = $connection->prepare("SELECT ev_title, ev_desc, ev_date, ev_time, ev_completed FROM events WHERE ev_id = ?");
 $stmt->bind_param("i", $event_id);
 $stmt->execute();
