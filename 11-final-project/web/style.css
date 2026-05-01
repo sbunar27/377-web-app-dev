@@ -59,6 +59,10 @@ td.dataTables {
     color:#e6e3db
 }
 
+#bubble:hover {
+    cursor: pointer;
+}
+
 #calendar {
   width: 700px;
   font-family: Arial, sans-serif;
@@ -99,6 +103,21 @@ td.dataTables {
   flex-direction: column;
 }
 
+#dog-feedback {
+  margin-top: 10px;
+  font-style: italic;
+  font-family: 'Pixelify Sans', sans-serif;
+  color: #3a5a40;
+  text-align: center;
+}
+
+#dog-feedback a {
+    color: #588157; /* Match your theme green */
+    text-decoration: underline;
+    position: relative;
+    z-index: 50; /* Ensures it sits above the bubble image */
+}
+
 #event-section {
   display: flex;
   gap: 10px;           /* Puts space between items */
@@ -134,6 +153,14 @@ td {
   background-color: #e6e3db;
 } */
 
+.centered-button {
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+}
+
 .date-number {
   font-weight: bold;
   margin-bottom: 6px;
@@ -152,4 +179,11 @@ td {
   border-radius: 3px;
   font-size: 0.85em;
   overflow-wrap: break-word;
+}
+
+.overlay-text {
+  position: relative;
+  transform: translate(0%, -80%);
+  padding: 5px;
+  background-color: #fff5f0;
 }
