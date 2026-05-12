@@ -140,7 +140,7 @@ td.dataTables {
 /* Give the description more space since it's a textarea */
 #event-desc {
   flex-grow: 1; 
-  height: 38px;       /* Matches a standard input height initially */
+  height: 35px;       /* Matches a standard input height initially */
   resize: vertical;   /* Allows user to pull it down if needed */
 }
 
@@ -183,7 +183,27 @@ td {
 
 .overlay-text {
   position: relative;
-  transform: translate(0%, -80%);
+  transform: translate(0%, -50%);
   padding: 5px;
   background-color: #fff5f0;
+}
+
+td.dataTab {
+  background-color: #779976;
+  color: #e6e3db;
+}
+
+a.dataTab {
+  color: #e6e3db;
+}
+
+#event-detail {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+h3#event-detail, h2#event-detail {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-weight: 300;
+  color: #3a5a40;
 }

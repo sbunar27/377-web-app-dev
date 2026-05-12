@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>event details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="leaf.png">
 </head>
@@ -39,8 +42,8 @@ $stmt->close();
 $connection->close();
 ?>
 
-<div id="event-detail-section" style="max-width: 600px; margin: 20px auto; font-family: sans-serif;">
-    <h2>Edit Event</h2>
+<div id="event-detail">
+    <h3>Edit Event</h3>
     
     <form action="save.php" method="POST">
         
@@ -73,11 +76,11 @@ $connection->close();
             </label>
         </div>
 
-        <button type="submit" style="padding: 10px 20px; background-color: #588157; color: white; border: none; cursor: pointer;">Save Changes</button>
-        <a href="index.php" style="margin-left: 10px; color: #555; text-decoration: none;">Cancel</a>
-        <a href="delete.php?id=<?php echo $event_id; ?>" 
+        <button type="submit" class="button">Save Changes</button>
+        <a class="button" href="index.php">Cancel</a>
+        <a class="button" href="delete.php?id=<?php echo $event_id; ?>" 
             onclick="return confirm('Are you sure you want to delete this event?');" 
-            style="margin-left: 20px; color: #5c2323ff;">
+            style="background-color: #8e4242ff; color: #ffeaeaff;">
             Delete Event
         </a>
     </form>

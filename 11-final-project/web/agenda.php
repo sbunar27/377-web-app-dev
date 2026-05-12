@@ -73,13 +73,13 @@ echo "<script>var eventHeatmap = " . json_encode($eventCounts) . ";</script>";
         <td style="width: 120px; height: 120px;">
           <img id="bubble" src="bubble.gif" alt="Thought Bubble" style="width: 100px; display: block; margin-left: auto; margin-right: auto;">
           <p id="dog-feedback" class="overlay-text"></p>
+          <strong><a class="button centered-button" href="https://www.cdc.gov/mental-health/living-with/index.html">CDC WEBSITE</a></strong>
         </td>
         <td style="width: 200px; height: 120px; position: relative;">
           <img id="dog-image" src="dog-sprites/neutral.png" alt="Dog Image" style="width: 100%; max-width: 200px; display: block; margin: 0 auto;">
         </td>
       </table>
     </div>
-    <strong><a class="button centered-button" href="https://www.cdc.gov/mental-health/living-with/index.html">CDC WEBSITE</a></strong>
     <div id="event-section" style="margin-top: 20px;">
       <input type="text" id="event-title" placeholder="Event title" />
       <textarea id="event-desc" placeholder="Event description"></textarea>
@@ -163,11 +163,13 @@ print('</script>');
       { title: "Event", data: "ev_title", render: function(data, type, row) {
           return type === 'display' ? '<a href="detail.php?id=' + row.ev_id + '">' + data + '</a>' : data;
       }},
-      { title: "Event Date", data: "formatted_date" },
       { title: "Event Time", data: "ev_time" },
       { title: "Description", data: "ev_desc" }
     ]
   });
+
+  $('#eventTable').css('background-color', '#779976');
+  $('#eventTable').css('color', '#e6e3db');
 
   // Time converters
   const toMins = (t) => {
@@ -209,8 +211,9 @@ print('</script>');
   }
 
   // 3. THE DOG
-  let typewriterTimeout;
 
+  // COOL CODE: TYPEWRITER EFFECT
+  let typewriterTimeout;
   function dogSpeak(text) {
     const feedback = document.getElementById('dog-feedback');
     const dogImg = document.querySelector('#dog-image');
@@ -238,6 +241,7 @@ print('</script>');
         }
         typewriterTimeout = setTimeout(type, 40);
       } else {
+        // After finishing typing, switch back to neutral after a delay (2 seconds)
         setTimeout(() => { 
           if(dogImg.src.includes('talk.gif')) dogImg.src = 'dog-sprites/neutral.png'; 
         }, 2000);
@@ -250,12 +254,17 @@ print('</script>');
     const dogImg = document.querySelector('#dog-image');
     const feedback = document.getElementById('dog-feedback');
     const bubble = document.querySelector('#bubble');
+    const resource = document.querySelector('.centered-button');
     
     const count = eventHeatmap[selectedDate] || 0;
     const conflict = getConflictDetails(data); 
 
+    var todoCount = $('#todo-list li').length;
+    // console.log("To-do count:", todoCount);
+
     feedback.style.visibility = 'hidden';
     bubble.style.visibility = 'visible';
+    resource.style.visibility = 'hidden';
 
     let message = "";
     let sprite = 'neutral.png';
@@ -264,16 +273,40 @@ print('</script>');
       sprite = 'think.png';
       const suggestion = findSuggestedGap(data);
       message = `Bark! "${conflict.event1}" and "${conflict.event2}" overlap. Maybe move "${conflict.event2}" to ${suggestion}?`;
-    } else if (count > 1) {
+    } else if (count > 4) {
       sprite = 'sleepy.png';
-      // message = "Woah, that's a busy day! Remember to take a break. Visit <a href='https://www.cdc.gov/mental-health/living-with/index.html' target='_blank'>this site</a> for tips on managing stress.";
-      message = "Woah, that's a busy day! Remember to take a break. Visit the resource below for tips on managing stress.";
+      messages = [
+        "Your schedule looks packed! Don't forget to take breaks and manage your time wisely.",
+        "That schedule is looking scary! Make sure to take care of yourself while tackling those tasks.",
+        "Woah, that's a busy day! Remember to breathe and take it one step at a time."
+      ];
+      message = messages[Math.floor(Math.random() * messages.length)];
+      resource.style.visibility = 'visible';
+    } else if (todoCount > 5) {
+      sprite = 'sleepy.png';
+      messages = [
+        "Your schedule looks light, but your to-do list is long! Don't forget to take breaks and manage your time wisely.",
+        "That to-do list is looking a little scary! Make sure to take care of yourself while tackling those tasks.",
+        "Woah, that's a lot on your plate! Remember to breathe and take it one step at a time."
+      ];
+      message = messages[Math.floor(Math.random() * messages.length)];
+      resource.style.visibility = 'visible';
     } else if (count > 0) {
       sprite = 'bleh.png';
-      message = "Not too bad! You've got this.";
+      messages = [
+        "Not too bad! You've got this.",
+        "Looking good! A few tasks to tackle but nothing you can't handle.",
+        "Your schedule is looking manageable. Keep up the good work!"
+      ];
+      message = messages[Math.floor(Math.random() * messages.length)];
     } else {
       sprite = 'neutral.png';
-      message = "All quiet on the western front! Want to add some plans?";
+      messages = [
+        "All quiet on the western front! Want to add some plans?",
+        "Nothing on the schedule! Maybe it's a good day to relax or try something new?",
+        "Your calendar is clear! How about setting some goals or planning a fun activity?"
+      ];
+      message = messages[Math.floor(Math.random() * messages.length)];
     }
 
     dogImg.src = 'dog-sprites/' + sprite;
@@ -360,4 +393,70 @@ print('</script>');
   // Init
   renderCalendar(currentDate);
   updateDogImage();
+
+
+  // 5. TO-DO LIST FUNCTIONALITY
+    const todoInput = document.getElementById('todo-input');
+    const addTodoButton = document.getElementById('add-todo-btn');
+    const todoList = document.getElementById('todo-list');
+
+    function saveTask() {
+      var taskText = $('#todo-input').val().trim();
+      if (!taskText) return;
+
+      $.ajax({
+        url: 'todo.php',
+        method: 'POST',
+        data: { task: taskText, action: 'add' },
+        cache: false,
+        headers: {
+            'Cache-Control': 'no-cache'
+        },
+        success: function(response) {
+          const id = parseInt(response, 10);
+          if (id > 0) {
+            const li = $('<li>').text(taskText).attr('data-id', id);
+            $('#todo-list').append(li);
+            $('#todo-input').val('');
+            updateDogImage();
+          } else {
+            alert('Error: ' + response);
+          }
+        },
+        error: function() {
+          alert('AJAX request failed');
+        }
+      });
+    }
+
+    $('#add-todo-btn').click(saveTask);
+
+    // to-do removal functionality
+    $('#todo-list').on('click', 'li', function() {
+      const li = $(this);
+      const id = li.data('id');
+
+      if (!id) return;
+
+      if (!confirm('Delete this task?')) return;
+
+      $.ajax({
+        url: 'todo.php',
+        method: 'POST',
+        data: { action: 'delete', id: id },
+        cache: false,
+        success: function(response) {
+          if (response === 'success') {
+            li.remove();
+            updateDogImage();
+          } else {
+            alert('Error deleting task: ' + response);
+          }
+        },
+        error: function() {
+          alert('AJAX request failed');
+        }
+      });
+    });
+
 </script>
