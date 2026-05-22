@@ -16,7 +16,7 @@ if ($action === 'add') {
     $ev_desc = $_POST['ev_desc'] ?? '';
     $ev_time = $_POST['ev_time'] ?? '';
 
-    if ($ev_date === '' || $ev_title === '' || $ev_desc === '' || $ev_time === '') {
+    if ($ev_date === '' || $ev_title === '' || $ev_time === '') {
         echo 'All fields are required';
         exit;
     }

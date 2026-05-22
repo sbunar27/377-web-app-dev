@@ -112,15 +112,29 @@ td.dataTables {
 }
 
 #dog-feedback a {
-    color: #588157; /* Match your theme green */
+    color: #588157;
     text-decoration: underline;
     position: relative;
     z-index: 50; /* Ensures it sits above the bubble image */
 }
 
+#dog-image {
+  width: 100%; 
+  max-width: 200px; 
+  display: block; 
+  margin: 0 auto;
+}
+
+#bubble {
+  width: 100px; 
+  display: block; 
+  margin-left: auto; 
+  margin-right: auto;
+}
+
 #event-section {
   display: flex;
-  gap: 10px;           /* Puts space between items */
+  gap: 10px;        
   align-items: flex-start; 
   margin-top: 20px;
   background: #e6e3db;
@@ -140,7 +154,7 @@ td.dataTables {
 /* Give the description more space since it's a textarea */
 #event-desc {
   flex-grow: 1; 
-  height: 35px;       /* Matches a standard input height initially */
+  height: 35px;       /* Matches a standard input height */
   resize: vertical;   /* Allows user to pull it down if needed */
 }
 
@@ -148,10 +162,6 @@ td {
   vertical-align: top;
   padding: 20px;
 }
-
-/* #calendar-dates div:hover {
-  background-color: #e6e3db;
-} */
 
 .centered-button {
   text-align: center;
@@ -171,6 +181,10 @@ td {
   color: #e6e3db;
 }
 
+.form-group {
+  margin-bottom: 15px;
+}
+
 .event {
   background-color: #A3B18A;
   color: #344E41;
@@ -179,6 +193,22 @@ td {
   border-radius: 3px;
   font-size: 0.85em;
   overflow-wrap: break-word;
+}
+
+.form-control {
+  padding: 8px;
+  width: 100%;
+}
+
+
+.death-button {
+  background-color: #8e4242ff;
+  color: #ffeaeaff;
+}
+
+.dog-bubble {
+  width: 120px; 
+  height: 120px;
 }
 
 .overlay-text {
@@ -206,4 +236,18 @@ h3#event-detail, h2#event-detail {
   font-family: 'Pixelify Sans', sans-serif;
   font-weight: 300;
   color: #3a5a40;
+}
+
+/* styles for draggable dog bubble */
+#dog {
+  position: absolute;
+  z-index: 9;
+  text-align: center;
+  background-color: #3a5a4068;
+  cursor: move;
+  border-radius: 5% / 50%;
+}
+
+#dog-image {
+  z-index: 10;
 }

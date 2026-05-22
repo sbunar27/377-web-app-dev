@@ -25,6 +25,8 @@ echo "<script>var eventHeatmap = " . json_encode($eventCounts) . ";</script>";
   <td>
     <h2>Agenda</h2>
     <!-- CALENDAR -->
+    <button id="show-completed-btn">Completed Events</button>
+    <br><br>
     <div id="calendar">
       <div id="calendar-header">
         <button id="prev-month">&lt;</button>
@@ -50,47 +52,50 @@ echo "<script>var eventHeatmap = " . json_encode($eventCounts) . ";</script>";
       <button id="add-todo-btn">Add</button>
       <ul id="todo-list">
         <?php
+          $todo_date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+
           $connection = get_connection();
           if ($connection->connect_error) {
               echo 'DB connection failed';
               exit;
           }
 
-          $sql = "SELECT todo_id, todo_task FROM todos WHERE todo_date = CURDATE()";
+          $todoDate = $connection->real_escape_string($todo_date);
+          $sql = "SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate'";
           $result = $connection->query($sql);
 
-          if ($result->num_rows > 0) {
+          if ($result && $result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
                   echo '<li data-id="' . $row["todo_id"] . '">' . htmlspecialchars($row["todo_task"]) . '</li>';
               }
           }
           $connection->close();
-         ?>
+        ?>
       </ul>
     </div>
-    <div id="dog">
-      <table>
-        <td style="width: 120px; height: 120px;">
-          <img id="bubble" src="bubble.gif" alt="Thought Bubble" style="width: 100px; display: block; margin-left: auto; margin-right: auto;">
-          <p id="dog-feedback" class="overlay-text"></p>
-          <strong><a class="button centered-button" href="https://www.cdc.gov/mental-health/living-with/index.html">CDC WEBSITE</a></strong>
-        </td>
-        <td style="width: 200px; height: 120px; position: relative;">
-          <img id="dog-image" src="dog-sprites/neutral.png" alt="Dog Image" style="width: 100%; max-width: 200px; display: block; margin: 0 auto;">
-        </td>
-      </table>
-    </div>
-    <div id="event-section" style="margin-top: 20px;">
+    <div id="event-section">
       <input type="text" id="event-title" placeholder="Event title" />
       <textarea id="event-desc" placeholder="Event description"></textarea>
       <input type="time" id="event-time" />
       <button id="add-event-btn" class="button">Add Event</button>
     </div>
     <br><hr><br>
-    <h3>Events</h3>
+    <h3>Events for <?php echo htmlspecialchars(isset($_GET['date']) ? $_GET['date'] : date('Y-m-d')); ?></h3>
     <br>
     <table id="eventTable" class="stripe hover dataTables"></table>
     <br><br>
+    <div id="dog">
+      <table>
+        <td class="dog-bubble">
+          <img id="bubble" src="bubble.gif" alt="Thought Bubble">
+          <p id="dog-feedback" class="overlay-text"></p>
+          <strong><a class="button centered-button" href="https://www.cdc.gov/mental-health/living-with/index.html">CDC WEBSITE</a></strong>
+        </td>
+        <td>
+          <img id="dog-image" src="dog-sprites/neutral.png" alt="Dog Image">
+        </td>
+      </table>
+    </div>
   </td>
 </table>
 
@@ -161,14 +166,15 @@ print('</script>');
     data: data,
     columns: [
       { title: "Event", data: "ev_title", render: function(data, type, row) {
-          return type === 'display' ? '<a href="detail.php?id=' + row.ev_id + '">' + data + '</a>' : data;
+          // route through index.php instead of going straight to detail.php
+          return type === 'display' ? '<a href="index.php?nav=detail&id=' + row.ev_id + '">' + data + '</a>' : data;
       }},
       { title: "Event Time", data: "ev_time" },
       { title: "Description", data: "ev_desc" }
     ]
   });
 
-  $('#eventTable').css('background-color', '#779976');
+  $('#eventTable').css('background-color', '#7fa07eff');
   $('#eventTable').css('color', '#e6e3db');
 
   // Time converters
@@ -360,7 +366,10 @@ print('</script>');
     const time = document.getElementById('event-time').value.trim();
     const desc = document.getElementById('event-desc').value.trim();
 
-    if (!selectedDate || !title) return alert('Select a date and enter a title!');
+    // Catch missing details before even sending the AJAX request
+    if (!selectedDate || !title || !time) {
+      return alert('All fields (Date, Title, and Time) are required!');
+    }
 
     $.ajax({
       url: 'events.php',
@@ -379,9 +388,16 @@ print('</script>');
           renderCalendar(currentDate);
           updateDogImage();
           
+          // Clear ALL inputs including description
           document.getElementById('event-title').value = '';
           document.getElementById('event-time').value = '';
+          document.getElementById('event-desc').value = ''; 
+        } else {
+          alert('Server Error: ' + response);
         }
+      },
+      error: function() {
+        alert('AJAX request failed completely.');
       }
     });
   };
@@ -396,43 +412,63 @@ print('</script>');
 
 
   // 5. TO-DO LIST FUNCTIONALITY
-    const todoInput = document.getElementById('todo-input');
-    const addTodoButton = document.getElementById('add-todo-btn');
-    const todoList = document.getElementById('todo-list');
+  const todoInput = document.getElementById('todo-input');
+  const addTodoButton = document.getElementById('add-todo-btn');
+  const todoList = document.getElementById('todo-list');
 
-    function saveTask() {
-      var taskText = $('#todo-input').val().trim();
-      if (!taskText) return;
+  function loadTasks() {
+    $.ajax({
+      url: 'todo.php',
+      method: 'GET',
+      data: { date: selectedDate },
+      success: function(response) {
+        todoList.innerHTML = '';
+        const tasks = JSON.parse(response);
+        tasks.forEach(task => {
+          const li = document.createElement('li');
+          li.textContent = task.todo_task;
+          li.setAttribute('data-id', task.todo_id);
+          todoList.appendChild(li);
+        });
+        updateDogImage();
+      }
+    });
+  }
 
-      $.ajax({
-        url: 'todo.php',
-        method: 'POST',
-        data: { task: taskText, action: 'add' },
-        cache: false,
-        headers: {
-            'Cache-Control': 'no-cache'
-        },
-        success: function(response) {
-          const id = parseInt(response, 10);
-          if (id > 0) {
-            const li = $('<li>').text(taskText).attr('data-id', id);
-            $('#todo-list').append(li);
-            $('#todo-input').val('');
-            updateDogImage();
-          } else {
-            alert('Error: ' + response);
-          }
-        },
-        error: function() {
-          alert('AJAX request failed');
+  function saveTask() {
+    var taskText = $('#todo-input').val().trim();
+    if (!taskText) return;
+
+    $.ajax({
+      url: 'todo.php',
+      method: 'POST',
+      data: { task: taskText, action: 'add', date: selectedDate },
+      cache: false,
+      headers: {
+          'Cache-Control': 'no-cache'
+      },
+      success: function(response) {
+        const id = parseInt(response, 10);
+        if (id > 0) {
+          const li = $('<li>').text(taskText).attr('data-id', id);
+          $('#todo-list').append(li);
+          $('#todo-input').val('');
+          updateDogImage();
+        } else {
+          alert('Error: ' + response);
         }
-      });
-    }
+      },
+      error: function() {
+        alert('AJAX request failed');
+      }
+    });
+  }
 
-    $('#add-todo-btn').click(saveTask);
+  // todo addition
+  addTodoButton.onclick = saveTask;
 
-    // to-do removal functionality
-    $('#todo-list').on('click', 'li', function() {
+  // todo removal
+  $('#todo-list').on('click', 'li', function() {
       const li = $(this);
       const id = li.data('id');
 
@@ -459,4 +495,46 @@ print('</script>');
       });
     });
 
+  // Make the DIV element draggable: (https://www.w3schools.com/howto/howto_js_draggable.asp)
+  dragElement(document.getElementById("dog"));
+
+  function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    elmnt.onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      // call a function whenever the cursor moves:
+      document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // calculate the new cursor position:
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      // set the element's new position:
+      elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+      elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+      // stop moving when mouse button is released:
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+  }
+
+  // Completed Events Button
+  document.getElementById('show-completed-btn').onclick = function() {
+    window.location.href = 'index.php?nav=completed';
+  };
 </script>
