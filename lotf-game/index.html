@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lord of the Flies: The Beast Within - Quiz Game</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Eerie Atmosphere -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        creepster: ['Creepster', 'cursive'],
+                        elite: ['Special Elite', 'monospace'],
+                    },
+                    colors: {
+                        blood: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#ef4444',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                            950: '#450a0a',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom animations and scrollbars */
+        .glow-red {
+            box-shadow: 0 0 20px rgba(185, 28, 28, 0.4);
+        }
+        .glow-red-heavy {
+            box-shadow: 0 0 35px rgba(185, 28, 28, 0.75);
+        }
+        .island-bg {
+            background: radial-gradient(circle at center, #1a0505 0%, #080101 100%);
+        }
+        /* Custom pulsing animations for the Beast */
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.03); opacity: 1; filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.6)); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 4s infinite ease-in-out;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); }
+            25%, 75% { opacity: 0.95; }
+        }
+        .animate-flicker {
+            animation: flicker 0.15s infinite;
+        }
+        /* Full-screen horror shake animation */
+        @keyframes intense-shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-8px, 8px) rotate(-1.5deg); }
+            20% { transform: translate(-12px, -8px) rotate(1.5deg); }
+            30% { transform: translate(8px, 12px) rotate(0deg); }
+            40% { transform: translate(12px, -12px) rotate(2.5deg); }
+            50% { transform: translate(-8px, 16px) rotate(-2.5deg); }
+            60% { transform: translate(-16px, 8px) rotate(1.5deg); }
+            70% { transform: translate(16px, -8px) rotate(-1.5deg); }
+            80% { transform: translate(-12px, -16px) rotate(2.5deg); }
+            90% { transform: translate(12px, 12px) rotate(-2.5deg); }
+        }
+        .animate-intense-shake {
+            animation: intense-shake 0.15s infinite;
+        }
+
+        /* Blood drip custom class */
+        .blood-drip {
+            border-bottom: 3px solid #7f1d1d;
+            position: relative;
+        }
+        /* Style scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080101;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7f1d1d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b91c1c;
+        }
+    </style>
+</head>
+<body class="island-bg text-stone-200 min-h-screen flex flex-col justify-between overflow-x-hidden font-sans select-none selection:bg-blood-700 selection:text-white">
+
+    <!-- Ambient Fire Sparks Overlay -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-20 bg-[radial-gradient(#b91c1c_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+    <!-- Audio Settings Controller (Top Right) -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-3 bg-blood-950/80 border border-blood-900/50 p-2 px-3 rounded-full backdrop-blur-sm shadow-lg">
+        <span class="text-xs font-elite tracking-widest text-blood-500 uppercase">Soundscape</span>
+        <button id="toggle-audio-btn" onclick="toggleAudio()" class="text-stone-400 hover:text-blood-500 focus:outline-none transition-all">
+            <svg id="volume-icon-on" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+            <svg id="volume-icon-off" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zm10.243-5.257l4.243 4.243m0-4.243l-4.243 4.243" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- THE BEAST ATTACK JUMPSCARE OVERLAY -->
+    <div id="beast-scare-overlay" class="fixed inset-0 z-50 bg-black flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="text-center animate-intense-shake p-6">
+            <div class="w-72 h-72 text-blood-500 mx-auto filter drop-shadow-[0_0_40px_rgba(239,68,68,0.9)] mb-6">
+                <!-- Giant, looming Lord of the Flies skull -->
+                <svg viewBox="0 0 100 100" fill="currentColor" class="w-full h-full">
+                    <!-- <path d="M50 5C30 5 15 15 15 35c0 15 5 25 10 35l5 15h40l5-15c5-10 10-20 10-35C85 15 70 5 50 5zm-15 30c-4 0-7-3-7-7s3-7 7-7 7 3 7 7-3 7-7 7zm30 0c-4 0-7-3-7-7s3-7 7-7 7 3 7 7-3 7-7 7zM50 85c-12 0-22-6-24-14h48c-2 8-12 14-24 14zm-5-30h10v5H45v-5z"/>
+                    <path d="M50 42c-2 0-3-1-3-3s1-3 3-3 3 1 3 3-1 3-3 3z" fill="#ff0000"/> -->
+                    <image href="tripleT.webp" x="10" y="10" width="80" height="80" class="animate-pulse-slow"/>
+                    <!-- Flying swarms -->
+                    <circle cx="15" cy="20" r="3" class="animate-ping" style="animation-duration: 0.2s;"/>
+                    <circle cx="85" cy="15" r="2.5" class="animate-ping" style="animation-duration: 0.15s;"/>
+                    <circle cx="65" cy="65" r="4" class="animate-ping" style="animation-duration: 0.25s;"/>
+                    <circle cx="30" cy="55" r="3.5" class="animate-ping" style="animation-duration: 0.1s;"/>
+                </svg>
+            </div>
+            <h1 class="font-creepster text-red-600 text-5xl md:text-7xl tracking-wider select-none animate-flicker">THE BEAST IS WITHIN YOU</h1>
+            <p class="font-elite text-stone-400 text-lg mt-4">"You knew, didn't you? I'm part of you?"</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <main id="main-container" class="relative z-10 flex-grow flex items-center justify-center p-4 md:p-8">
+        
+        <!-- INTRO SCREEN -->
+        <section id="intro-screen" class="max-w-3xl w-full bg-stone-950/80 border-2 border-blood-900 rounded-lg p-6 md:p-12 text-center glow-red relative overflow-hidden backdrop-blur-md transition-all duration-500">
+            <!-- Blood splatter/drip design -->
+            <div class="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-blood-950 via-blood-700 to-blood-950"></div>
+            
+            <!-- Logo / Visual header -->
+            <div class="mb-6 flex justify-center">
+                <div class="w-28 h-28 text-blood-700 animate-pulse-slow">
+                    <!-- Custom SVG: Lord of the Flies (Pig Skull / Beast) -->
+                    <svg viewBox="0 0 100 100" fill="currentColor" class="w-full h-full">
+                        <!-- <path d="M50 5C30 5 15 15 15 35c0 15 5 25 10 35l5 15h40l5-15c5-10 10-20 10-35C85 15 70 5 50 5zm-15 30c-4 0-7-3-7-7s3-7 7-7 7 3 7 7-3 7-7 7zm30 0c-4 0-7-3-7-7s3-7 7-7 7 3 7 7-3 7-7 7zM50 85c-12 0-22-6-24-14h48c-2 8-12 14-24 14zm-5-30h10v5H45v-5z" opacity="0.85"/>
+                        <path d="M50 42c-2 0-3-1-3-3s1-3 3-3 3 1 3 3-1 3-3 3z" fill="#ef4444"/> -->
+                        <!-- use an image instead of a svg as the beast's head -->
+                        <image href="tripleT.webp" x="10" y="10" width="80" height="80" class="animate-pulse-slow"/>
+                        <!-- Flies orbiting -->
+                        <circle cx="20" cy="15" r="2" class="animate-ping" style="animation-duration: 1.5s;"/>
+                        <circle cx="80" cy="20" r="1.5" class="animate-ping" style="animation-duration: 2s;"/>
+                        <circle cx="75" cy="55" r="2.5" class="animate-ping" style="animation-duration: 1.8s;"/>
+                        <circle cx="25" cy="60" r="1" class="animate-ping" style="animation-duration: 2.2s;"/>
+                    </svg>
+                </div>
+            </div>
+
+            <h1 class="font-creepster text-4xl md:text-6xl text-blood-500 tracking-wider mb-2">LORD OF THE FLIES</h1>
+            <h2 class="font-cinzel text-lg md:text-2xl text-stone-300 tracking-widest uppercase mb-6">The Beast Within Quiz</h2>
+            
+            <p class="font-elite text-stone-400 text-sm md:text-base leading-relaxed mb-8 max-w-xl mx-auto">
+                "We did everything the way adults would have. Why did things go wrong?"
+                <br><br>
+                Step onto the island. Face the terrifying depths of William Golding's masterpiece. Test your knowledge of symbolisms, allegories, tragedy, and the savagery that lies within us all.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="startGame('normal')" class="w-full sm:w-auto font-cinzel text-lg font-bold tracking-widest bg-blood-900 hover:bg-blood-700 text-white px-8 py-4 rounded border border-blood-500 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-blood-500/50">
+                    START THE ASSEMBLY
+                </button>
+                <button onclick="showInstructions()" class="w-full sm:w-auto font-cinzel text-sm tracking-wider bg-transparent hover:bg-stone-900 text-stone-300 hover:text-white px-6 py-4 rounded border border-stone-800 transition-all duration-300">
+                    RULES OF THE ISLAND
+                </button>
+            </div>
+        </section>
+
+        <!-- INSTRUCTIONS MODAL -->
+        <section id="instructions-screen" class="hidden max-w-2xl w-full bg-stone-950/95 border border-blood-900 rounded-lg p-6 md:p-10 glow-red backdrop-blur-md transition-all duration-500">
+            <h3 class="font-cinzel text-2xl text-blood-500 tracking-wider mb-4 border-b border-blood-900 pb-2">Survival Protocol</h3>
+            
+            <div class="space-y-4 font-elite text-sm md:text-base text-stone-300 mb-8 leading-relaxed">
+                <p>1. <span class="text-blood-400 font-bold">The Sanity Meter:</span> You start with 100% Sanity. Each incorrect answer decays your Sanity by 15%. If your Sanity drops to 0%, the Beast consumes you and it is Game Over.</p>
+                <p>2. <span class="text-blood-400 font-bold">The Assembly (Lifelines):</span> You have 3 sacred tribal items to assist you. Each item can only be used once:</p>
+                <ul class="list-disc pl-5 space-y-2 text-stone-400">
+                    <li><strong class="text-amber-100">The Conch Shell:</strong> Invokes democratic order. Temporarily removes 2 incorrect choices.</li>
+                    <li><strong class="text-sky-300">Piggy's Glasses:</strong> Directs absolute scientific focus. Reveals the correct answer, but fractures your sight (costs 10 Sanity as standard fatigue).</li>
+                    <li><strong class="text-red-400">The Lord of the Flies:</strong> Whispers chaotic truth. Reveals a cryptic hint directly from the Beast.</li>
+                </ul>
+                <p>3. <span class="text-blood-400 font-bold">Victory:</span> Complete all 15 survival trials to salvage rescue. Your final archetype depends on your performance.</p>
+            </div>
+
+            <div class="text-center">
+                <button onclick="hideInstructions()" class="font-cinzel text-sm bg-stone-900 hover:bg-stone-800 text-stone-100 px-6 py-3 rounded border border-stone-700 transition-all">
+                    RETURN TO BEACH
+                </button>
+            </div>
+        </section>
+
+        <!-- GAME INTERFACE -->
+        <section id="game-screen" class="hidden max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 gap-6 transition-all duration-500">
+            
+            <!-- Left Side: Status & Lifelines (lg:col-span-4) -->
+            <div class="lg:col-span-4 flex flex-col gap-4">
+                
+                <!-- Survival Stats -->
+                <div class="bg-stone-950/90 border border-blood-900/60 rounded-lg p-5 glow-red backdrop-blur-sm">
+                    <h3 class="font-cinzel text-xs tracking-widest text-blood-500 uppercase mb-3">Status Monitor</h3>
+                    
+                    <!-- Sanity Meter -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-elite text-xs text-stone-400">SANITY LEVEL</span>
+                            <span id="sanity-value" class="font-cinzel text-sm text-red-500 font-bold">100%</span>
+                        </div>
+                        <div class="w-full bg-stone-900 rounded-full h-3.5 border border-stone-800 overflow-hidden">
+                            <div id="sanity-bar" class="bg-gradient-to-r from-blood-800 to-blood-500 h-full transition-all duration-500" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Tracker -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-stone-900/50 p-2 rounded border border-stone-800 text-center">
+                            <span class="block text-[10px] font-elite text-stone-500">SURVIVED</span>
+                            <span id="progress-val" class="font-cinzel text-lg text-stone-100 font-bold">1 / 15</span>
+                        </div>
+                        <div class="bg-stone-900/50 p-2 rounded border border-stone-800 text-center">
+                            <span class="block text-[10px] font-elite text-stone-500">BEAST TENSION</span>
+                            <span id="tension-val" class="font-cinzel text-lg text-blood-500 font-bold">LOW</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tribal Lifelines -->
+                <div class="bg-stone-950/90 border border-blood-900/60 rounded-lg p-5 glow-red backdrop-blur-sm flex-grow">
+                    <h3 class="font-cinzel text-xs tracking-widest text-blood-500 uppercase mb-4">Tribal Lifelines</h3>
+                    <div class="flex flex-col gap-3">
+                        
+                        <!-- Conch shell button -->
+                        <button id="conch-btn" onclick="useConch()" class="relative flex items-center gap-3 w-full bg-stone-900/80 hover:bg-stone-800/80 border border-amber-900/50 p-3 rounded text-left transition-all group overflow-hidden">
+                            <div class="text-amber-200 bg-amber-950/40 p-2 rounded border border-amber-900/50 group-hover:scale-105 transition-all">
+                                <!-- Conch Shell SVG -->
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 1.93-.68 3.7-1.82 5.09z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="block font-cinzel text-xs text-amber-200">The Conch Shell</span>
+                                <span class="block text-[10px] font-elite text-stone-400">Settle assembly (50:50)</span>
+                            </div>
+                        </button>
+
+                        <!-- Piggy's Glasses button -->
+                        <button id="glasses-btn" onclick="useGlasses()" class="relative flex items-center gap-3 w-full bg-stone-900/80 hover:bg-stone-800/80 border border-sky-900/50 p-3 rounded text-left transition-all group overflow-hidden">
+                            <div class="text-sky-200 bg-sky-950/40 p-2 rounded border border-sky-900/50 group-hover:scale-105 transition-all">
+                                <!-- Glasses SVG -->
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm-7-3c0-2.21 1.79-4 4-4 .55 0 1-.45 1-1s-.45-1-1-1c-3.31 0-6 2.69-6 6s2.69 6 6 6c.55 0 1-.45 1-1s-.45-1-1-1c-2.21 0-4-1.79-4-4zm14-4c-2.21 0-4 1.79-4 4 0 .55.45 1 1 1s1-.45 1-1c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2c-.55 0-1 .45-1 1s.45 1 1 1c2.21 0 4-1.79 4-4s-1.79-4-4-4z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="block font-cinzel text-xs text-sky-200">Piggy's Glasses</span>
+                                <span class="block text-[10px] font-elite text-stone-400">Scientific insight (Answer, -10 Sanity)</span>
+                            </div>
+                        </button>
+
+                        <!-- Pig's Head (Lord of the Flies) button -->
+                        <button id="beast-btn" onclick="useBeast()" class="relative flex items-center gap-3 w-full bg-stone-900/80 hover:bg-stone-800/80 border border-red-950 p-3 rounded text-left transition-all group overflow-hidden">
+                            <div class="text-red-400 bg-red-950/40 p-2 rounded border border-red-900/50 group-hover:scale-105 transition-all">
+                                <!-- Pig Skull SVG -->
+                                <svg class="w-6 h-6" viewBox="0 0 100 100" fill="currentColor">
+                                    <!-- <path d="M50 15C35 15 25 25 25 40c0 10 3 18 8 25l3 10h28l3-10c5-7 8-15 8-25 0-15-10-25-25-25zm-10 20c-3 0-5-2-5-5s2-5 5-5 5 2 5 5-2 5-5 5zm20 0c-3 0-5-2-5-5s2-5 5-5 5 2 5 5-2 5-5 5zm-10 35c-8 0-15-4-16-9h32c-1 5-8 9-16 9z" /> -->
+                                    <image href="tripleT.webp" x="10" y="10" width="80" height="80" class="animate-pulse-slow"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="block font-cinzel text-xs text-red-400">The Lord of the Flies</span>
+                                <span class="block text-[10px] font-elite text-stone-400">Hear the Beast's Hint</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Main Quiz Block (lg:col-span-8) -->
+            <div class="lg:col-span-8 flex flex-col gap-6">
+                <!-- Question Container -->
+                <div class="bg-stone-950/90 border border-blood-900 rounded-lg p-6 md:p-8 flex-grow flex flex-col justify-between glow-red relative">
+                    
+                    <!-- Question Category -->
+                    <div class="flex justify-between items-center mb-4 border-b border-blood-900/50 pb-2">
+                        <span id="question-category" class="font-cinzel text-xs text-blood-500 tracking-widest uppercase">SYMBOLS & MOTIFS</span>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-blood-600 animate-pulse"></span>
+                            <span class="font-elite text-[10px] text-stone-500 uppercase tracking-widest">Live Feed</span>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Text -->
+                    <div class="my-auto py-4">
+                        <p id="question-text" class="font-elite text-base md:text-xl text-stone-100 leading-relaxed">
+                            Loading trial...
+                        </p>
+                    </div>
+
+                    <!-- Options Grid -->
+                    <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
+                        <!-- Dynamic Options inserted here -->
+                    </div>
+
+                    <!-- Beast Hint Box (Collapsible) -->
+                    <div id="beast-hint-container" class="hidden mt-6 bg-blood-950/40 border border-blood-900/60 p-4 rounded-lg relative overflow-hidden transition-all duration-500">
+                        <div class="absolute -top-6 -right-6 text-blood-900/30 w-20 h-20 pointer-events-none">
+                            <svg viewBox="0 0 100 100" fill="currentColor">
+                                <image href="tripleT.webp" x="10" y="10" width="80" height="80" class="animate-pulse-slow"/>
+                                <!-- <path d="M50 15C35 15 25 25 25 40c0 10 3 18 8 25l3 10h28l3-10c5-7 8-15 8-25 0-15-10-25-25-25zm-10 20c-3 0-5-2-5-5s2-5 5-5 5 2 5 5-2 5-5 5zm20 0c-3 0-5-2-5-5s2-5 5-5 5 2 5 5-2 5-5 5zm-10 35c-8 0-15-4-16-9h32c-1 5-8 9-16 9z" /> -->
+                            </svg>
+                        </div>
+                        <h4 class="font-creepster text-sm text-red-500 tracking-wider mb-1">The Swarm Whispers...</h4>
+                        <p id="beast-hint-text" class="font-elite text-xs text-stone-400 italic">
+                            "You knew, didn't you? I'm part of you?"
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Footer Nav inside Game -->
+                <div class="flex justify-between items-center bg-stone-950/80 border border-blood-900/40 p-3 rounded-lg px-4">
+                    <span class="font-elite text-[10px] text-stone-500">WILLIAM GOLDING'S ALLEGORY</span>
+                    <button onclick="abandonIsland()" class="font-cinzel text-xs text-stone-500 hover:text-red-500 tracking-widest uppercase transition-all">
+                        Abandon Island
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAME OVER / COMPLETED SCREEN -->
+        <section id="results-screen" class="hidden max-w-2xl w-full bg-stone-950/90 border-2 border-blood-900 rounded-lg p-6 md:p-12 text-center glow-red-heavy relative backdrop-blur-md transition-all duration-500">
+            <!-- Title -->
+            <h2 id="result-title" class="font-creepster text-5xl text-blood-700 tracking-widest mb-4">THE BEAST REIGNS</h2>
+            
+            <div class="mb-6 flex justify-center">
+                <div id="result-avatar" class="w-32 h-32 text-blood-500">
+                    <!-- Swapped via JS dynamically (Pig Head on stick vs Conch) -->
+                </div>
+            </div>
+
+            <!-- Stats breakdown -->
+            <div class="bg-stone-900/60 border border-stone-800 rounded-lg p-6 max-w-md mx-auto mb-8">
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="border-r border-stone-800">
+                        <span class="block text-xs font-elite text-stone-500">ARCHETYPE</span>
+                        <span id="result-archetype" class="font-cinzel text-base text-stone-100 font-bold">The Savage</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs font-elite text-stone-500">FINAL SANITY</span>
+                        <span id="result-sanity" class="font-cinzel text-base text-red-500 font-bold">0%</span>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-stone-800">
+                    <span class="block text-xs font-elite text-stone-500 mb-1">SCORE</span>
+                    <span id="result-score" class="font-cinzel text-3xl text-stone-100 font-bold tracking-widest">0 / 15</span>
+                </div>
+            </div>
+
+            <!-- Narrative evaluation -->
+            <p id="result-narrative" class="font-elite text-sm text-stone-400 leading-relaxed mb-8 max-w-md mx-auto">
+                You succumbed to the tribal chants. Simon lies dead in the sand, and the signal fire has burned down to absolute ash. You are now part of the swarm.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="restartGame()" class="font-cinzel text-sm bg-blood-900 hover:bg-blood-700 text-white px-8 py-4 rounded border border-blood-500 transition-all duration-300">
+                    RETURN TO THE ISLAND
+                </button>
+                <button onclick="goToIntro()" class="font-cinzel text-sm bg-stone-900 hover:bg-stone-800 text-stone-300 px-6 py-4 rounded border border-stone-800 transition-all duration-300">
+                    MAIN MENU
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 w-full text-center py-4 bg-stone-950/60 border-t border-blood-950">
+        <p class="font-cinzel text-[10px] tracking-widest text-stone-500">
+            "Maybe there is a beast... maybe it's only us." &copy; 2026 Lord of the Flies Quiz Game
+        </p>
+    </footer>
+
+    <!-- GAME LOGIC AND AUDIO ENGINE -->
+    <script>
+        // --- WEB AUDIO API SYNTHESIZER ---
+        let audioCtx = null;
+        let ambientDrone = null;
+        let soundscapeActive = false;
+        let ambientOscillator = null;
+        let campfireNoiseNode = null;
+        let filterNode = null;
+
+        function initAudio() {
+            if (audioCtx) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            setupAmbientSoundscape();
+        }
+
+        function setupAmbientSoundscape() {
+            if (!audioCtx) return;
+
+            // 1. Eerie Low Jungle Drone
+            ambientOscillator = audioCtx.createOscillator();
+            let lfo = audioCtx.createOscillator();
+            let lfoGain = audioCtx.createGain();
+            let droneGain = audioCtx.createGain();
+
+            ambientOscillator.type = 'sawtooth';
+            ambientOscillator.frequency.value = 55; // A1 low frequency
+            
+            lfo.frequency.value = 0.2; // very slow cycle
+            lfoGain.gain.value = 5; // modulate frequency slightly
+
+            // Lowpass filter to keep it deep, dark, and rumble-like
+            filterNode = audioCtx.createBiquadFilter();
+            filterNode.type = 'lowpass';
+            filterNode.frequency.value = 120;
+            filterNode.Q.value = 1;
+
+            lfo.connect(lfoGain);
+            lfoGain.connect(ambientOscillator.frequency);
+            
+            ambientOscillator.connect(filterNode);
+            filterNode.connect(droneGain);
+            droneGain.connect(audioCtx.destination);
+
+            droneGain.gain.value = 0.08; // quiet, subtle background rumble
+
+            // 2. Synthesized Crackling Fire Effect
+            // Generate pinkish noise
+            const bufferSize = 2 * audioCtx.sampleRate;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            let b0, b1, b2, b3, b4, b5, b6;
+            b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+            for (let i = 0; i < bufferSize; i++) {
+                const white = Math.random() * 2 - 1;
+                b0 = 0.99886 * b0 + white * 0.0555179;
+                b1 = 0.99332 * b1 + white * 0.0750759;
+                b2 = 0.96900 * b2 + white * 0.1538520;
+                b3 = 0.86650 * b3 + white * 0.3104856;
+                b4 = 0.55000 * b4 + white * 0.5329522;
+                b5 = -0.7616 * b5 - white * 0.0168980;
+                output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+                output[i] *= 0.11; // rescue gain
+                b6 = white * 0.115926;
+            }
+
+            campfireNoiseNode = audioCtx.createBufferSource();
+            campfireNoiseNode.buffer = noiseBuffer;
+            campfireNoiseNode.loop = true;
+
+            // Connect noise through high-mid pass filter for cracking sounds
+            let fireFilter = audioCtx.createBiquadFilter();
+            fireFilter.type = 'bandpass';
+            fireFilter.frequency.value = 1000;
+            fireFilter.Q.value = 0.8;
+
+            let fireGain = audioCtx.createGain();
+            fireGain.gain.value = 0.02; // very soft hiss/crackles
+
+            campfireNoiseNode.connect(fireFilter);
+            fireFilter.connect(fireGain);
+            fireGain.connect(audioCtx.destination);
+
+            // Start soundscape generators
+            ambientOscillator.start(0);
+            lfo.start(0);
+            campfireNoiseNode.start(0);
+
+            soundscapeActive = true;
+            updateVolumeUI();
+        }
+
+        // Sound Effects (Sfx Generators)
+        function playSfx(type) {
+            if (!audioCtx || audioCtx.state === 'suspended') return;
+
+            const time = audioCtx.currentTime;
+            
+            if (type === 'drum') {
+                // Primal tribal drum hit
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(110, time);
+                osc.frequency.exponentialRampToValueAtTime(30, time + 0.3);
+                
+                gain.gain.setValueAtTime(0.6, time);
+                gain.gain.exponentialRampToValueAtTime(0.01, time + 0.3);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(time);
+                osc.stop(time + 0.35);
+            } 
+            else if (type === 'correct') {
+                // NEW: Dark, organic log drum block hits instead of a magical chime
+                let osc1 = audioCtx.createOscillator();
+                let osc2 = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(160, time);
+                osc1.frequency.exponentialRampToValueAtTime(70, time + 0.35);
+                
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(200, time);
+                osc2.frequency.exponentialRampToValueAtTime(95, time + 0.35);
+                
+                gain.gain.setValueAtTime(0.45, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.35);
+                
+                osc1.connect(gain);
+                osc2.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc1.start(time);
+                osc2.start(time);
+                osc1.stop(time + 0.4);
+                osc2.stop(time + 0.4);
+            } 
+            else if (type === 'wrong') {
+                // Harsh low growl / screech of the beast
+                let osc1 = audioCtx.createOscillator();
+                let osc2 = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                
+                osc1.type = 'sawtooth';
+                osc1.frequency.setValueAtTime(80, time);
+                osc1.frequency.linearRampToValueAtTime(50, time + 0.5);
+
+                osc2.type = 'square';
+                osc2.frequency.setValueAtTime(85, time);
+                osc2.frequency.linearRampToValueAtTime(45, time + 0.5);
+                
+                gain.gain.setValueAtTime(0.3, time);
+                gain.gain.exponentialRampToValueAtTime(0.01, time + 0.5);
+                
+                osc1.connect(gain);
+                osc2.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc1.start(time);
+                osc2.start(time);
+                osc1.stop(time + 0.55);
+                osc2.stop(time + 0.55);
+            }
+            else if (type === 'glass') {
+                // Glass shattering/tinkling effect
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(2500, time);
+                osc.frequency.exponentialRampToValueAtTime(800, time + 0.2);
+                
+                gain.gain.setValueAtTime(0.2, time);
+                gain.gain.exponentialRampToValueAtTime(0.01, time + 0.2);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(time);
+                osc.stop(time + 0.25);
+            }
+            else if (type === 'conch') {
+                // Deep resonant horn blast
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(130, time);
+                osc.frequency.linearRampToValueAtTime(115, time + 0.8);
+                
+                let filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 400;
+
+                gain.gain.setValueAtTime(0.25, time);
+                gain.gain.linearRampToValueAtTime(0.01, time + 0.8);
+                
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(time);
+                osc.stop(time + 0.85);
+            }
+            else if (type === 'roar') {
+                // Terrifying synthetic Beast screech roar for jumpscare sequences
+                // let oscGrowl = audioCtx.createOscillator();
+                // let oscScreech = audioCtx.createOscillator();
+                // let roarGain = audioCtx.createGain();
+                
+                // oscGrowl.type = 'sawtooth';
+                // oscGrowl.frequency.setValueAtTime(90, time);
+                // oscGrowl.frequency.linearRampToValueAtTime(30, time + 1.8);
+                
+                // oscScreech.type = 'sawtooth';
+                // oscScreech.frequency.setValueAtTime(320, time);
+                // oscScreech.frequency.exponentialRampToValueAtTime(750, time + 0.4);
+                // oscScreech.frequency.exponentialRampToValueAtTime(140, time + 1.6);
+                
+                // // Add extreme gain distortion
+                // roarGain.gain.setValueAtTime(0.8, time);
+                // roarGain.gain.exponentialRampToValueAtTime(0.001, time + 1.8);
+                
+                // oscGrowl.connect(roarGain);
+                // oscScreech.connect(roarGain);
+                // roarGain.connect(audioCtx.destination);
+                
+                // oscGrowl.start(time);
+                // oscScreech.start(time);
+                
+                // oscGrowl.stop(time + 1.8);
+                // oscScreech.stop(time + 1.8);
+
+                //instead of the screech, use the sfx tung-tung-tung sahur
+                sfx = new Audio('tung-tung-tung-sahur.mp3');
+                sfx.volume = 0.5;
+                sfx.play();
+
+            }
+        }
+
+        function toggleAudio() {
+            if (!audioCtx) {
+                initAudio();
+                return;
+            }
+
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+                soundscapeActive = true;
+            } else if (audioCtx.state === 'running' && soundscapeActive) {
+                audioCtx.suspend();
+                soundscapeActive = false;
+            } else {
+                audioCtx.resume();
+                soundscapeActive = true;
+            }
+            updateVolumeUI();
+        }
+
+        function updateVolumeUI() {
+            const onIcon = document.getElementById('volume-icon-on');
+            const offIcon = document.getElementById('volume-icon-off');
+            if (soundscapeActive) {
+                onIcon.classList.remove('hidden');
+                offIcon.classList.add('hidden');
+            } else {
+                onIcon.classList.add('hidden');
+                offIcon.classList.remove('hidden');
+            }
+        }
+
+
+        // --- GAME QUESTIONS STATE DATABASE ---
+        const questions = [
+            {
+                id: 1,
+                category: "SYMBOLS & MOTIFS",
+                question: "What does the conch shell primarily symbolize throughout the first half of the novel?",
+                options: [
+                    "Democratic order, assembly, and rules of civilized debate",
+                    "Primal survival and hunting supremacy",
+                    "A direct portal to communicate with the Beast",
+                    "Piggy's technological prowess and scientific background"
+                ],
+                answer: 0,
+                hint: "It starts assemblies on the platform and holds the power to silence others."
+            },
+            {
+                id: 2,
+                category: "CHARACTERS & ALLEGORY",
+                question: "Which boy represents the rational, scientific, and technological aspects of human civilization?",
+                options: [
+                    "Jack Merridew",
+                    "Simon",
+                    "Piggy",
+                    "Roger"
+                ],
+                answer: 2,
+                hint: "He is physical science personified: wears spectacles, has asthma, and calculates their rescue realistically."
+            },
+            {
+                id: 3,
+                category: "PLOT CRISIS",
+                question: "In Chapter 8, which character climbs the mountain alone and has a hallucination talking to 'The Lord of the Flies'?",
+                options: [
+                    "Ralph",
+                    "Simon",
+                    "Samneric",
+                    "Maurice"
+                ],
+                answer: 1,
+                hint: "The mystic, quiet boy who seeks isolation and recognizes that the Beast is not a physical monster."
+            },
+            {
+                id: 4,
+                category: "LITERARY DEVICES",
+                question: "Golding writes that 'the forest shrieked with their hunt.' What literary device is dominantly showcased in this quote?",
+                options: [
+                    "Synecdoche",
+                    "Personification",
+                    "Oxymoron",
+                    "Understatement"
+                ],
+                answer: 1,
+                hint: "Giving human actions (shrieking) to an inanimate structure or environment."
+            },
+            {
+                id: 5,
+                category: "THEMES & ALLEGORY",
+                question: "The translation of Beelzebub, a demon or devil representing decay and swarm mentality, is represented in the novel by:",
+                options: [
+                    "The Conch Shell",
+                    "Piggy's Glasses",
+                    "The Lord of the Flies (the pig's head on a spear)",
+                    "The dead parachutist on the mountain"
+                ],
+                answer: 2,
+                hint: "It literally means 'Lord of the Flies' in Hebrew, attracting swarms of insects on its decaying flesh."
+            },
+            {
+                id: 6,
+                category: "SYMBOLS & MOTIFS",
+                question: "The maintaining of the signal fire is Ralph's ultimate priority because it represents:",
+                options: [
+                    "A way to cook the meat Jack and his hunters capture",
+                    "Their desire to burn down the island to cleanse it of evil",
+                    "The hope of rescue and intellectual connection to civilization",
+                    "A defense mechanism to keep the beast away at night"
+                ],
+                answer: 2,
+                hint: "Without it, they are forgotten and invisible to passing ships."
+            },
+            {
+                id: 7,
+                category: "LITERARY DEVICES & FORESHADOWING",
+                question: "Roger throwing stones at Henry, but intentionally leaving an untouched space around him, foreshadows what?",
+                options: [
+                    "Roger's ultimate descent into unrestrained homicidal violence",
+                    "Roger building a castle on the beach for the littluns",
+                    "Roger becoming Ralph's closest ally",
+                    "Roger's rescue by a schoolmaster"
+                ],
+                answer: 0,
+                hint: "The taboo of the old society still binds his arm, but it is fading fast."
+            },
+            {
+                id: 8,
+                category: "LITERARY DEVICES",
+                question: "The boys are saved from Ralph's murder hunt by a British naval officer who spotted the smoke of a wildfire set to burn Ralph out. What is this device?",
+                options: [
+                    "Dramatic Irony",
+                    "Situational Irony",
+                    "Hyperbole",
+                    "Deus ex Machina & Situational Irony"
+                ],
+                answer: 3,
+                hint: "The devastating fire meant for destruction becomes their rescue beacon, arriving like a god from a machine."
+            },
+            {
+                id: 9,
+                category: "CHARACTERS & ALLEGORY",
+                question: "Which character is widely interpreted as a spiritual Christ-figure, meeting a martyr's death while bringing truth to the tribe?",
+                options: [
+                    "Ralph",
+                    "Simon",
+                    "Piggy",
+                    "The Parachutist"
+                ],
+                answer: 1,
+                hint: "He feeds the hungry littluns, retreats to a garden of nature, and is slaughtered when revealing the truth of the beast."
+            },
+            {
+                id: 10,
+                category: "PLOT CRISIS",
+                question: "Who is responsible for the actual destruction of the conch shell and the sudden death of Piggy?",
+                options: [
+                    "Jack, by throwing his spear",
+                    "Roger, by releasing a massive boulder from Castle Rock",
+                    "Ralph, by dropping it in a panic",
+                    "The Beast, during the thunderstorm"
+                ],
+                answer: 1,
+                hint: "The executioner of the group, acting with deliberate, calculated malice."
+            },
+            {
+                id: 11,
+                category: "SYMBOLS & MOTIFS",
+                question: "The painted faces of Jack's hunters symbolize:",
+                options: [
+                    "Protection from the blistering tropical sun",
+                    "A mask that liberates the boys from shame, self-consciousness, and moral law",
+                    "Their initiation into a royal noble guard",
+                    "A strategic camouflage to fool the island's beast"
+                ],
+                answer: 1,
+                hint: "Behind the paint, they are no longer schoolboys bound by rules; they are anonymous hunters."
+            },
+            {
+                id: 12,
+                category: "PLOT RESOLUTION",
+                question: "What is the physical reality of the 'Beast from Air' that terrifies Samneric on the mountain?",
+                options: [
+                    "A giant rogue bat",
+                    "A fighter pilot's corpse caught in a canopy parachute",
+                    "An escaped zoo gorilla",
+                    "A physical manifestation of a demon"
+                ],
+                answer: 1,
+                hint: "A tragic byproduct of the adults' war taking place in the skies above."
+            },
+            {
+                id: 13,
+                category: "LITERARY DEVICES",
+                question: "Ralph and Jack serve as characters whose contrasting traits emphasize the specific qualities of each other. This literary relationship is known as:",
+                options: [
+                    "Foil Characters",
+                    "Dynamic Antagonists",
+                    "Soliloquists",
+                    "Archetypal Mentors"
+                ],
+                answer: 0,
+                hint: "Like light and shadow, democratic leadership and autocratic dictatorship."
+            },
+            {
+                id: 14,
+                category: "THEMES & ALLEGORY",
+                question: "What is Golding’s core philosophical message regarding human nature throughout the novel?",
+                options: [
+                    "Evil is an external force that corrupts otherwise pure individuals",
+                    "Without the structure of societal laws, humanity's innate savagery inevitably takes over",
+                    "Democratic systems are infallible if properly managed",
+                    "Children are naturally moral until adults teach them to kill"
+                ],
+                answer: 1,
+                hint: "The breakdown of order is not due to the island, but the defect of human hearts."
+            },
+            {
+                id: 15,
+                category: "SYMBOL ANALYSIS",
+                question: "What does the cracking and ultimate loss of both lenses of Piggy’s spectacles represent?",
+                options: [
+                    "The expansion of their scientific research capabilities",
+                    "The gradual decay of intellect, rational truth, and civil vision on the island",
+                    "A sign of supernatural bad luck surrounding the group",
+                    "The transition from fire-making to electricity-making"
+                ],
+                answer: 1,
+                hint: "As the glass breaks, the boys sink further into blind savagery."
+            }
+        ];
+
+        // --- GAME PLAY STATE ---
+        let currentQuestionIdx = 0;
+        let score = 0;
+        let sanity = 100;
+        let lifelinesUsed = {
+            conch: false,
+            glasses: false,
+            beast: false
+        };
+        let activeOptions = [0, 1, 2, 3]; // Track which options are visible/active
+
+        // --- DOM ELEMENTS ---
+        const introScreen = document.getElementById('intro-screen');
+        const instructionsScreen = document.getElementById('instructions-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const scareOverlay = document.getElementById('beast-scare-overlay');
+        const mainContainer = document.getElementById('main-container');
+
+        const sanityBar = document.getElementById('sanity-bar');
+        const sanityValue = document.getElementById('sanity-value');
+        const progressVal = document.getElementById('progress-val');
+        const tensionVal = document.getElementById('tension-val');
+
+        const conchBtn = document.getElementById('conch-btn');
+        const glassesBtn = document.getElementById('glasses-btn');
+        const beastBtn = document.getElementById('beast-btn');
+
+        const questionCategory = document.getElementById('question-category');
+        const questionText = document.getElementById('question-text');
+        const optionsGrid = document.getElementById('options-grid');
+
+        const beastHintContainer = document.getElementById('beast-hint-container');
+        const beastHintText = document.getElementById('beast-hint-text');
+
+        // --- NAVIGATION & VIEWS ---
+        function showInstructions() {
+            initAudio();
+            playSfx('drum');
+            introScreen.classList.add('hidden');
+            instructionsScreen.classList.remove('hidden');
+        }
+
+        function hideInstructions() {
+            playSfx('drum');
+            instructionsScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+        }
+
+        function abandonIsland() {
+            playSfx('wrong');
+            goToIntro();
+        }
+
+        function goToIntro() {
+            gameScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            instructionsScreen.classList.add('hidden');
+            scareOverlay.classList.remove('opacity-100');
+            scareOverlay.classList.add('opacity-0', 'pointer-events-none');
+            introScreen.classList.remove('hidden');
+        }
+
+        // --- GAMEPLAY LOOPS ---
+        function startGame() {
+            initAudio();
+            playSfx('drum');
+            
+            // Reset state variables
+            currentQuestionIdx = 0;
+            score = 0;
+            sanity = 100;
+            lifelinesUsed = { conch: false, glasses: false, beast: false };
+            
+            // Reset Lifelines UI
+            conchBtn.disabled = false;
+            conchBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+            glassesBtn.disabled = false;
+            glassesBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+            beastBtn.disabled = false;
+            beastBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+
+            introScreen.classList.add('hidden');
+            instructionsScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            scareOverlay.classList.remove('opacity-100');
+            scareOverlay.classList.add('opacity-0', 'pointer-events-none');
+            gameScreen.classList.remove('hidden');
+
+            updateStats();
+            loadQuestion();
+        }
+
+        function updateStats() {
+            // Update sanity UI
+            sanityBar.style.width = `${sanity}%`;
+            sanityValue.innerText = `${sanity}%`;
+            
+            // Change color profile of bar based on danger level
+            if (sanity <= 30) {
+                sanityBar.classList.remove('from-blood-800', 'to-blood-500');
+                sanityBar.classList.add('bg-red-700', 'animate-pulse');
+                tensionVal.innerText = "CRITICAL";
+                tensionVal.className = "font-cinzel text-lg text-red-600 font-bold animate-ping";
+            } else if (sanity <= 60) {
+                sanityBar.classList.remove('from-blood-800', 'to-blood-500');
+                sanityBar.classList.add('bg-amber-600');
+                tensionVal.innerText = "HIGH";
+                tensionVal.className = "font-cinzel text-lg text-amber-500 font-bold";
+            } else {
+                sanityBar.className = "bg-gradient-to-r from-blood-800 to-blood-500 h-full transition-all duration-500";
+                tensionVal.innerText = "LOW";
+                tensionVal.className = "font-cinzel text-lg text-stone-300 font-bold";
+            }
+
+            progressVal.innerText = `${currentQuestionIdx + 1} / ${questions.length}`;
+        }
+
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIdx];
+            questionCategory.innerText = currentQ.category;
+            questionText.innerText = currentQ.question;
+            beastHintContainer.classList.add('hidden'); // collapse hints on new load
+            
+            activeOptions = [0, 1, 2, 3];
+            renderOptions();
+        }
+
+        function renderOptions() {
+            const currentQ = questions[currentQuestionIdx];
+            optionsGrid.innerHTML = "";
+
+            currentQ.options.forEach((optText, index) => {
+                const isEliminated = !activeOptions.includes(index);
+                
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left font-elite p-4 rounded border transition-all duration-300 flex items-start gap-3 relative overflow-hidden ${
+                    isEliminated 
+                    ? 'opacity-25 bg-stone-950 border-stone-900 text-stone-600 cursor-not-allowed pointer-events-none' 
+                    : 'bg-stone-900/60 hover:bg-blood-950/40 border-stone-800 hover:border-blood-800 text-stone-300 hover:text-white'
+                }`;
+                btn.disabled = isEliminated;
+                btn.onclick = () => submitAnswer(index);
+
+                // Option prefix marker (A, B, C, D)
+                const prefix = String.fromCharCode(65 + index);
+                btn.innerHTML = `
+                    <span class="font-cinzel font-bold ${isEliminated ? 'text-stone-700' : 'text-blood-500'}">${prefix}.</span>
+                    <span class="text-sm md:text-base">${optText}</span>
+                `;
+                
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        // --- LIFELINE ACTIONS ---
+        function useConch() {
+            if (lifelinesUsed.conch) return;
+            lifelinesUsed.conch = true;
+            playSfx('conch');
+
+            // Disable conch shell UI
+            conchBtn.disabled = true;
+            conchBtn.classList.add('opacity-40', 'cursor-not-allowed');
+
+            const currentQ = questions[currentQuestionIdx];
+            const correctAns = currentQ.answer;
+
+            // Generate candidates of wrong choices to discard
+            let wrongIndices = [0, 1, 2, 3].filter(idx => idx !== correctAns);
+            // Randomly pick two wrong options to disable
+            wrongIndices.sort(() => Math.random() - 0.5);
+            const toEliminate = wrongIndices.slice(0, 2);
+
+            activeOptions = activeOptions.filter(idx => !toEliminate.includes(idx));
+            renderOptions();
+        }
+
+        function useGlasses() {
+            if (lifelinesUsed.glasses) return;
+            lifelinesUsed.glasses = true;
+            playSfx('glass');
+
+            // Disable Glasses UI
+            glassesBtn.disabled = true;
+            glassesBtn.classList.add('opacity-40', 'cursor-not-allowed');
+
+            const currentQ = questions[currentQuestionIdx];
+            const correctAns = currentQ.answer;
+
+            // Focus purely on correct answer
+            activeOptions = [correctAns];
+            renderOptions();
+
+            // Deduct Sanity due to physical strain and fogging sight
+            sanity = Math.max(0, sanity - 10);
+            updateStats();
+
+            // Check if glasses breaking led to absolute loss of mind
+            if (sanity <= 0) {
+                triggerBeastAttack();
+            }
+        }
+
+        function useBeast() {
+            if (lifelinesUsed.beast) return;
+            lifelinesUsed.beast = true;
+            playSfx('wrong');
+
+            // Disable beast UI
+            beastBtn.disabled = true;
+            beastBtn.classList.add('opacity-40', 'cursor-not-allowed');
+
+            const currentQ = questions[currentQuestionIdx];
+            beastHintText.innerText = `"${currentQ.hint}"`;
+            beastHintContainer.classList.remove('hidden');
+        }
+
+        // --- THE BEAST ATTACK JUMPSCARE ---
+        function triggerBeastAttack() {
+            // Hide game content
+            gameScreen.classList.add('hidden');
+            
+            // Show terrifying jumpscare overlay and shake screen
+            scareOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            scareOverlay.classList.add('opacity-100');
+            mainContainer.classList.add('animate-intense-shake');
+
+            // Play Beast sound
+            playSfx('tung-tung-tung-sahur.mp3'); // Using the same roar sound for maximum terror
+
+            // Wait 2.2 seconds, then transition to results screen
+            setTimeout(() => {
+                mainContainer.classList.remove('animate-intense-shake');
+                scareOverlay.classList.remove('opacity-100');
+                scareOverlay.classList.add('opacity-0', 'pointer-events-none');
+                endGame(false);
+            }, 2200);
+        }
+
+        // --- ANSWER PROCESSING ---
+        function submitAnswer(chosenIdx) {
+            const currentQ = questions[currentQuestionIdx];
+            const correctIdx = currentQ.answer;
+
+            // Prevent multi-tapping choices
+            const allOptionBtns = optionsGrid.querySelectorAll('button');
+            allOptionBtns.forEach(btn => btn.disabled = true);
+
+            if (chosenIdx === correctIdx) {
+                // Correct!
+                playSfx('correct');
+                score++;
+                
+                // Show visual feedback instantly
+                allOptionBtns[chosenIdx].classList.remove('bg-stone-900/60', 'hover:bg-blood-950/40', 'border-stone-800');
+                allOptionBtns[chosenIdx].classList.add('bg-emerald-950/60', 'border-emerald-500', 'text-emerald-100', 'glow-emerald');
+                
+                // Proceed automatically to next turn after interval
+                setTimeout(() => {
+                    if (currentQuestionIdx + 1 >= questions.length) {
+                        endGame(true);
+                    } else {
+                        currentQuestionIdx++;
+                        updateStats();
+                        loadQuestion();
+                    }
+                }, 1800);
+            } else {
+                // Wrong!
+                playSfx('wrong');
+                sanity = Math.max(0, sanity - 15);
+                updateStats();
+
+                // Highlight correct and incorrect choices
+                allOptionBtns[chosenIdx].classList.remove('bg-stone-900/60', 'border-stone-800');
+                allOptionBtns[chosenIdx].classList.add('bg-red-950/60', 'border-red-500', 'text-red-200');
+
+                allOptionBtns[correctIdx].classList.remove('bg-stone-900/60', 'border-stone-800');
+                allOptionBtns[correctIdx].classList.add('bg-emerald-950/60', 'border-emerald-500', 'text-emerald-200');
+
+                // Proceed automatically to next turn or trigger jumpscare
+                setTimeout(() => {
+                    if (sanity <= 0) {
+                        triggerBeastAttack();
+                    } else if (currentQuestionIdx + 1 >= questions.length) {
+                        endGame(true);
+                    } else {
+                        currentQuestionIdx++;
+                        updateStats();
+                        loadQuestion();
+                    }
+                }, 1800);
+            }
+        }
+
+        // --- ENDGAME EVALUATION & SCREEN ---
+        function endGame(survivedAll) {
+            gameScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const title = document.getElementById('result-title');
+            const avatar = document.getElementById('result-avatar');
+            const archetype = document.getElementById('result-archetype');
+            const sanityResult = document.getElementById('result-sanity');
+            const scoreResult = document.getElementById('result-score');
+            const narrative = document.getElementById('result-narrative');
+
+            // Set dynamic stats
+            sanityResult.innerText = `${sanity}%`;
+            scoreResult.innerText = `${score} / ${questions.length}`;
+
+            if (!survivedAll || sanity <= 0) {
+                // Succumbed to the Beast
+                title.innerText = "THE BEAST REIGNS";
+                title.className = "font-creepster text-5xl text-blood-700 tracking-widest mb-4";
+                
+                avatar.innerHTML = `
+                    <svg viewBox="0 0 100 100" fill="currentColor" class="w-full h-full text-blood-900 animate-pulse-slow">
+                        <image href="tripleT.webp" x="10" y="10" width="80" height="80" class="animate-pulse-slow"/>
+                    </svg>
+                `;
+                archetype.innerText = "Succumbed / Savage";
+                archetype.className = "font-cinzel text-base text-red-500 font-bold";
+                narrative.innerText = "You surrendered to primal urges. The thin veneer of civilization crumbled completely beneath the shadows of the jungle canopy. You are now part of the hunting chorus chanting: 'Kill the beast! Cut his throat! Spill his blood!'";
+            } else {
+                // Rescued! Analyze performance tier
+                playSfx('correct');
+                title.innerText = "THE RESCUE SHIP ARRIVES";
+                title.className = "font-cinzel text-4xl text-emerald-500 tracking-widest mb-4 font-bold";
+                
+                avatar.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full text-emerald-600">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 1.93-.68 3.7-1.82 5.09z"/>
+                    </svg>
+                `;
+
+                if (score >= 13) {
+                    archetype.innerText = "Simon's Visionary";
+                    archetype.className = "font-cinzel text-base text-amber-300 font-bold";
+                    narrative.innerText = "Stunning work! You achieved ultimate clarity. Like Simon, you saw past the illusions, recognized that the beast is merely our own internal flaws, and preserved intellectual civilization.";
+                } else if (score >= 9) {
+                    archetype.innerText = "Ralph's Assembly Leader";
+                    archetype.className = "font-cinzel text-base text-emerald-400 font-bold";
+                    narrative.innerText = "Excellent! You fought hard to keep the signal fire alive. Despite heavy tolls and fracturing moments, you held onto the conch and preserved your fundamental sanity when the ship arrived.";
+                } else {
+                    archetype.innerText = "The Restless Littlun";
+                    archetype.className = "font-cinzel text-base text-stone-400 font-bold";
+                    narrative.innerText = "You survived, but only barely. Confused, frightened by the beast in the dark, and struggling to answer basic questions of democratic logic, you wept on the shore for the end of innocence.";
+                }
+            }
+        }
+
+        function restartGame() {
+            startGame();
+        }
+    </script>
+</body>
+</html>
