@@ -200,7 +200,6 @@ td {
   width: 100%;
 }
 
-
 .death-button {
   background-color: #8e4242ff;
   color: #ffeaeaff;
@@ -251,3 +250,42 @@ h3#event-detail, h2#event-detail {
 #dog-image {
   z-index: 10;
 }
+
+.error-message {
+  color: #8e4242ff;
+  font-weight: bold;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* option.menu-work {
+  background-color: #588157;
+  color: #e6e3db;
+}
+
+option.menu-personal {
+  background-color: #779976;
+  color: #e6e3db;
+}
+
+option.menu-health {
+  background-color: #A3B18A;
+  color: #344E41;
+}
+
+option.menu-school {
+  background-color: #D9BF77;
+  color: #344E41;
+}
+
+option.menu-other {
+  background-color: #E6B89C;
+  color: #344E41;
+} */

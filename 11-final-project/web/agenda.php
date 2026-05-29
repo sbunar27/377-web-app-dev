@@ -60,8 +60,13 @@ echo "<script>var eventHeatmap = " . json_encode($eventCounts) . ";</script>";
               exit;
           }
 
+          // $todoDate = $connection->real_escape_string($todo_date);
+          // $sql = "SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate' AND todo_completed = 0";
+          // $result = $connection->query($sql);
+
           $todoDate = $connection->real_escape_string($todo_date);
-          $sql = "SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate'";
+          // look for 0 OR NULL
+          $sql = "SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate' AND (todo_completed = 0 OR todo_completed IS NULL)";
           $result = $connection->query($sql);
 
           if ($result && $result->num_rows > 0) {
@@ -77,8 +82,18 @@ echo "<script>var eventHeatmap = " . json_encode($eventCounts) . ";</script>";
       <input type="text" id="event-title" placeholder="Event title" />
       <textarea id="event-desc" placeholder="Event description"></textarea>
       <input type="time" id="event-time" />
+      <select id="event-cat">
+        <option value="">Select category</option>
+        <option value="Work">Work</option>
+        <option value="Personal">Personal</option>
+        <option value="Health">Health</option>
+        <option value="School">School</option>
+        <option value="Other">Other</option>
+      </select>
       <button id="add-event-btn" class="button">Add Event</button>
+      <br><br>
     </div>
+    <div id="event-error" class="error-message"></div>
     <br><hr><br>
     <h3>Events for <?php echo htmlspecialchars(isset($_GET['date']) ? $_GET['date'] : date('Y-m-d')); ?></h3>
     <br>
@@ -170,6 +185,7 @@ print('</script>');
           return type === 'display' ? '<a href="index.php?nav=detail&id=' + row.ev_id + '">' + data + '</a>' : data;
       }},
       { title: "Event Time", data: "ev_time" },
+      { title: "Category", data: "ev_cat" },
       { title: "Description", data: "ev_desc" }
     ]
   });
@@ -368,17 +384,18 @@ print('</script>');
 
     // Catch missing details before even sending the AJAX request
     if (!selectedDate || !title || !time) {
-      return alert('All fields (Date, Title, and Time) are required!');
+      $('#event-error').text('All fields (Date, Title, and Time) are required!');
+      return;
     }
 
     $.ajax({
       url: 'events.php',
       method: 'POST',
-      data: { action: 'add', ev_date: selectedDate, ev_time: time, ev_title: title, ev_desc: desc },
+      data: { action: 'add', ev_date: selectedDate, ev_time: time, ev_title: title, ev_desc: desc, ev_cat: $('#event-cat').val() },
       success: function(response) {
         if (response.startsWith('success')) {
           // Update local data so dog reacts immediately
-          const newEv = { ev_title: title, ev_time: time, ev_desc: desc, formatted_date: selectedDate };
+          const newEv = { ev_title: title, ev_time: time, ev_desc: desc, formatted_date: selectedDate, ev_cat: $('#event-cat').val() };
           data.push(newEv);
           
           eventHeatmap[selectedDate] = (eventHeatmap[selectedDate] || 0) + 1;
@@ -393,11 +410,11 @@ print('</script>');
           document.getElementById('event-time').value = '';
           document.getElementById('event-desc').value = ''; 
         } else {
-          alert('Server Error: ' + response);
+          $('#event-error').text(response);
         }
       },
       error: function() {
-        alert('AJAX request failed completely.');
+        $('#event-error').text('AJAX request failed completely.');
       }
     });
   };
@@ -422,9 +439,10 @@ print('</script>');
       method: 'GET',
       data: { date: selectedDate },
       success: function(response) {
+        // make sure only events that arent completed show up on the to-do list
+        const incompleteTasks = JSON.parse(response).filter(task => !task.todo_completed);
         todoList.innerHTML = '';
-        const tasks = JSON.parse(response);
-        tasks.forEach(task => {
+        incompleteTasks.forEach(task => {
           const li = document.createElement('li');
           li.textContent = task.todo_task;
           li.setAttribute('data-id', task.todo_id);
@@ -537,4 +555,5 @@ print('</script>');
   document.getElementById('show-completed-btn').onclick = function() {
     window.location.href = 'index.php?nav=completed';
   };
+  
 </script>

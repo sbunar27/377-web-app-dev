@@ -15,7 +15,11 @@ if (($action = $_POST['action'] ?? '') === 'delete') {
         exit;
     }
 
-    $sql = "DELETE FROM todos WHERE todo_id = $id";
+    // $sql = "DELETE FROM todos WHERE todo_id = $id";
+
+    $sql = "UPDATE todos SET
+            todo_completed = 1
+            WHERE todo_id = $id";
 
     if ($connection->query($sql) === TRUE) {
         echo 'success';
@@ -39,7 +43,7 @@ if (($action = $_POST['action'] ?? '') === 'delete') {
     $posted_date = (isset($_POST['date']) && !empty($_POST['date'])) ? $_POST['date'] : date('Y-m-d');
     $date_escaped = $connection->real_escape_string($posted_date);
 
-    $sql = "INSERT INTO todos (todo_task, todo_date) VALUES ('$task_escaped', '$date_escaped')";
+    $sql = "INSERT INTO todos (todo_task, todo_date, todo_completed) VALUES ('$task_escaped', '$date_escaped', 0)";
 
     if ($connection->query($sql) === TRUE) {
         // return only the numeric ID

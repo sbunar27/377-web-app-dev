@@ -14,7 +14,7 @@ if ($event_id === 0) {
 }
 
 // instead of using a direct query, use a prepared statement to prevent SQL injection --> fixed by Gemini/Copilot
-$stmt = $connection->prepare("SELECT ev_title, ev_desc, ev_date, ev_time, ev_completed FROM events WHERE ev_id = ?");
+$stmt = $connection->prepare("SELECT ev_title, ev_desc, ev_date, ev_time, ev_completed, ev_cat FROM events WHERE ev_id = ?");
 $stmt->bind_param("i", $event_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -56,13 +56,29 @@ $connection->close();
         </div>
 
         <div class="form-group">
+            <label for="ev_cat"><strong>Category:</strong></label><br>
+            <select id="ev_cat" class="form-control" name="ev_cat">
+                <option value="">Select category</option>
+                <option class="menu-work" value="Work" <?php echo ($event['ev_cat'] === 'Work') ? 'selected' : ''; ?>>Work</option>
+                <option class="menu-personal" value="Personal" <?php echo ($event['ev_cat'] === 'Personal') ? 'selected' : ''; ?>>Personal</option>
+                <option class="menu-health" value="Health" <?php echo ($event['ev_cat'] === 'Health') ? 'selected' : ''; ?>>Health</option>
+                <option class="menu-school" value="School" <?php echo ($event['ev_cat'] === 'School') ? 'selected' : ''; ?>>School</option>
+                <option class="menu-other" value="Other" <?php echo ($event['ev_cat'] === 'Other') ? 'selected' : ''; ?>>Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
             <label>
                 <input type="checkbox" name="ev_completed" value="1" <?php echo ($event['ev_completed'] == 1) ? 'checked' : ''; ?>>
                 <strong>Mark as Completed</strong>
             </label>
         </div>
 
-        <button type="submit" class="button">Save Changes</button>
+        <!-- This div will be used to display any error messages returned from save.php via AJAX -->
+        <div id="edit-error" class="error-message"></div>
+        <br><br>
+
+        <button id="save-button" type="submit" class="button">Save Changes</button>
         <a class="button" href="index.php?nav=agenda">Cancel</a>
         <a class="death-button button" href="delete.php?id=<?php echo $event_id; ?>" 
             onclick="return confirm('Are you sure you want to delete this event?');">
@@ -70,3 +86,57 @@ $connection->close();
         </a>
     </form>
 </div>
+
+<!-- Use ajax to send it in, code fixed by Copilot -->
+<script>
+    $(document).ready(function() {
+        $('#save-button').on("click", function(event) {
+            event.preventDefault(); // Stop normal form submission
+            
+            $("#edit-error").text(""); // Clear any previous errors
+            
+            // Serialize grabs all current values from the form fields dynamically
+            var formData = $(this).closest('form').serialize();
+
+            $.ajax({
+                url: "save.php",
+                type: "POST",
+                data: formData,
+                dataType: "json", // Expect a JSON response back from save.php
+                success: function(response) {
+                    if (response.success) {
+                        // Redirect the actual browser window on success
+                        window.location.href = response.redirect;
+                    }
+                },
+                error: function(xhr) {
+                    // Try to parse JSON error message, fallback to raw text if it fails
+                    try {
+                        var res = JSON.parse(xhr.responseText);
+                        $("#edit-error").text(res.error);
+                    } catch(e) {
+                        $("#edit-error").text("An error occurred: " + xhr.responseText);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<!-- <script>
+    $('#save-button').on("click", function(event) {
+        event.preventDefault(); // Prevent the default form submission
+            $.ajax({
+                url: "save.php",
+                type: "POST",
+                data: { action: 'post', ev_date: "<?php echo $event['ev_date']; ?>", ev_time: "<?php echo $event['ev_time']; ?>", ev_title: "<?php echo $event['ev_title']; ?>", ev_desc: "<?php echo $event['ev_desc']; ?>", ev_cat: "<?php echo $event['ev_cat']; ?>", ev_completed: "<?php echo $event['ev_completed']; ?>", ev_id: "<?php echo $event_id; ?>" },
+                success: function(response) {
+                    console.log("Event updated successfully.");
+                },
+                error: function(xhr) {
+                    $("#edit-error").text(xhr.responseText);
+                }
+            });
+        });
+    });
+</script> -->

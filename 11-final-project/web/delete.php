@@ -21,7 +21,6 @@ if (isset($_GET['id'])) {
 
     $connection->close();
 } else {
-    // No ID provided? Send them home.
     header("Location: index.php");
     exit();
 }

@@ -24,6 +24,31 @@ $connection->close();
 
 // pass the completed data to JavaScript
 echo "<script>var completedData = " . json_encode($rows, JSON_PARTIAL_OUTPUT_ON_ERROR) . ";</script>";
+
+// get ONLY completed todos, sorted by most recent date
+$connection = get_connection();
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+}  
+
+$sql = "SELECT *, date_format(todo_date, '%m/%d/%Y') as 'formatted_date'
+        FROM todos
+        WHERE todo_completed = 1
+        ORDER BY todo_date DESC";
+
+$rows = [];
+$result = $connection->query($sql);
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+    $result->free();
+}
+$connection->close();
+
+// pass the completed data to JavaScript
+echo "<script>var completedTodoData = " . json_encode($rows, JSON_PARTIAL_OUTPUT_ON_ERROR) . ";</script>";
+
 ?>
 
 <div id="completed-section">
@@ -32,12 +57,19 @@ echo "<script>var completedData = " . json_encode($rows, JSON_PARTIAL_OUTPUT_ON_
     <br>
     
     <table id="completedTable" class="stripe hover dataTables"></table>
+    <br><br>
+
+    <h2>Completed To-Dos</h2>
+    <p>And here are the tasks you've checked off your to-do list!</p>
+    <br>
+    <table id="completedTodoTable" class="stripe hover dataTables"></table>
     
     <br>
     <a class="button" href="index.php?nav=agenda">Back to Agenda</a>
 </div>
 
 <script>
+//completed events
 $(document).ready(function() {
     var completedTable = $('#completedTable').DataTable({
         data: completedData,
@@ -48,11 +80,26 @@ $(document).ready(function() {
                 return type === 'display' ? '<a href="index.php?nav=detail&id=' + row.ev_id + '">' + data + '</a>' : data;
             }},
             { title: "Time", data: "ev_time" },
-            { title: "Description", data: "ev_desc" }
+            { title: "Description", data: "ev_desc" },
+            { title: "Category", data: "ev_cat" }
         ]
     });
 
     $('#completedTable').css('background-color', '#5f7b5eff');
     $('#completedTable').css('color', '#e6e3db');
+});
+
+// completed to-dos
+$(document).ready(function() {
+    var completedTodoTable = $('#completedTodoTable').DataTable({
+        data: completedTodoData,
+        columns: [
+            { title: "Date", data: "formatted_date" },
+            { title: "Task", data: "todo_task" }
+        ]
+    });
+
+    $('#completedTodoTable').css('background-color', '#5f7b5eff');
+    $('#completedTodoTable').css('color', '#e6e3db');
 });
 </script>

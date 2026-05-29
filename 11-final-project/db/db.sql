@@ -5,10 +5,12 @@ CREATE TABLE `solace`.`events` (
   `ev_date` DATE NOT NULL,
   `ev_time` VARCHAR(100) NULL,
   `ev_completed` TINYINT NULL DEFAULT 0,
+  `ev_cat` VARCHAR(100) NULL,
   PRIMARY KEY (`ev_id`));
   
 CREATE TABLE `solace`.`todos` (
   `todo_id` INT NOT NULL AUTO_INCREMENT,
   `todo_task` MEDIUMTEXT NOT NULL,
   `todo_date` DATE NOT NULL,
+  `todo_completed` TINYINT NULL DEFAULT 0,
   PRIMARY KEY (`todo_id`));
