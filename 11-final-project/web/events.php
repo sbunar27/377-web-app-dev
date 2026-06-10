@@ -30,7 +30,7 @@ if ($action === 'add') {
     else if ($ev_time > '22:00:00') {
         echo 'Events cannot be scheduled after 10pm, remember to get some sleep!';
         exit;
-    } // If the time is earlier than 5am, stop the user from adding the event and return an error message
+    } // If the time is earlier than or equal to 5am, stop the user from adding the event and return an error message
     else if ($ev_time < '05:00:00') {
         echo 'Events cannot be scheduled before 5am, remember to get some rest!';
         exit;

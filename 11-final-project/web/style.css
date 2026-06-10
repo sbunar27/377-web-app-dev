@@ -59,6 +59,12 @@ td.dataTables {
     color:#e6e3db
 }
 
+.content {
+    margin: auto;
+    max-width: fit-content;
+    align-items: center;
+}
+
 #bubble:hover {
     cursor: pointer;
 }

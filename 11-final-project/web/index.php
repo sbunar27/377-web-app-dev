@@ -13,18 +13,18 @@
     <body>
         <a href="index.php?nav=agenda"><h1 id="icon"><span style="font-size: 24px;">&#127793;</span> solace</h1></a>
         
-        <?php
-            include_once("library.php");
+            <?php
+                include_once("library.php");
 
-            $nav = isset($_GET['nav']) ? $_GET['nav'] : 'agenda';
+                $nav = isset($_GET['nav']) ? $_GET['nav'] : 'agenda';
 
-            // only allow these specific files to be included
-            $allowed_views = ['agenda', 'detail', 'completed'];
-            if (!in_array($nav, $allowed_views)) {
-                $nav = 'agenda';
-            }
+                // only allow these specific files to be included
+                $allowed_views = ['agenda', 'detail', 'completed'];
+                if (!in_array($nav, $allowed_views)) {
+                    $nav = 'agenda';
+                }
 
-            include("$nav.php");
-        ?>
+                include("$nav.php");
+            ?>
     </body>
 </html>

@@ -28,97 +28,98 @@ $connection->close();
 echo "<script>var eventHeatmap = " . json_encode($eventCounts) . ";</script>";
 ?>
 
-
-<table>
-  <td>
-    <h2>Agenda</h2>
-    <!-- CALENDAR -->
-    <button id="show-completed-btn">Completed Events</button>
-    <br><br>
-    <div id="calendar">
-      <div id="calendar-header">
-        <button id="prev-month">&lt;</button>
-        <span id="month-year"></span>
-        <button id="next-month">&gt;</button>
-      </div>
-      <div id="calendar-days">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-      </div>
-      <div id="calendar-dates"></div>
-    </div>
-  </td>
-  <td>
-    <div id="to-do">
-      <h3>To-Do List</h3>
-      <input type="text" id="todo-input" placeholder="Add to-do item" />
-      <button id="add-todo-btn">Add</button>
-      <ul id="todo-list">
-        <?php
-          $todo_date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
-
-          $connection = get_connection();
-          if ($connection->connect_error) {
-              echo 'DB connection failed';
-              exit;
-          }
-
-          $todoDate = $connection->real_escape_string($todo_date);
-          // look for 0 OR NULL
-          $sql = <<<SQL
-          SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate' AND (todo_completed = 0 OR todo_completed IS NULL)
-          SQL;
-          $result = $connection->query($sql);
-
-          if ($result && $result->num_rows > 0) {
-              while($row = $result->fetch_assoc()) {
-                  echo '<li data-id="' . $row["todo_id"] . '">' . htmlspecialchars($row["todo_task"]) . '</li>';
-              }
-          }
-          $connection->close();
-        ?>
-      </ul>
-    </div>
-    <div id="event-section">
-      <input type="text" id="event-title" placeholder="Event title" />
-      <textarea id="event-desc" placeholder="Event description"></textarea>
-      <input type="time" id="event-time" />
-      <select id="event-cat">
-        <option value="">Select category</option>
-        <option value="Work">Work</option>
-        <option value="Personal">Personal</option>
-        <option value="Health">Health</option>
-        <option value="School">School</option>
-        <option value="Other">Other</option>
-      </select>
-      <button id="add-event-btn" class="button">Add Event</button>
+<div class="content">
+  <table>
+    <td>
+      <h2>Agenda</h2>
+      <!-- CALENDAR -->
+      <button id="show-completed-btn">Completed Events</button>
       <br><br>
-    </div>
-    <div id="event-error" class="error-message"></div>
-    <br><hr><br>
-    <h3>Events for <?php echo htmlspecialchars(isset($_GET['date']) ? $_GET['date'] : date('Y-m-d')); ?></h3>
-    <br>
-    <table id="eventTable" class="stripe hover dataTables"></table>
-    <br><br>
-    <div id="dog">
-      <table>
-        <td class="dog-bubble">
-          <img id="bubble" src="bubble.gif" alt="Thought Bubble">
-          <p id="dog-feedback" class="overlay-text"></p>
-          <strong><a class="button centered-button" href="https://www.cdc.gov/mental-health/living-with/index.html">CDC WEBSITE</a></strong>
-        </td>
-        <td>
-          <img id="dog-image" src="dog-sprites/neutral.png" alt="Dog Image">
-        </td>
-      </table>
-    </div>
-  </td>
-</table>
+      <div id="calendar">
+        <div id="calendar-header">
+          <button id="prev-month">&lt;</button>
+          <span id="month-year"></span>
+          <button id="next-month">&gt;</button>
+        </div>
+        <div id="calendar-days">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
+        <div id="calendar-dates"></div>
+      </div>
+    </td>
+    <td>
+      <div id="to-do">
+        <h3>To-Do List</h3>
+        <input type="text" id="todo-input" placeholder="Add to-do item" />
+        <button id="add-todo-btn">Add</button>
+        <ul id="todo-list">
+          <?php
+            $todo_date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+
+            $connection = get_connection();
+            if ($connection->connect_error) {
+                echo 'DB connection failed';
+                exit;
+            }
+
+            $todoDate = $connection->real_escape_string($todo_date);
+            // look for 0 OR NULL
+            $sql = <<<SQL
+            SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate' AND (todo_completed = 0 OR todo_completed IS NULL)
+            SQL;
+            $result = $connection->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo '<li data-id="' . $row["todo_id"] . '">' . htmlspecialchars($row["todo_task"]) . '</li>';
+                }
+            }
+            $connection->close();
+          ?>
+        </ul>
+      </div>
+      <div id="event-section">
+        <input type="text" id="event-title" placeholder="Event title" />
+        <textarea id="event-desc" placeholder="Event description"></textarea>
+        <input type="time" id="event-time" />
+        <select id="event-cat">
+          <option value="">Select category</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Health">Health</option>
+          <option value="School">School</option>
+          <option value="Other">Other</option>
+        </select>
+        <button id="add-event-btn" class="button">Add Event</button>
+        <br><br>
+      </div>
+      <div id="event-error" class="error-message"></div>
+      <br><hr><br>
+      <h3>Events for <?php echo htmlspecialchars(isset($_GET['date']) ? $_GET['date'] : date('Y-m-d')); ?></h3>
+      <br>
+      <table id="eventTable" class="stripe hover dataTables"></table>
+      <br><br>
+      <div id="dog">
+        <table>
+          <td class="dog-bubble">
+            <img id="bubble" src="bubble.gif" alt="Thought Bubble">
+            <p id="dog-feedback" class="overlay-text"></p>
+            <strong><a class="button centered-button" href="https://www.cdc.gov/mental-health/living-with/index.html">CDC WEBSITE</a></strong>
+          </td>
+          <td>
+            <img id="dog-image" src="dog-sprites/neutral.png" alt="Dog Image">
+          </td>
+        </table>
+      </div>
+    </td>
+  </table>
+</div>
 
 <?php
 // Use selected date from calendar (passed as ?date=YYYY-MM-DD), otherwise use today
