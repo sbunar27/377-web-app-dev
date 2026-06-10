@@ -1,3 +1,12 @@
+<!-- 
+ 
+ events.php: handles the backend logic for adding new events to the database. 
+ It validates the input data, ensuring that all required fields are filled and that the event time is between 5am and 10pm. 
+ If the validation passes, it inserts the new event into the 'events' table in the database. 
+ The script returns a success message if the insertion is successful or an error message if it fails.
+
+-->
+
 <?php
 
 include("library.php");

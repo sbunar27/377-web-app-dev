@@ -1,3 +1,13 @@
+<!-- 
+ 
+ save.php: processes the form submission from detail.php when a user edits an event. 
+ It validates the input data, ensuring that all required fields are filled and that the event time is between 5am and 10pm. 
+ If the validation passes, it updates the existing event in the 'events' table in the database. 
+ The script returns a success message if the update is successful or an error message if it fails. 
+ Additionally, it handles AJAX requests by returning JSON responses, allowing for a better user experience without full page reloads.
+
+-->
+
 <?php
 include("library.php");
 
@@ -13,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $ev_id        = isset($_POST['ev_id']) ? intval($_POST['ev_id']) : 0;
-    $ev_title     = isset($_POST['ev_title']) ? trim($_POST['ev_title']) : '';
-    $ev_date      = isset($_POST['ev_date']) ? $_POST['ev_date'] : '';
-    $ev_time      = isset($_POST['ev_time']) ? $_POST['ev_time'] : '';
-    $ev_desc      = isset($_POST['ev_desc']) ? trim($_POST['ev_desc']) : '';
-    $ev_cat       = isset($_POST['ev_cat']) ? $_POST['ev_cat'] : 'Other';
+    $ev_id = isset($_POST['ev_id']) ? intval($_POST['ev_id']) : 0;
+    $ev_title = isset($_POST['ev_title']) ? trim($_POST['ev_title']) : '';
+    $ev_date = isset($_POST['ev_date']) ? $_POST['ev_date'] : '';
+    $ev_time = isset($_POST['ev_time']) ? $_POST['ev_time'] : '';
+    $ev_desc = isset($_POST['ev_desc']) ? trim($_POST['ev_desc']) : '';
+    $ev_cat = isset($_POST['ev_cat']) ? $_POST['ev_cat'] : 'Other';
     $ev_completed = isset($_POST['ev_completed']) ? 1 : 0; 
 
     // Basic validation
@@ -43,14 +53,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ev_desc = $connection->real_escape_string($ev_desc);
     $ev_cat = $connection->real_escape_string($ev_cat);
 
-    $sql = "UPDATE events SET 
-            ev_title = '$ev_title', 
-            ev_date = '$ev_date', 
-            ev_time = '$ev_time', 
-            ev_desc = '$ev_desc', 
-            ev_completed = $ev_completed,
-            ev_cat = '$ev_cat'
-            WHERE ev_id = $ev_id";
+    $sql = <<<SQL
+    UPDATE events SET 
+    ev_title = '$ev_title', 
+    ev_date = '$ev_date', 
+    ev_time = '$ev_time', 
+    ev_desc = '$ev_desc', 
+    ev_completed = $ev_completed,
+    ev_cat = '$ev_cat'
+    WHERE ev_id = $ev_id
+    SQL;
 
     if ($connection->query($sql)) {
         // Return success and let JavaScript handle the redirection
@@ -71,73 +83,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: index.php");
     exit();
 }
-?>
-
-<!-- old code before fixes -->
-<?php
-// include("library.php");
-
-// // Check if form was actually submitted via ajax
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     $connection = get_connection();
-    
-//     if ($connection->connect_error) {
-//         die("Connection failed: " . $connection->connect_error);
-//     }
-
-//     $ev_id = isset($_POST['ev_id']) ? intval($_POST['ev_id']) : 0;
-//     $ev_title = trim($_POST['ev_title']);
-//     $ev_date = $_POST['ev_date'];
-//     $ev_time = $_POST['ev_time'];
-//     $ev_desc = trim($_POST['ev_desc']);
-    
-//     // Checkbox logic: If it's checked, it sends '1'. If unchecked, it sends nothing.
-//     $ev_completed = isset($_POST['ev_completed']) ? 1 : 0; 
-
-//     // Basic validation
-//     if ($ev_id === 0 || empty($ev_title) || empty($ev_date)) {
-//         http_response_code(400);
-//         echo "Missing required fields.";
-//         exit;
-//     } else if ($ev_time > '22:00:00') {
-//         http_response_code(400);
-//         echo 'Events cannot be scheduled after 10pm, remember to get some sleep!';
-//         exit;
-//     } else if ($ev_time < '05:00:00') {
-//         http_response_code(400);
-//         echo 'Events cannot be scheduled before 5am, remember to get some rest!';
-//         exit;
-//     }
-
-//     // Sanitize the inputs
-//     $ev_id        = intval($_POST['ev_id']); 
-//     $ev_title     = $connection->real_escape_string($_POST['ev_title']);
-//     $ev_date      = $connection->real_escape_string($_POST['ev_date']);
-//     $ev_time      = $connection->real_escape_string($_POST['ev_time']);
-//     $ev_desc      = $connection->real_escape_string($_POST['ev_desc']);
-//     $ev_completed = isset($_POST['ev_completed']) ? 1 : 0;
-//     $ev_cat       = $connection->real_escape_string($_POST['ev_cat']);
-
-//     $sql = "UPDATE events SET 
-//             ev_title = '$ev_title', 
-//             ev_date = '$ev_date', 
-//             ev_time = '$ev_time', 
-//             ev_desc = '$ev_desc', 
-//             ev_completed = $ev_completed,
-//             ev_cat = '$ev_cat'
-//             WHERE ev_id = $ev_id";
-
-//     if ($connection->query($sql)) {
-//         header("Location: index.php?date=" . $ev_date);
-//         exit();
-//     } else {
-//         echo "Update failed: " . $connection->error;
-//     }
-
-//     $connection->close();
-// } else {
-//     // If someone tries to load save.php directly in their browser without clicking "Save"
-//     header("Location: index.php");
-//     exit();
-// }
 ?>

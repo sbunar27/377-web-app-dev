@@ -10,7 +10,10 @@ if (isset($_GET['id'])) {
 
     $ev_id = intval($_GET['id']);
 
-    $sql = "DELETE FROM events WHERE ev_id = $ev_id";
+    $sql = <<<SQL
+    DELETE FROM events 
+    WHERE ev_id = $ev_id
+    SQL;
 
     if ($connection->query($sql)) {
         header("Location: index.php"); 

@@ -1,12 +1,22 @@
+<!-- 
+ 
+ agenda.php: displays the agenda for the user, including a calendar and to-do list.
+ It retrieves event data from the database and passes it to JavaScript for rendering the calendar and events.
+ The page includes logic to determine if there are any scheduling conflicts and provides suggestions for resolving them.
+
+-->
+
 <?php
 // USING THE NUMBER OF EVENTS TO FIGURE OUT HEATMAP COLORS:
 $connection = get_connection();
 
 // Add "WHERE ev_completed = 0" so completed events are ignored by the count
-$countSql = "SELECT ev_date, COUNT(*) as total 
-             FROM events 
-             WHERE ev_completed = 0 
-             GROUP BY ev_date";
+$countSql = <<<SQL
+SELECT ev_date, COUNT(*) as total 
+FROM events 
+WHERE ev_completed = 0 
+GROUP BY ev_date
+SQL;
 
 $countResult = $connection->query($countSql);
 $eventCounts = [];
@@ -60,13 +70,11 @@ echo "<script>var eventHeatmap = " . json_encode($eventCounts) . ";</script>";
               exit;
           }
 
-          // $todoDate = $connection->real_escape_string($todo_date);
-          // $sql = "SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate' AND todo_completed = 0";
-          // $result = $connection->query($sql);
-
           $todoDate = $connection->real_escape_string($todo_date);
           // look for 0 OR NULL
-          $sql = "SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate' AND (todo_completed = 0 OR todo_completed IS NULL)";
+          $sql = <<<SQL
+          SELECT todo_id, todo_task FROM todos WHERE todo_date = '$todoDate' AND (todo_completed = 0 OR todo_completed IS NULL)
+          SQL;
           $result = $connection->query($sql);
 
           if ($result && $result->num_rows > 0) {
@@ -129,15 +137,19 @@ if ($connection->connect_error) {
 
 if ($selected_date) {
   $dateEsc = $connection->real_escape_string($selected_date);
-  $sql = "SELECT *, date_format(ev_date, '%m/%d/%Y') as 'formatted_date'
-      FROM events
-      WHERE ev_date = '$dateEsc'
-      ORDER BY ev_title ASC";
+  $sql = <<<SQL
+  SELECT *, date_format(ev_date, '%m/%d/%Y') as 'formatted_date'
+  FROM events
+  WHERE ev_date = '$dateEsc'
+  ORDER BY ev_title ASC
+  SQL;
 } else {
-  $sql = "SELECT *, date_format(ev_date, '%m/%d/%Y') as 'formatted_date'
-      FROM events
-      WHERE ev_date = CURDATE()
-      ORDER BY ev_title ASC";
+  $sql = <<<SQL
+  SELECT *, date_format(ev_date, '%m/%d/%Y') as 'formatted_date'
+  FROM events
+  WHERE ev_date = CURDATE()
+  ORDER BY ev_title ASC
+  SQL;
 }
 
 // Execute query and collect rows with error checking
@@ -181,7 +193,6 @@ print('</script>');
     data: data,
     columns: [
       { title: "Event", data: "ev_title", render: function(data, type, row) {
-          // route through index.php instead of going straight to detail.php
           return type === 'display' ? '<a href="index.php?nav=detail&id=' + row.ev_id + '">' + data + '</a>' : data;
       }},
       { title: "Event Time", data: "ev_time" },
@@ -209,6 +220,9 @@ print('</script>');
   // 2. CONFLICT & SUGGESTION LOGIC
   function getConflictDetails(events) {
     if (!events || events.length < 2) return null;
+    // spread operator takes all the items out of events array and puts them into a new array, which can then sort without affecting the original data
+    // converts both times into total minutes from midnight and subtracts event b's time from event a's time. 
+    // If the result is negative, a is earlier; if positive, b is earlier; if zero, they are at the same time.
     const sorted = [...events].sort((a, b) => toMins(a.ev_time) - toMins(b.ev_time));
 
     for (let i = 0; i < sorted.length - 1; i++) {
@@ -222,11 +236,22 @@ print('</script>');
     return null;
   }
 
-  // Suggests the next available 1-hour slot between 9am and 5pm that doesn't conflict with existing events (Gemini help with map)
+  // Suggests the next available 1-hour slot between 5am and 10pm that doesn't conflict with existing events (Gemini help with map)
   function findSuggestedGap(events) {
+    // converts the event's start time into total minutes from midnight using 'toMins()'
+    // and calculates the end time by adding 60 minutes (assuming each event is 1 hour long).
     const busySlots = events.map(e => ({ start: toMins(e.ev_time), end: toMins(e.ev_time) + 60 }));
-    for (let time = 540; time <= 1020; time += 30) { // 9am to 5pm
+    
+    // loop through the workday in 30-minute increments.
+    // 300 represents minutes from midnight (5:00 AM) and 1320 represents 10:00 PM.
+    for (let time = 300; time <= 1320; time += 30) { // 5am to 10pm
+
+      // check if the current 60-minute window conflicts with any existing busy slots.
+      // '.some()' checks if at least one busy slot overlaps with our current 'time' to 'time + 60'.
+      // The '!' (NOT operator) flips it, meaning 'isFree' will be true ONLY if there are zero conflicts.
       const isFree = !busySlots.some(slot => (time < slot.end && time + 60 > slot.start));
+
+      // convert the minutes back into a readable time string and exit the function.
       if (isFree) return toStr(time);
     }
     return "later tonight";

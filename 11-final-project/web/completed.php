@@ -1,3 +1,11 @@
+<!-- 
+ 
+ completed.php: displays a log of all completed events and to-dos, sorted by most recent date. 
+ It retrieves completed events and to-dos from the database, formats the dates, and passes the data to JavaScript to render in DataTables. 
+ The page allows users to review their completed items and click back into event details if they want to uncheck completion status.
+
+ -->
+
 <?php
 include_once("library.php");
 
@@ -7,10 +15,12 @@ if ($connection->connect_error) {
 }
 
 // get ONLY completed events, sorted by most recent date
-$sql = "SELECT *, date_format(ev_date, '%m/%d/%Y') as 'formatted_date'
-        FROM events
-        WHERE ev_completed = 1
-        ORDER BY ev_date DESC, ev_time ASC";
+$sql = <<<SQL
+SELECT *, date_format(ev_date, '%m/%d/%Y') as 'formatted_date'
+FROM events
+WHERE ev_completed = 1
+ORDER BY ev_date DESC, ev_time ASC
+SQL;
 
 $rows = [];
 $result = $connection->query($sql);
@@ -31,10 +41,12 @@ if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }  
 
-$sql = "SELECT *, date_format(todo_date, '%m/%d/%Y') as 'formatted_date'
-        FROM todos
-        WHERE todo_completed = 1
-        ORDER BY todo_date DESC";
+$sql = <<<SQL
+SELECT *, date_format(todo_date, '%m/%d/%Y') as 'formatted_date'
+FROM todos
+WHERE todo_completed = 1
+ORDER BY todo_date DESC
+SQL;
 
 $rows = [];
 $result = $connection->query($sql);

@@ -1,3 +1,9 @@
+<!-- 
+
+ detail.php: shows the details of a single event and allows editing.
+ It retrieves the event data from the database based on the event ID passed in the URL, and displays it in a form.
+
+-->
 <?php
 include_once("library.php");
 
@@ -122,21 +128,3 @@ $connection->close();
         });
     });
 </script>
-
-<!-- <script>
-    $('#save-button').on("click", function(event) {
-        event.preventDefault(); // Prevent the default form submission
-            $.ajax({
-                url: "save.php",
-                type: "POST",
-                data: { action: 'post', ev_date: "<?php echo $event['ev_date']; ?>", ev_time: "<?php echo $event['ev_time']; ?>", ev_title: "<?php echo $event['ev_title']; ?>", ev_desc: "<?php echo $event['ev_desc']; ?>", ev_cat: "<?php echo $event['ev_cat']; ?>", ev_completed: "<?php echo $event['ev_completed']; ?>", ev_id: "<?php echo $event_id; ?>" },
-                success: function(response) {
-                    console.log("Event updated successfully.");
-                },
-                error: function(xhr) {
-                    $("#edit-error").text(xhr.responseText);
-                }
-            });
-        });
-    });
-</script> -->
