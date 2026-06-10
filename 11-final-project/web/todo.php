@@ -1,12 +1,9 @@
-<!-- 
- 
- todo.php: handles the backend logic for adding new to-do items and marking them as completed. 
- When a new to-do item is added, it validates the input data and inserts it into the 'todos' table in the database. 
- When a to-do item is marked as completed, it updates the 'todos' table to set the item as completed.
-
--->
-
 <?php
+
+//  todo.php: handles the backend logic for adding new to-do items and marking them as completed. 
+//  When a new to-do item is added, it validates the input data and inserts it into the 'todos' table in the database. 
+//  When a to-do item is marked as completed, it updates the 'todos' table to set the item as completed.
+
 
 include("library.php");
 

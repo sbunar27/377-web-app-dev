@@ -1,14 +1,14 @@
-<!-- 
- 
- save.php: processes the form submission from detail.php when a user edits an event. 
- It validates the input data, ensuring that all required fields are filled and that the event time is between 5am and 10pm. 
- If the validation passes, it updates the existing event in the 'events' table in the database. 
- The script returns a success message if the update is successful or an error message if it fails. 
- Additionally, it handles AJAX requests by returning JSON responses, allowing for a better user experience without full page reloads.
-
--->
-
 <?php
+
+
+// save.php: processes the form submission from detail.php when a user edits an event. 
+//  It validates the input data, ensuring that all required fields are filled and that the event time is between 5am and 10pm. 
+//  If the validation passes, it updates the existing event in the 'events' table in the database. 
+//  The script returns a success message if the update is successful or an error message if it fails. 
+//  Additionally, it handles AJAX requests by returning JSON responses, allowing for a better user experience without full page reloads.
+
+
+
 include("library.php");
 
 // Set header to return JSON data format --> fixed by Copilot/Gemini in order to properly handle AJAX responses

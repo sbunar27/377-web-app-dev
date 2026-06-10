@@ -1,12 +1,10 @@
-<!-- 
- 
- completed.php: displays a log of all completed events and to-dos, sorted by most recent date. 
- It retrieves completed events and to-dos from the database, formats the dates, and passes the data to JavaScript to render in DataTables. 
- The page allows users to review their completed items and click back into event details if they want to uncheck completion status.
-
- -->
-
 <?php
+ 
+//  completed.php: displays a log of all completed events and to-dos, sorted by most recent date. 
+//  It retrieves completed events and to-dos from the database, formats the dates, and passes the data to JavaScript to render in DataTables. 
+//  The page allows users to review their completed items and click back into event details if they want to uncheck completion status.
+
+
 include_once("library.php");
 
 $connection = get_connection();

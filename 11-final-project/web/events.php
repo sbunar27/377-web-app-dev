@@ -1,13 +1,10 @@
-<!-- 
+<?php 
  
- events.php: handles the backend logic for adding new events to the database. 
- It validates the input data, ensuring that all required fields are filled and that the event time is between 5am and 10pm. 
- If the validation passes, it inserts the new event into the 'events' table in the database. 
- The script returns a success message if the insertion is successful or an error message if it fails.
+//  events.php: handles the backend logic for adding new events to the database. 
+//  It validates the input data, ensuring that all required fields are filled and that the event time is between 5am and 10pm. 
+//  If the validation passes, it inserts the new event into the 'events' table in the database. 
+//  The script returns a success message if the insertion is successful or an error message if it fails.
 
--->
-
-<?php
 
 include("library.php");
 $connection = get_connection();
@@ -38,7 +35,12 @@ if ($action === 'add') {
         echo 'Events cannot be scheduled before 5am, remember to get some rest!';
         exit;
     } else {
-        echo '';
+        // Sanitize the inputs
+        $ev_date = $connection->real_escape_string($ev_date);
+        $ev_title = $connection->real_escape_string($ev_title);
+        $ev_desc = $connection->real_escape_string($ev_desc);
+        $ev_time = $connection->real_escape_string($ev_time);
+        $ev_cat = $connection->real_escape_string($ev_cat);
     }
 
     $sql = <<<SQL

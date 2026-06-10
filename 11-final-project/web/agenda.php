@@ -1,12 +1,10 @@
-<!-- 
  
- agenda.php: displays the agenda for the user, including a calendar and to-do list.
- It retrieves event data from the database and passes it to JavaScript for rendering the calendar and events.
- The page includes logic to determine if there are any scheduling conflicts and provides suggestions for resolving them.
-
--->
-
 <?php
+
+// agenda.php: displays the agenda for the user, including a calendar and to-do list.
+//  It retrieves event data from the database and passes it to JavaScript for rendering the calendar and events.
+//  The page includes logic to determine if there are any scheduling conflicts and provides suggestions for resolving them.
+
 // USING THE NUMBER OF EVENTS TO FIGURE OUT HEATMAP COLORS:
 $connection = get_connection();
 

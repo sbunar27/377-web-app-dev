@@ -1,10 +1,10 @@
-<!-- 
 
- detail.php: shows the details of a single event and allows editing.
- It retrieves the event data from the database based on the event ID passed in the URL, and displays it in a form.
-
--->
 <?php
+
+//  detail.php: shows the details of a single event and allows editing.
+//  It retrieves the event data from the database based on the event ID passed in the URL, and displays it in a form.
+
+
 include_once("library.php");
 
 $connection = get_connection();
