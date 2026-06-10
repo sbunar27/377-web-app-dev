@@ -411,6 +411,21 @@
             setupAmbientSoundscape();
         }
 
+        // Asynchronously load and decode the custom jumpscare MP3
+        async function loadRoarAudio() {
+            try {
+                const response = await fetch('tung-tung-sahur.mp3');
+                const arrayBuffer = await response.arrayBuffer();
+                audioCtx.decodeAudioData(arrayBuffer, (decodedData) => {
+                    roarBuffer = decodedData;
+                }, (err) => {
+                    console.error("Error decoding jumpscare audio data", err);
+                });
+            } catch (e) {
+                console.error("Failed to load jumpscare audio 'tung-tung-sahur.mp3'", e);
+            }
+        }
+
         function setupAmbientSoundscape() {
             if (!audioCtx) return;
 
@@ -510,7 +525,7 @@
                 osc.stop(time + 0.35);
             } 
             else if (type === 'correct') {
-                // NEW: Dark, organic log drum block hits instead of a magical chime
+                // Dark, organic log drum block hits instead of a magical chime
                 let osc1 = audioCtx.createOscillator();
                 let osc2 = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
@@ -599,39 +614,46 @@
                 osc.stop(time + 0.85);
             }
             else if (type === 'roar') {
-                // Terrifying synthetic Beast screech roar for jumpscare sequences
-                // let oscGrowl = audioCtx.createOscillator();
-                // let oscScreech = audioCtx.createOscillator();
-                // let roarGain = audioCtx.createGain();
-                
-                // oscGrowl.type = 'sawtooth';
-                // oscGrowl.frequency.setValueAtTime(90, time);
-                // oscGrowl.frequency.linearRampToValueAtTime(30, time + 1.8);
-                
-                // oscScreech.type = 'sawtooth';
-                // oscScreech.frequency.setValueAtTime(320, time);
-                // oscScreech.frequency.exponentialRampToValueAtTime(750, time + 0.4);
-                // oscScreech.frequency.exponentialRampToValueAtTime(140, time + 1.6);
-                
-                // // Add extreme gain distortion
-                // roarGain.gain.setValueAtTime(0.8, time);
-                // roarGain.gain.exponentialRampToValueAtTime(0.001, time + 1.8);
-                
-                // oscGrowl.connect(roarGain);
-                // oscScreech.connect(roarGain);
-                // roarGain.connect(audioCtx.destination);
-                
-                // oscGrowl.start(time);
-                // oscScreech.start(time);
-                
-                // oscGrowl.stop(time + 1.8);
-                // oscScreech.stop(time + 1.8);
+                // If custom MP3 "tung-tung-sahur" is loaded, play it!
+                if (roarBuffer) {
+                    let source = audioCtx.createBufferSource();
+                    source.buffer = roarBuffer;
 
-                //instead of the screech, use the sfx tung-tung-tung sahur
-                sfx = new Audio('tung-tung-tung-sahur.mp3');
-                sfx.volume = 0.5;
-                sfx.play();
+                    let gain = audioCtx.createGain();
+                    gain.gain.setValueAtTime(0.9, time);
 
+                    source.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    source.start(time);
+                } else {
+                    // Fallback: Terrifying synthetic Beast screech roar if MP3 is still loading or failed
+                    let oscGrowl = audioCtx.createOscillator();
+                    let oscScreech = audioCtx.createOscillator();
+                    let roarGain = audioCtx.createGain();
+                    
+                    oscGrowl.type = 'sawtooth';
+                    oscGrowl.frequency.setValueAtTime(90, time);
+                    oscGrowl.frequency.linearRampToValueAtTime(30, time + 1.8);
+                    
+                    oscScreech.type = 'sawtooth';
+                    oscScreech.frequency.setValueAtTime(320, time);
+                    oscScreech.frequency.exponentialRampToValueAtTime(750, time + 0.4);
+                    oscScreech.frequency.exponentialRampToValueAtTime(140, time + 1.6);
+                    
+                    // Add extreme gain distortion
+                    roarGain.gain.setValueAtTime(0.8, time);
+                    roarGain.gain.exponentialRampToValueAtTime(0.001, time + 1.8);
+                    
+                    oscGrowl.connect(roarGain);
+                    oscScreech.connect(roarGain);
+                    roarGain.connect(audioCtx.destination);
+                    
+                    oscGrowl.start(time);
+                    oscScreech.start(time);
+                    
+                    oscGrowl.stop(time + 1.8);
+                    oscScreech.stop(time + 1.8);
+                }
             }
         }
 
