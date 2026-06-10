@@ -47,7 +47,7 @@ if ($action === 'add') {
     SQL;
 
     if ($connection->query($sql) === TRUE) {
-        echo 'success';
+        echo 'success:' . $connection->insert_id;
     } else {
         echo 'Error: ' . $connection->error;
     }

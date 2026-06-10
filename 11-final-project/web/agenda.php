@@ -419,8 +419,19 @@ print('</script>');
       data: { action: 'add', ev_date: selectedDate, ev_time: time, ev_title: title, ev_desc: desc, ev_cat: $('#event-cat').val() },
       success: function(response) {
         if (response.startsWith('success')) {
-          // Update local data so dog reacts immediately
-          const newEv = { ev_title: title, ev_time: time, ev_desc: desc, formatted_date: selectedDate, ev_cat: $('#event-cat').val() };
+          // Split the response string (e.g., "success:42") to extract the ID
+          const parts = response.split(':');
+          const newId = parts[1];
+
+          // Update local data including the real database ID
+          const newEv = { 
+            ev_id: newId,
+            ev_title: title, 
+            ev_time: time, 
+            ev_desc: desc, 
+            formatted_date: selectedDate, 
+            ev_cat: $('#event-cat').val() 
+          };
           data.push(newEv);
           
           eventHeatmap[selectedDate] = (eventHeatmap[selectedDate] || 0) + 1;
