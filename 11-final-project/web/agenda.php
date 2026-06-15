@@ -285,6 +285,7 @@ print('</script>');
           feedback.innerHTML += text.charAt(i);
           i++;
         }
+        // tells the browser: "wait 40 milliseconds,  then run this type function again."
         typewriterTimeout = setTimeout(type, 40);
       } else {
         // After finishing typing, switch back to neutral after a delay (2 seconds)

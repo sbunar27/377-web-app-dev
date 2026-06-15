@@ -253,10 +253,6 @@ h3#event-detail, h2#event-detail {
   border-radius: 5% / 50%;
 }
 
-#dog-image {
-  z-index: 10;
-}
-
 .error-message {
   color: #8e4242ff;
   font-weight: bold;
